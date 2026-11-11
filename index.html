@@ -344,6 +344,20 @@ dialog.sub-d::backdrop{background:rgba(6,30,26,.6)}
 @media (max-width:599px){.minute .list{grid-auto-columns:85%}}
 .num{justify-content:center}
 .num .pill.nb{margin-top:6px}
+/* option B (Editor, Nov. 11, 2026): on a computer "Number of the week" is a slim band across the page and "The week in
+   a minute" gets its own full-width row with four cards in view */
+@media (min-width:900px){
+  .wk .in{flex-direction:column;gap:18px}
+  .num,.minute{flex:none;width:100%;min-width:0;box-sizing:border-box}
+  .num{display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-rows:auto auto;column-gap:32px;row-gap:4px;align-items:center;padding:22px 30px}
+  .num>b{grid-column:1;grid-row:1}
+  .num .big{grid-column:1;grid-row:2;font-size:84px}
+  .num>span:not(.big):not(.from){grid-column:2;grid-row:1 / span 2;font-size:18px;line-height:1.45}
+  .num .from{display:none}
+  .num .pill.nb{grid-column:3;grid-row:1 / span 2;margin:0}
+  .minute .list{grid-auto-columns:calc((100% - 72px) / 4)}
+}
+@media (min-width:900px) and (max-width:1099px){.minute .list{grid-auto-columns:calc((100% - 48px) / 3)}}
 .minute .count{white-space:nowrap}
 @media (max-width:599px){.minute h2{font-size:24px}.minute .top{gap:8px}}
 .minute .list a i{margin-top:auto;padding-top:6px;font-style:normal;display:inline-flex;align-items:center;gap:6px;font-weight:900;font-size:13px;color:var(--g)}
