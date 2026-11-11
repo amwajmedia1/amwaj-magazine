@@ -777,6 +777,16 @@ body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#ff
 }
 /* the cover story's caption under the author's name, not on the photo (Editor, Nov. 11, 2026) */
 .hero .shot .pcap{display:none !important}
+/* computer: every caption at the bottom of its photo (Editor, Nov. 11, 2026): the cover's on the photo again; the
+   full-page openers' under the byline at the foot of the page; the contents page's at the photo's foot */
+@media (min-width:900px){
+  .hero .shot .pcap.bottom{display:flex !important}
+  .hero .panel .ccap{display:none !important}
+  .page .pcap.top{display:none}
+  .pcap-in{display:block !important;margin-top:2.6cqw;font-size:max(10.5px,2.1cqw);line-height:1.4;color:rgba(255,255,255,.82)}
+}
+.toc .tcover .pcap.top{display:flex;top:auto;bottom:0;padding:5cqw 3.4cqw 2.2cqw;background:linear-gradient(180deg,rgba(4,14,12,0),rgba(4,14,12,.78) 62%)}
+.wave .tcover .pcap.top{top:auto;bottom:0;padding:28px 16px 11px;background:linear-gradient(180deg,rgba(4,14,12,0),rgba(4,14,12,.78) 62%)}
 .hero .ccap{font-size:12.5px;line-height:1.45;color:rgba(255,255,255,.78);margin-top:-8px;max-width:40em}
 .hero .ph-story .ccap{margin-top:-4px;font-size:11.5px}
 .hero .panel .ccap{display:block}
