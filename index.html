@@ -491,7 +491,17 @@ body.dopen .drawer{transform:none;visibility:visible;transition:transform .28s c
 .dtab:hover{background:#FFD6A3;padding-right:13px}
 body.dopen .dtab{display:none}
 @media (max-width:899px){.dtab{display:none}}
-@media (max-width:420px){.mh .cbtn span{display:none}.mh .cbtn{padding:0 11px}}
+/* phone header (Editor, Nov. 11, 2026): rounded-rectangle buttons that always fit; "Open reader" keeps its words where
+   there is room, and is a book icon on the narrowest phones */
+@media (max-width:899px){
+  .mh .wrap{gap:8px;padding-block:10px}
+  .mh img{height:22px}
+  .mh .mag{font-size:16px;padding-left:8px;border-left-width:1.5px}
+  .mh .pill{border-radius:8px;min-height:36px;padding:0 10px;font-size:12px;gap:6px;flex:none}
+  .mh .cbtn svg{width:16px;height:16px}
+}
+@media (max-width:399px){.mh .cbtn span{display:none}.mh .cbtn{padding:0 9px}.mh .mag{font-size:15px}.mh img{height:20px}}
+@media (max-width:339px){.mh .mag{font-size:13.5px;padding-left:6px}.mh .wrap{gap:6px}.mh .pill{padding:0 8px;font-size:11.5px}}
 
 /* the table of contents: the reader's pages 2-3 (sizes in page units), the front page's "In this wave" and the phone's
    contents page (sizes in px) */
@@ -684,6 +694,38 @@ body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#ff
 .ti:hover{background:#FFEFD9}
 .ti.g-cover-story{background:#FFF0DC}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .drawer{background:#241D14}:root:not([data-theme="light"]) .drawer .dh{background:#3A2E20}}
+/* ---------- the phone reader: one screen-sized page at a time (Editor, Nov. 11, 2026) ---------- */
+#ntoc{display:none}
+@media (max-width:899px){
+  body.reading .stage{padding:0;overflow:hidden}
+  body.reading .book{margin:0;box-shadow:none;border-radius:0}
+  body.reading .book.one .page{box-shadow:none}
+  .nav{gap:6px;padding:6px 10px calc(8px + env(safe-area-inset-bottom,0px));background:var(--paper);border-top:1px solid var(--rule)}
+  .pager{gap:6px;min-width:0}
+  .arrow{width:40px;height:40px}
+  .arrow.sm{width:36px;height:36px}
+  .where .lbl{font-size:11.5px}
+  .tools{gap:4px}
+  #zout,#zin,#zl,#full,.tools .sep{display:none}
+  #ntoc{display:grid}
+  .turn-next{animation-name:inRp}.turn-prev{animation-name:inLp}
+}
+@keyframes inRp{from{opacity:.4;transform:translateX(40px)}to{opacity:1;transform:none}}
+@keyframes inLp{from{opacity:.4;transform:translateX(-40px)}to{opacity:1;transform:none}}
+/* phone captions never on top of a photo (Editor, Nov. 11, 2026): the cover's goes under the photo, the contents page's to its foot */
+.hero .ph-cap{display:none}
+.pcap-in{display:none}
+.book.one .pcap.top{display:none}
+.book.one .pcap-in{display:block;margin-top:3cqw;font-size:max(11px,2.9cqw);line-height:1.4;color:rgba(255,255,255,.82)}
+@media (max-width:899px){
+  .issline{flex-wrap:wrap;gap:4px 14px;font-size:11px;letter-spacing:.08em}
+  .issline span{white-space:nowrap}
+}
+@media (max-width:899px){
+  .hero .shot .pcap.top{display:none}
+  .hero .ph-cap{display:block;flex-basis:100%;padding:8px 16px 10px;font-size:11.5px;line-height:1.4;color:rgba(255,255,255,.88);background:#06302A}
+  .pc .tcover .pcap.top{top:auto;bottom:0;padding:28px 14px 10px;background:linear-gradient(180deg,rgba(4,14,12,0),rgba(4,14,12,.78) 62%)}
+}
 .eyebrow{font-size:2.3cqw;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-ink)}
 
 </style>
@@ -903,6 +945,8 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     p.capText = c;
     if (!p.alt) p.alt = c;
   });
+  // the caption inside a full-page photo's text block: shown on a phone in place of the caption at the top of the photo
+  function capIn(p) { return p.capText ? '<span class="pcap-in">' + esc(p.capText) + '</span>' : ''; }
   // the whole caption as one run of text, credit in its brackets as written (Editor, Nov. 11, 2026)
   function cap(p, pos) {
     if (!p.capText) return '';
@@ -952,13 +996,13 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   // a graphic page: one or two graphs (or the D style's photo, full bleed)
   function gpageHtml(p, group, n) {
     var g0 = group[0];
-    if (g0.photo) return '<div class="page op-a"><img src="' + esc(g0.src) + '" alt="' + esc(p.alt) + '"><div class="veil" style="opacity:.55"></div>' + cap(p, 'top') + '<div class="tx"><div class="kick"><span class="r">' + esc(p.region) + '</span><span class="y">' + esc(p.type) + '</span></div></div></div>';
+    if (g0.photo) return '<div class="page op-a"><img src="' + esc(g0.src) + '" alt="' + esc(p.alt) + '"><div class="veil" style="opacity:.55"></div>' + cap(p, 'top') + '<div class="tx"><div class="kick"><span class="r">' + esc(p.region) + '</span><span class="y">' + esc(p.type) + '</span></div>' + capIn(p) + '</div></div>';
     return '<div class="page gpage"><div class="gin' + (group.length > 1 ? ' two' : '') + '">' + group.map(function (g) { return '<div class="gslot">' + g.html + '</div>'; }).join('') + '</div>' + folio(n, p.region) + '</div>';
   }
   function opener(p, n) {
     var kick = '<div class="kick"><span class="r">' + esc(p.region) + '</span><span class="y">' + esc(p.type) + ' · ' + esc(p.category) + '</span></div>';
     var by = '<div class="by">By <b>' + esc(p.authors.join(' and ')) + '</b> · ' + esc(day(p.date)) + '</div>';
-    if (p.tpl === 'a') return '<div class="page op-a"><img src="' + esc(p.img) + '" alt="' + esc(p.alt) + '"><div class="veil"></div>' + cap(p, 'top') + '<div class="tx">' + kick + '<h1>' + esc(p.title) + '</h1>' + by + '</div></div>';
+    if (p.tpl === 'a') return '<div class="page op-a"><img src="' + esc(p.img) + '" alt="' + esc(p.alt) + '"><div class="veil"></div>' + cap(p, 'top') + '<div class="tx">' + kick + '<h1>' + esc(p.title) + '</h1>' + by + capIn(p) + '</div></div>';
     if (p.tpl === 'b') return '<div class="page op-b"><div class="tx">' + kick + '<h1>' + esc(p.title) + '</h1>' + by + '</div><div class="ph"><img src="' + esc(p.img) + '" alt="' + esc(p.alt) + '">' + cap(p, 'bottom') + '</div></div>';
     if (p.tpl === 'c') return '<div class="page op-c"><div class="band"><div class="label">Media Monitor</div><h1>' + esc(p.title) + '</h1>' + by.replace('class="by"', 'class="by" style="color:#fff"') + '</div><div class="ph"><img src="' + esc(p.img) + '" alt="' + esc(p.alt) + '">' + cap(p, 'bottom') + '</div></div>';
     if (p.tpl === 'o') return '<div class="page op-o"><div class="ph"><img src="' + esc(p.img) + '" alt="' + esc(p.alt) + '">' + cap(p, 'bottom') + '</div><div class="tx"><span class="label">Old News</span><h1>' + esc(p.title.replace(/^Old News:\s*/, '')) + '</h1>' + by + '</div>' + folio(n, p.region) + '</div>';
@@ -1113,7 +1157,8 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       + '<div class="shot"><img src="' + esc(COVER.img) + '" alt="' + esc(COVER.alt) + '"><div class="veil"></div><a class="shot-link" href="#story-1" aria-label="' + esc(COVER.title) + '"></a>' + cap(COVER, 'bottom') + cap(COVER, 'top') + '<div class="ph-story">'
       + '<span class="tag">' + esc(COVER.region) + ' · ' + esc(COVER.category) + '</span><h2><a class="hlink" href="#story-1">' + esc(COVER.title) + '</a></h2><span class="by">By <b>' + esc(COVER.authors.join(' and ')) + '</b></span>'
       + '<div class="lines">' + mixed().slice(1, 4).map(function (p) { return '<a href="#story-' + p.no + '"><b>p. ' + p.start + '</b><span>' + esc(p.short) + '</span></a>'; }).join('') + '</div>'
-      + '<a class="pill" href="#contents">Browse this week’s edition</a></div></div></div></div></section>'
+      + '<a class="pill" href="#contents">Browse this week’s edition</a></div></div>'
+      + (COVER.capText ? '<div class="ph-cap">' + esc(COVER.capText) + '</div>' : '') + '</div></div></section>'
       + '<section class="wk"><div class="wrap"><div class="in">'
       + (NUMP ? '<div class="num"><b>Number of the week</b><span class="big">' + esc(NUM.big) + '</span><span>' + esc(NUM.text) + '</span><span class="from">From “' + esc(NUMP.short) + '”</span><a class="pill nb" href="#story-' + NUMP.no + '">Get the full story · p. ' + NUMP.start + ' ' + ARROW + '</a></div>' : '')
       + '<div class="minute"><div class="top"><h2>The week in a minute</h2><span class="count" id="mcount"></span>'
@@ -1148,6 +1193,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   var PW = 560, PH = 800, story = null, ZL = [1, 1.25, 1.5, 2, 2.5], zi = 0;
   function size() {
     var st = $('stage'), b = $('book'); if (!st || !b) return;
+    if (!wide) { b.style.zoom = 1; $('fdn').disabled = fi === 0; $('fup').disabled = fi === FS.length - 1; return; }
     var cs = getComputedStyle(st);
     var W = st.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
     var H = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
@@ -1169,33 +1215,51 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     paginateAll();
     if (cur) openStory(cur, Math.floor(frac * Math.ceil(cur.pages.length / 2)));
   }
-  function storyPages(p) {
-    var m = measure(p), body = flowHtml(p, m.out), byKey = {}, pages = [];
+  // phone: no issue page numbers in the folios (a phone page is a screen, not a magazine page)
+  function storyPages(p, phone) {
+    var m = measure(p), body = flowHtml(p, m.out), byKey = {}, pages = [], cols = wide ? p.cols : 1;
+    var num = function (k) { return phone ? '' : p.start + k; };
     figures(p).list.forEach(function (g) { byKey[g.key] = g; });
-    pages.push(opener(p, p.start));
+    pages.push(opener(p, num(0)));
     for (var i = 0; i < m.n; i++) {
-      pages.push('<div class="page' + (p.tpl === 'o' ? ' oldnews' : '') + '"><div class="fview"><div class="flow c' + p.cols + '" style="--figmax:' + m.figmax + 'px;transform:translateX(' + (-i * m.stride) + 'px)">' + body + '</div></div>' + folio(p.start + pages.length, p.region, i < m.n - 1) + '</div>');
+      pages.push('<div class="page' + (p.tpl === 'o' ? ' oldnews' : '') + '"><div class="fview"><div class="flow c' + cols + '" style="--figmax:' + m.figmax + 'px;transform:translateX(' + (-i * m.stride) + 'px)">' + body + '</div></div>' + folio(num(pages.length), p.region, i < m.n - 1) + '</div>');
       var here = m.placed.filter(function (x) { return x.page === i && byKey[x.key]; }).map(function (x) { return byKey[x.key]; }), groups = [];
       here.forEach(function (g) {
         var last = groups[groups.length - 1], pairable = !g.photo && g.kind !== 'cards';
         if (last && last.length === 1 && pairable && !last[0].photo && last[0].kind !== 'cards') last.push(g); else groups.push([g]);
       });
-      groups.forEach(function (grp) { pages.push(gpageHtml(p, grp, p.start + pages.length)); });
+      groups.forEach(function (grp) { pages.push(gpageHtml(p, grp, num(pages.length))); });
     }
     $('measure').innerHTML = '';
     return pages;
   }
+  // ---------- the phone reader (Editor, Nov. 11, 2026): the story laid out in pages the size of the screen, one at a
+  // time, swiped or tapped like a magazine; the computer's fixed-size pages would be too small to read on a phone ----------
+  var phoneW = 0;
+  function phonePages(p) {
+    var st = $('stage'), cs = getComputedStyle(st), ms = $('measure'), b = $('book');
+    var W = Math.floor(st.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight));
+    var H = Math.floor(st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom));
+    phoneW = W;
+    [ms, b].forEach(function (el) { el.style.setProperty('--pw', W + 'px'); el.style.setProperty('--ph', H + 'px'); });
+    var w0 = wide; wide = false;
+    var pages = storyPages(p, true);
+    wide = w0;
+    ms.style.removeProperty('--pw'); ms.style.removeProperty('--ph');
+    return pages;
+  }
   function showSpread(s, dir) {
-    var b = $('book'), list = [story.pages[s * 2], story.pages[s * 2 + 1]].filter(Boolean);
+    var per = wide ? 2 : 1, b = $('book'), list = story.pages.slice(s * per, s * per + per);
     story.at = s;
-    b.className = 'book' + (list.length === 2 ? ' two' : '');
+    b.className = 'book' + (list.length === 2 ? ' two' : '') + (wide ? '' : ' one');
     b.innerHTML = list.join('');
     if (dir) { void b.offsetWidth; b.classList.add(dir > 0 ? 'turn-next' : 'turn-prev'); }
-    var n = story.pages.length, spreads = Math.ceil(n / 2), p = story.p, a = p.start + s * 2, z = a + list.length - 1, idx = SEQ.indexOf(p);
+    var n = story.pages.length, spreads = Math.ceil(n / per), p = story.p, a = p.start + s * 2, z = a + list.length - 1, idx = SEQ.indexOf(p);
     $('prev').disabled = idx === 0 && s === 0;
     $('next').disabled = idx === SEQ.length - 1 && s === spreads - 1;
-    $('bar').style.width = ((z / LAST) * 100) + '%';
-    $('lbl').textContent = (a === z ? 'Page ' + a : 'Pages ' + a + '–' + z) + ' of ' + LAST + ' · ' + p.short;
+    $('bar').style.width = ((wide ? z / LAST : (s + 1) / n) * 100) + '%';
+    $('lbl').textContent = wide ? (a === z ? 'Page ' + a : 'Pages ' + a + '–' + z) + ' of ' + LAST + ' · ' + p.short
+      : (s + 1) + ' / ' + n + ' · ' + p.short;
     curKey = p.toc ? 'contents' : 'story-' + p.no; markDrawer();
     $('stage').scrollTop = 0; $('stage').scrollLeft = 0;
     size();
@@ -1255,15 +1319,17 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   }
   function step(d) {
     if (!story) return;
-    var spreads = Math.ceil(story.pages.length / 2), s = story.at + d;
+    var spreads = Math.ceil(story.pages.length / (wide ? 2 : 1)), s = story.at + d;
     if (s >= 0 && s < spreads) return showSpread(s, d);
-    // past the last spread: the next story; before the first: the previous story's last spread (the contents come first)
+    // past the last spread: the next story; before the first: the previous story's last spread (the contents come first;
+    // on a phone the contents are their own page)
     var other = SEQ[SEQ.indexOf(story.p) + d];
+    if (other && other.toc && !wide) { location.hash = '#contents'; return; }
     if (other) openStory(other, d > 0 ? 0 : -1, d);
   }
   function openStory(p, spread, dir) {
-    story = { p: p, pages: p.pages, at: 0 };
-    var spreads = Math.ceil(story.pages.length / 2);
+    story = { p: p, pages: (wide || p.toc) ? p.pages : phonePages(p), at: 0 };
+    var spreads = Math.ceil(story.pages.length / (wide ? 2 : 1));
     showSpread(spread < 0 ? spreads - 1 : Math.min(spread || 0, spreads - 1), dir);
   }
 
@@ -1305,10 +1371,12 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       return;
     }
     var p = isToc ? TOCP : (P[+m[1] - 1] || P[0]);
-    if (!wide) {
+    // a phone shows the contents as their own scrolling page; stories open in the phone reader
+    if (!wide && isToc) {
       story = null;
       document.body.classList.remove('reading');
-      v.innerHTML = isToc ? phoneContentsHtml() : phoneStoryHtml(p);
+      if ($('stage')) { v.outerHTML = '<div id="view"></div>'; v = $('view'); }
+      v.innerHTML = phoneContentsHtml();
       window.scrollTo(0, 0);
       return;
     }
@@ -1329,7 +1397,15 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
         + '<button class="zl" id="zl" type="button" title="Fit to screen">100%</button>'
         + '<button class="arrow sm" id="zin" type="button" aria-label="Zoom in"><svg viewBox="0 0 24 24"><path d="M6 12h12M12 6v12"/></svg></button>'
         + (canFull ? '<button class="arrow sm" id="full" type="button" aria-label="Full screen"><svg viewBox="0 0 24 24"><path id="fullp" d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>' : '')
+        + '<button class="arrow sm" id="ntoc" type="button" aria-label="Contents" aria-controls="drawer"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg></button>'
         + '</span></nav></div></div>';
+      $('ntoc').onclick = function () { setDrawer(!document.body.classList.contains('dopen')); };
+      // phone: a tap on the left or right quarter of the page turns it, like a magazine app
+      $('stage').addEventListener('click', function (e) {
+        if (wide || (e.target.closest && e.target.closest('a,button'))) return;
+        var r = this.getBoundingClientRect(), x = (e.clientX - r.left) / r.width;
+        if (x < 0.25) step(-1); else if (x > 0.75) step(1);
+      });
       $('prev').onclick = function () { step(-1); };
       $('next').onclick = function () { step(1); };
       $('zout').onclick = function () { zoom(-1); };
@@ -1338,8 +1414,8 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       if ($('full')) $('full').onclick = toggleFull;
       $('fdn').onclick = function () { textSize(-1); };
       $('fup').onclick = function () { textSize(1); };
-      // the reader always opens with the contents drawer out (Editor, Nov. 11, 2026)
-      setDrawer(true);
+      // the reader always opens with the contents drawer out on a computer (Editor, Nov. 11, 2026); a phone has no room
+      setDrawer(wide);
       // a swipe turns the page, unless the page is zoomed in (then a drag moves around it)
       var sx = null, sy = 0;
       $('stage').addEventListener('pointerdown', function (e) { sx = e.clientX; sy = e.clientY; });
@@ -1349,7 +1425,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       });
     }
     if (!story || story.p !== p) openStory(p, m && m[2] ? +m[2] - 1 : 0);
-    else if (m && m[2] && +m[2] - 1 !== story.at) showSpread(Math.min(+m[2] - 1, Math.ceil(story.pages.length / 2) - 1));
+    else if (m && m[2] && +m[2] - 1 !== story.at) showSpread(Math.min(+m[2] - 1, Math.ceil(story.pages.length / (wide ? 2 : 1)) - 1));
   }
   // the minimized drawer: a tab floating on the right edge brings it back
   $('dtab').onclick = function () { setDrawer(true); };
@@ -1362,7 +1438,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   // on a phone the drawer lies over the page: a tap outside it closes it
   document.addEventListener('click', function (e) {
     if (wide || !document.body.classList.contains('dopen') || !e.target.closest) return;
-    if (e.target.closest('#drawer') || e.target.closest('#cbtn')) return;
+    if (e.target.closest('#drawer') || e.target.closest('#cbtn') || e.target.closest('#ntoc')) return;
     setDrawer(false);
   });
   // ---------- Subscribe: the Weekly newsletter through the app's subscribe.php (same Mailchimp audience and groups) ----------
@@ -1428,6 +1504,11 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     rt = setTimeout(function () {
       var wasWide = wide, nowWide = window.matchMedia('(min-width:900px)').matches;
       if (story && wasWide && nowWide) size();
+      // phone turned round (width changes; a height change is only the address bar): lay the story out again
+      else if (story && !nowWide && !wasWide && !story.p.toc && Math.abs($('stage').clientWidth - phoneW) > 30) {
+        var fr = story.at / Math.max(1, story.pages.length), sp = story.p; story = null; openStory(sp, 0);
+        showSpread(Math.min(story.pages.length - 1, Math.floor(fr * story.pages.length)));
+      }
       else if (wasWide !== nowWide) { story = null; route(); }
     }, 180);
   });
