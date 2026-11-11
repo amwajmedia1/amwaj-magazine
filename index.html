@@ -82,7 +82,7 @@ body.reading{background:var(--desk);height:100vh;height:100dvh;overflow:hidden;d
 .op-o .ph{position:relative;height:56%}
 .op-o .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:sepia(.75) contrast(1.05) brightness(.95)}
 .op-o .tx{padding:5cqw 7.5cqw 0}
-.op-o .label{display:inline-block;border:2px solid #3A2A1C;font-weight:900;font-size:2.6cqw;letter-spacing:.16em;text-transform:uppercase;padding:.6cqw 1.6cqw}
+.op-o .label{display:inline-block;border:1px solid #333333;border-radius:3px;background:#333333;color:#FFFFFF;font-weight:900;font-size:2.6cqw;letter-spacing:.16em;text-transform:uppercase;padding:.6cqw 1.6cqw}   /* Badge Guide: ANALYSIS row */
 .op-o h1{font-family:var(--display);font-weight:900;font-size:7cqw;line-height:1.02;margin:2.4cqw 0 0;text-wrap:balance}
 .op-o .kick .r{color:var(--brown)}
 
@@ -90,7 +90,9 @@ body.reading{background:var(--desk);height:100vh;height:100dvh;overflow:hidden;d
 /* setting F of the type test (Editor, Nov. 11, 2026): two columns, 13 px on the 560 px page, line spacing 1.4,
    left-aligned, smaller margins. The phone reader (one column) keeps its own text size. */
 .fview{flex:1;min-height:0;overflow:hidden;margin:4.5cqw 5.5cqw 0;position:relative}
-.flow{height:100%;width:100%;column-gap:var(--gap,22px);column-fill:auto;line-height:1.56;hyphens:auto;-webkit-hyphens:auto;will-change:transform}
+.flow{height:100%;width:100%;column-gap:var(--gap,22px);column-fill:auto;line-height:1.56;hyphens:auto;-webkit-hyphens:auto}
+/* (no will-change:transform here: it made the browser paint the text once at the page's own size and stretch that
+   image when the page is scaled up on a big screen, so text and graphics looked blurred; Editor, Nov. 11, 2026) */
 .flow.c1{column-count:1}.flow.c2{column-count:2;font-size:.8125em;line-height:1.4}
 .flow.c2 p{margin-bottom:.6em}
 /* a band across the top of a two-column page: the Bottom Line (one column, set apart) or a graph */
@@ -118,8 +120,9 @@ body.reading{background:var(--desk);height:100vh;height:100dvh;overflow:hidden;d
 .opb-tx .kick{color:#fff}
 .opb-tx .kick .r{color:#FFE2BD}
 .opb-tx h1{font-family:var(--display);font-weight:900;font-size:6.2cqw;line-height:1.02;margin:1.6cqw 0 0;text-wrap:balance}
-.opb.mm .opb-tx .kick .y{background:var(--brown);color:#fff;padding:.3cqw 1.2cqw}
-.opb.old .opb-tx .kick .y{border:1.5px solid #fff;padding:.2cqw 1.2cqw}
+/* badges per the Badge Guide (Editor, Nov. 11, 2026): MEDIA MONITOR = DEVELOPING row, OLD NEWS = ANALYSIS row */
+.opb.mm .opb-tx .kick .y{background:#FBF3E4;border:1px solid #C09B5C;color:#64402E;border-radius:3px;padding:.3cqw 1.2cqw}
+.opb.old .opb-tx .kick .y{background:#333333;border:1px solid #333333;color:#FFFFFF;border-radius:3px;padding:.3cqw 1.2cqw}
 .opb-tx .by{font-size:2.3cqw;margin-top:1.6cqw;opacity:.9}
 .opb-cap{font-size:1.9cqw;line-height:1.35;color:var(--ink2);padding:1.4cqw 5.5cqw 0}
 .page.oldnews .opb-cap{color:#7a6650}
@@ -347,9 +350,7 @@ dialog.sub-d::backdrop{background:rgba(6,30,26,.6)}
 .lead.old img{filter:sepia(.75) contrast(1.05)}
 .lead.old .no{background:var(--brown);color:#fff}
 .lead.old .cat,.lead.old b,.lead.old .au{margin:0 14px}
-.lead.old .cat{align-self:flex-start;border:2px solid currentColor;padding:2px 8px;color:#3A2A1C}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .lead.old .cat{color:#E8D9BD}}
-:root[data-theme="dark"] .lead.old .cat{color:#E8D9BD}
+.lead.old .cat{align-self:flex-start;border:1px solid #333333;border-radius:3px;padding:2px 8px;background:#333333;color:#FFFFFF}   /* Badge Guide: ANALYSIS row */
 .foot{margin-top:56px;background:#00A693;color:#06302A}
 .foot .wrap{padding-block:44px;display:flex;flex-wrap:wrap;gap:28px;align-items:center}
 .foot .say{flex:1 1 420px;display:flex;flex-direction:column;gap:8px}
@@ -399,7 +400,7 @@ dialog.sub-d::backdrop{background:rgba(6,30,26,.6)}
 /* Nov. 11 (Editor): a stroke under the desk name; a bigger page number; wider cards (about two and a half in view, so
    there are fewer lines and less empty space) so the strip is no taller than the brown box; the brown box's button right
    under its last line, its content centred when the two boxes are stretched to the same height */
-.minute .list a b{padding-bottom:7px;border-bottom:2px solid var(--g);align-self:stretch}
+.minute .list a b{padding-bottom:7px;border-bottom:2px solid var(--g);align-self:stretch;font-weight:900}   /* desk name bold (Editor, Nov. 11, 2026) */
 .minute .list a .bigp{font-size:56px}
 .minute .list{grid-auto-columns:calc((100% - 48px) / 2.45)}
 @media (max-width:1199px){.minute .list{grid-auto-columns:calc((100% - 24px) / 1.6)}}
@@ -542,8 +543,11 @@ body.dopen .drawer{transform:none;visibility:visible;transition:transform .28s c
 .ti.g-cover-story .pg{font-size:26px}
 .ti.g-cover-story b{font-size:15px}
 .ti.g-cover-story img{width:58px;height:58px}
-.ti .kb{font-style:normal;display:inline-block;margin-right:6px;padding:1px 6px;border-radius:4px;background:#64402E;color:#FFE2BD;letter-spacing:.08em}
-.ti.old .kb{background:#3A2A1C}
+/* badges per the Badge Guide (Editor, Nov. 11, 2026), each an exact row, never mixed:
+   MEDIA MONITOR = DEVELOPING (outline): fill #FBF3E4, border #C09B5C, text #64402E
+   OLD NEWS = ANALYSIS (solid): fill #333333, border #333333, text #FFFFFF */
+.ti .kb{font-style:normal;display:inline-block;margin-right:6px;padding:1px 6px;border-radius:3px;background:#FBF3E4;border:1px solid #C09B5C;color:#64402E;font-weight:900;letter-spacing:.08em}
+.ti.old .kb{background:#333333;border-color:#333333;color:#FFFFFF}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .g-iran{--g:#4AD5C2}:root:not([data-theme="light"]) .g-iraq{--g:#9FC0D3}:root:not([data-theme="light"]) .g-peninsula{--g:#E8A0A0}:root:not([data-theme="light"]) .g-opening-pages{--g:#FFC98A}:root:not([data-theme="light"]) .g-cover-story{--g:#FFA333}:root:not([data-theme="light"]) .dg span{color:#1E1710}}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .drawer{background:#2E2418;color:#F3E7D7}:root:not([data-theme="light"]) .ti{color:#F3E7D7}:root:not([data-theme="light"]) .ti .pg,:root:not([data-theme="light"]) .drawer .dh b,:root:not([data-theme="light"]) .dg,:root:not([data-theme="light"]) .xbtn{color:#FFC98A}:root:not([data-theme="light"]) .ti small{color:#4AD5C2}:root:not([data-theme="light"]) .ti.cur{background:#45362A}:root:not([data-theme="light"]) .ti:hover{background:#3A2E22}}
 :root[data-theme="dark"] .drawer{background:#2E2418;color:#F3E7D7}
@@ -645,8 +649,8 @@ body.dopen .dtab{display:none}
 .mt-r .te .n,.mt-r .te.mm .n,.mt-r .te.old .n{color:var(--g)}
 .mt-r .te .go{color:var(--g)}
 .mt-r .te:hover b{color:var(--g)}
-.te .kb{font-style:normal;display:inline-block;margin-right:7px;padding:1px 6px;border-radius:4px;background:#64402E;color:#FFE2BD;letter-spacing:.08em}
-.te.old .kb{background:#3A2A1C}
+.te .kb{font-style:normal;display:inline-block;margin-right:7px;padding:1px 6px;border-radius:3px;background:#FBF3E4;border:1px solid #C09B5C;color:#64402E;font-weight:900;letter-spacing:.08em}
+.te.old .kb{background:#333333;border-color:#333333;color:#FFFFFF}
 .tr-g.g-iran{--g:#007D6E}.tr-g.g-iraq{--g:#4E6E81}.tr-g.g-peninsula{--g:#9B4F4F}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tr-g.g-iran{--g:#1DA58F}:root:not([data-theme="light"]) .tr-g.g-iraq{--g:#6C8FA4}:root:not([data-theme="light"]) .tr-g.g-peninsula{--g:#B86A6A}}
 @media (max-width:1099px){.mt-r .tlist:has(.tr-big){grid-template-columns:1fr}.tr-rest{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:22px}}
@@ -840,6 +844,9 @@ body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#ff
 .arif .gx-leg{font-weight:700;font-size:.84em}
 .arif .gx-leg i{border-radius:2px}
 .arif .gx-card img{border-color:#FFA333}
+/* a slider (card grid) with centred pictures: its label, header and subheader centred too (Editor, Nov. 11, 2026) */
+.arif.kind-cards:has(.gx-cards:not(.wide)) .ax-top{justify-content:center}
+.arif.kind-cards:has(.gx-cards:not(.wide)) .ax-t,.arif.kind-cards:has(.gx-cards:not(.wide)) .ax-s{text-align:center}
 .arif .gx-card .sub{color:#007D6E}
 .arif .gx-img{border-radius:3px}
 /* the timeline: dates down the left, dots on a turquoise line, the latest event in an orange box */
@@ -1749,7 +1756,9 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     var st = $('stage'), b = $('book'); if (!st || !b) return;
     // scaled with a transform, NOT css zoom: zoom makes Chrome lay the text out again at another size, so lines broke
     // differently from the measured layout and text slid under graph bands (Nov. 11, 2026)
-    var unscale = function () { b.style.transform = ''; b.style.margin = ''; };
+    // the CSS "scale" property, not "transform": the page-turn animation animates transform and, while it ran, replaced
+    // the scaling, so pages showed small and then jumped to size (Editor, Nov. 11, 2026)
+    var unscale = function () { b.style.scale = ''; b.style.margin = ''; };
     if (!wide) { unscale(); $('fdn').disabled = fi === 0; $('fup').disabled = fi === FS.length - 1; return; }
     var cs = getComputedStyle(st);
     var W = st.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
@@ -1757,7 +1766,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     var fit = Math.max(0.3, Math.min(W / (PW * 2), H / PH)), s = fit * ZL[zi];
     var W0 = b.offsetWidth, H0 = b.offsetHeight;      // the book's own size (transforms don't change these)
     b.style.transformOrigin = '0 0';
-    b.style.transform = 'scale(' + s.toFixed(4) + ')';
+    b.style.scale = s.toFixed(4);
     // the space the scaled book takes: centred while it fits, scrollable when zoomed in
     b.style.margin = '0 ' + (s * W0 - W0).toFixed(1) + 'px ' + (s * H0 - H0).toFixed(1) + 'px ' + Math.max(0, (W - s * W0) / 2).toFixed(1) + 'px';
     st.classList.toggle('zoomed', zi > 0);
