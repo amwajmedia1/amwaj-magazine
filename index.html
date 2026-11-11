@@ -406,7 +406,27 @@ body.dopen .drawer{transform:none;visibility:visible;transition:transform .28s c
 .ti.old img{filter:sepia(.75)}
 .ti:hover{background:rgba(255,255,255,.55)}
 .ti.cur{background:#fff;box-shadow:0 4px 16px rgba(100,64,46,.16)}
-.ti.cur .pg{color:#00A693}
+/* section colours: chip on the heading, an edge on each story, the page numbers */
+.drawer{--g:#64402E}
+.dg{padding-top:18px}
+.dg span{display:inline-block;padding:4px 10px;border-radius:999px;background:var(--g);color:#fff;letter-spacing:.14em}
+.dg::after{background:var(--g);opacity:.35;height:2px}
+.ti{box-shadow:inset 4px 0 0 var(--g);border-radius:4px 10px 10px 4px}
+.ti.cur{box-shadow:inset 4px 0 0 var(--g),0 4px 16px rgba(100,64,46,.16)}
+.ti .pg,.ti.cur .pg{color:var(--g)}
+.g-opening-pages{--g:#64402E}
+.g-cover-story{--g:#D9822B}
+.g-iran{--g:#007D6E}
+.g-iraq{--g:#4E6E81}
+.g-peninsula{--g:#9B4F4F}
+.dg.g-cover-story span{background:#FFA333;color:#2A1A05}
+.ti.g-cover-story{background:rgba(255,255,255,.45)}
+.ti.g-cover-story .pg{font-size:26px}
+.ti.g-cover-story b{font-size:15px}
+.ti.g-cover-story img{width:58px;height:58px}
+.ti .kb{font-style:normal;display:inline-block;margin-right:6px;padding:1px 6px;border-radius:4px;background:#64402E;color:#FFE2BD;letter-spacing:.08em}
+.ti.old .kb{background:#3A2A1C}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .g-iran{--g:#4AD5C2}:root:not([data-theme="light"]) .g-iraq{--g:#9FC0D3}:root:not([data-theme="light"]) .g-peninsula{--g:#E8A0A0}:root:not([data-theme="light"]) .g-opening-pages{--g:#FFC98A}:root:not([data-theme="light"]) .g-cover-story{--g:#FFA333}:root:not([data-theme="light"]) .dg span{color:#1E1710}}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .drawer{background:#2E2418;color:#F3E7D7}:root:not([data-theme="light"]) .ti{color:#F3E7D7}:root:not([data-theme="light"]) .ti .pg,:root:not([data-theme="light"]) .drawer .dh b,:root:not([data-theme="light"]) .dg,:root:not([data-theme="light"]) .xbtn{color:#FFC98A}:root:not([data-theme="light"]) .ti small{color:#4AD5C2}:root:not([data-theme="light"]) .ti.cur{background:#45362A}:root:not([data-theme="light"]) .ti:hover{background:#3A2E22}}
 :root[data-theme="dark"] .drawer{background:#2E2418;color:#F3E7D7}
 .mh .cbtn svg{flex:none}
@@ -470,20 +490,25 @@ body.dopen .drawer{transform:none;visibility:visible;transition:transform .28s c
 .wave .te .go,.pc .te .go{font-size:13px;margin-top:8px}
 .pc{background:var(--paper);max-width:720px;margin:0 auto}
 /* the front page's "In this wave": a magazine contents page (Editor, Nov. 11, 2026) */
-.mtoc{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:44px;border-top:6px solid var(--ink);padding-top:26px}
-.mt-l{display:flex;flex-direction:column;gap:20px;min-width:0;position:sticky;top:84px;align-self:start}
-.wave .tcover{flex:none}
-@media (max-width:1099px){.mt-l{position:static}}
-.mt-l .pill{align-self:flex-start}
+.mtoc{border-top:6px solid var(--ink);padding-top:26px}
+.mt-h{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:18px 32px;padding-bottom:26px;border-bottom:1px solid var(--rule);margin-bottom:26px}
 .mt-h .tw{font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-ink)}
 .mt-h .tw .ta{color:var(--orange)}
-.mt-h h2{margin:10px 0 12px;font-weight:900;font-size:clamp(52px,6.4vw,92px);line-height:.86;letter-spacing:-.03em}
+.mt-h h2{margin:10px 0 12px;font-weight:900;font-size:clamp(40px,5.6vw,80px);line-height:.9;letter-spacing:-.03em;text-wrap:balance}
 .mt-h .meta{font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
-.mt-r .tlist{columns:2;column-gap:44px;column-rule:1px solid var(--rule)}
+.mt-r .tlist{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:30px 44px}
+.mt-r .tlist:has(.tr-big){grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
+.tr-big .tr-g{columns:2;column-gap:44px;column-rule:1px solid var(--rule)}
+.tr-big .tg{column-span:all}
+.tr-rest{display:flex;flex-direction:column;gap:30px;min-width:0}
 .mt-r .tg{margin-top:0;padding-top:0}
-.mt-r .te + .tg{margin-top:22px}
-@media (max-width:1099px){.mtoc{grid-template-columns:1fr}}
-@media (max-width:699px){.mt-r .tlist{columns:1}.wave .te .n{width:44px;font-size:34px}.wave .te b{font-size:18px}}
+@media (max-width:1099px){.mt-r .tlist:has(.tr-big){grid-template-columns:1fr}.tr-rest{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:30px 44px}}
+@media (max-width:699px){.tr-big .tr-g{columns:1}.wave .te .n{width:44px;font-size:34px}.wave .te b{font-size:18px}}
+/* the desk headings in the contents: the drawer's desk colours */
+.tg.g-iran{--g:#007D6E}.tg.g-iraq{--g:#4E6E81}.tg.g-peninsula{--g:#9B4F4F}
+.tg[class*="g-"]{color:var(--g)}
+.tg[class*="g-"]::after{background:var(--g)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tg.g-iran{--g:#4AD5C2}:root:not([data-theme="light"]) .tg.g-iraq{--g:#9FC0D3}:root:not([data-theme="light"]) .tg.g-peninsula{--g:#E8A0A0}}
 /* slightly rounded corners on the front page (Editor, Nov. 11, 2026) */
 .hero .in{border-radius:14px;overflow:hidden}
 .num,.minute{border-radius:14px}
@@ -910,11 +935,18 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       + '<small>' + esc(kindOf(p)) + ' · ' + esc(p.authors.join(' and ')) + '</small><b>' + esc(p.short) + '</b>'
       + (rich ? '<span class="sf">' + esc(p.minute) + '</span><span class="go">' + goOf(p) + ' ' + ARROW + '</span>' : '') + '</span></a>';
   }
-  function tocList(rich) {
-    return REG.map(function (r) {
-      var list = P.filter(function (p) { return p !== COVER && p.region === r; });
-      return list.length ? '<div class="tg">' + r + '</div>' + list.map(function (p) { return tocEntry(p, rich); }).join('') : '';
-    }).join('');
+  // the stories by desk (cover story left out: it leads the page). On the front page a desk with at least twice as many
+  // stories as any other gets two columns under one heading, the others stack beside it (Editor, Nov. 11, 2026)
+  function tocList(rich, front) {
+    var gs = REG.map(function (r) { return { r: r, list: P.filter(function (p) { return p !== COVER && p.region === r; }) }; }).filter(function (g) { return g.list.length; });
+    var one = function (g) { return '<div class="tr-g"><div class="tg g-' + g.r.toLowerCase() + '">' + g.r + '</div>' + g.list.map(function (p) { return tocEntry(p, rich); }).join('') + '</div>'; };
+    if (front && gs.length > 1) {
+      var big = gs.slice().sort(function (a, b) { return b.list.length - a.list.length; })[0];
+      var rest = gs.filter(function (g) { return g !== big; });
+      if (rest.every(function (g) { return big.list.length >= 2 * g.list.length; }))
+        return '<div class="tr-big">' + one(big) + '</div><div class="tr-rest">' + rest.map(one).join('') + '</div>';
+    }
+    return gs.map(one).join('');
   }
   function tocCover() {
     return '<a class="tcover" href="#story-1"><span class="im"><img src="' + esc(COVER.img) + '" alt="' + esc(COVER.alt) + '">' + cap(COVER, 'top') + '</span>'
@@ -970,10 +1002,11 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
         return '<a href="#story-' + p.no + '"><b>' + esc(p.old ? 'Old News' : p.region) + '</b><span>' + esc(p.minute) + '</span><i>Turn to p. ' + p.start + ' ' + ARROW + '</i></a>';
       }).join('') + '</div></div></div></div></section>'
       // "In this wave": a magazine contents page, not a grid of web cards (Editor, Nov. 11, 2026)
-      + '<section class="wave" id="wave"><div class="wrap"><div class="mtoc"><div class="mt-l"><div class="mt-h"><span class="tw">Amwaj ' + WORD + ' · Issue ' + NO + '</span>'
-      + '<h2>In this wave</h2><span class="meta">' + esc(RANGE) + ' · ' + P.length + ' stories · ' + LAST + ' pages</span></div>' + tocCover()
+      // the cover story is left out here: it is already at the top of the page (Editor, Nov. 11, 2026)
+      + '<section class="wave" id="wave"><div class="wrap"><div class="mtoc"><div class="mt-h"><div><span class="tw">Amwaj ' + WORD + ' · Issue ' + NO + '</span>'
+      + '<h2>Browse this week’s edition</h2><span class="meta">' + esc(RANGE) + ' · ' + P.length + ' stories · ' + LAST + ' pages</span></div>'
       + '<a class="pill go" href="#contents">Open the contents spread · p. 2 ' + ARROW + '</a></div>'
-      + '<div class="mt-r"><div class="tlist">' + tocList(true) + '</div></div></div></div></section>'
+      + '<div class="mt-r"><div class="tlist">' + tocList(true, true) + '</div></div></div></div></section>'
       + '<footer class="foot"><div class="wrap"><div class="say"><b>One wave, every week.</b><span>Amwaj Magazine collects the week’s reporting and analysis from Amwaj.media on Iran, Iraq and the Arabian Peninsula.</span></div>'
       + '<div class="btns"><button class="pill w" type="button" data-sub>Subscribe</button><a class="pill o" href="https://amwaj.media/en" target="_blank" rel="noopener">Visit Amwaj.media</a><button class="pill o" type="button" id="fwd">Copy this issue’s link</button></div>'
       + '<div class="soc"><a href="https://x.com/Amwajmedia" target="_blank" rel="noopener">X @Amwajmedia</a><a href="https://www.facebook.com/amwajdotmedia" target="_blank" rel="noopener">Facebook</a><a href="https://www.linkedin.com/company/amwajmedia/" target="_blank" rel="noopener">LinkedIn</a></div></div></footer>';
@@ -1062,19 +1095,25 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     if (open) markDrawer();
     size(); setTimeout(size, 300);
   }
-  function dItem(key, href, pg, kick, title, p) {
-    return '<a class="ti' + (p && p.old ? ' old' : '') + '" data-key="' + key + '" href="' + href + '"><span class="pg">' + pg + '</span>'
-      + '<span class="tt"><small>' + esc(kick) + '</small><b>' + esc(title) + '</b></span>' + (p ? '<img src="' + esc(p.img) + '" alt="">' : '') + '</a>';
+  // each section of the drawer has its own colour (a label chip, an edge on its stories, their page numbers): the issue's
+  // opening pages brown, the cover story orange, then one colour per desk; Media Monitors and Old News get a badge
+  // (Editor, Nov. 11, 2026)
+  var gKey = function (g) { return 'g-' + g.toLowerCase().replace(/[^a-z]+/g, '-'); };
+  function dItem(key, href, pg, kick, title, p, g) {
+    var badge = p && (p.old || p.type === 'Media Monitor') ? '<em class="kb">' + (p.old ? 'Old News' : 'Media Monitor') + '</em>' : '';
+    return '<a class="ti ' + gKey(g) + (p && p.old ? ' old' : '') + '" data-key="' + key + '" href="' + href + '"><span class="pg">' + pg + '</span>'
+      + '<span class="tt"><small>' + badge + esc(kick) + '</small><b>' + esc(title) + '</b></span>' + (p ? '<img src="' + esc(p.img) + '" alt="">' : '') + '</a>';
   }
   function fillDrawer() {
-    var last = null;
+    var last = null, head = function (g) { return '<div class="dg ' + gKey(g) + '"><span>' + esc(g) + '</span></div>'; };
     $('drawer').innerHTML = '<div class="dh"><div><b>In this issue</b><span>Issue ' + NO + ' · ' + esc(RANGE) + '</span></div>'
       + '<button class="xbtn" type="button" id="dclose" aria-label="Hide contents"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>'
-      + '<nav class="dl">' + dItem('home', '#home', 1, 'Issue ' + NO, 'Front page') + dItem('contents', '#contents', 2, 'Pages 2–3', 'Table of contents')
+      + '<nav class="dl">' + head('Opening pages') + dItem('home', '#home', 1, 'Issue ' + NO, 'Front page', null, 'Opening pages') + dItem('contents', '#contents', 2, 'Pages 2–3', 'Table of contents', null, 'Opening pages')
       + P.map(function (p, i) {
-        var g = i === 0 ? 'Cover story' : p.region, h = g !== last ? '<div class="dg">' + esc(g) + '</div>' : '';
+        var g = i === 0 ? 'Cover story' : p.region, h = g !== last ? head(g) : '';
         last = g;
-        return h + dItem('story-' + p.no, '#story-' + p.no, p.start, i === 0 ? p.region + ' · ' + kindOf(p) : kindOf(p), p.short, p);
+        var kick = i === 0 ? p.region + ' · ' + p.category : (p.old || p.type === 'Media Monitor') ? '' : p.category;
+        return h + dItem('story-' + p.no, '#story-' + p.no, p.start, kick, p.short, p, g);
       }).join('') + '</nav>';
     $('dclose').onclick = function () { setDrawer(false, document.body.classList.contains('reading')); };
     markDrawer();
