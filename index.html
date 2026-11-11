@@ -182,7 +182,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 :root[data-theme="dark"] .mh .logo-l{display:none}:root[data-theme="dark"] .mh .logo-d{display:block}
 .mh .mag{white-space:nowrap;font-weight:900;font-size:21px;color:var(--teal-ink);text-decoration:none;border-left:2px solid var(--rule);padding-left:14px}
 .mh .iss{margin-left:auto;font-size:14px;color:var(--ink2)}
-.mh .sub{background:var(--teal);border-color:var(--teal);color:#06302A;font-weight:900}
+.mh .sub,#subgo{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:900}
 @media (max-width:899px){.mh .wrap{flex-wrap:nowrap}.mh .iss{display:none}.mh .mag{font-size:18px;margin-right:auto}.mh img{height:24px}.mh .pill{min-height:40px;padding:0 14px;font-size:13px}}
 @media (max-width:420px){.mh .wrap{gap:8px}.mh .mag{padding-left:8px;font-size:16px}.mh img{height:20px}.mh .pill{padding:0 10px;font-size:12px}}
 
@@ -381,26 +381,121 @@ dialog.sub-d::backdrop{background:rgba(6,30,26,.6)}
 /* one fixed page size; the book is scaled to the screen (zoom), so pages and page numbers are the same everywhere */
 :root{--pw:560px;--ph:800px}
 .rd{flex:1;min-height:0;display:flex}
-.drawer{width:300px;flex:none;background:var(--paper);border-right:1px solid var(--rule);overflow:auto;overscroll-behavior:contain}
-.rd.closed .drawer{display:none}
-.drawer .dh{display:flex;align-items:center;justify-content:space-between;padding:14px 12px 12px 18px;position:sticky;top:0;background:var(--paper);z-index:1;border-bottom:1px solid var(--rule)}
-.drawer .dh b{font-weight:900;font-size:19px}
-.xbtn{width:36px;height:36px;border-radius:50%;border:1px solid var(--rule);background:var(--paper);display:grid;place-items:center;cursor:pointer}
-.xbtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.4}
-.ti{display:flex;gap:12px;padding:12px 16px 12px 14px;text-decoration:none;border-left:4px solid transparent;border-bottom:1px solid var(--rule)}
-.ti .pg{flex:none;width:34px;font-weight:900;font-size:21px;line-height:1.05;color:var(--teal-ink);font-variant-numeric:tabular-nums;text-align:right}
-.ti .tt{min-width:0}
-.ti small{display:block;font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);font-weight:700;margin-bottom:3px}
-.ti b{display:block;font-size:14px;line-height:1.3;font-weight:700}
-.ti:hover{background:var(--tint)}
-.ti:hover b{color:var(--teal-ink)}
-.ti.cur{border-left-color:var(--teal);background:var(--chip)}
+/* the contents drawer: on the right, on the sand of the masthead's ة (Editor, Nov. 11, 2026); docked on a computer
+   (the page makes room for it), over the page on a phone */
+.drawer{position:fixed;top:0;right:0;bottom:0;width:320px;z-index:30;background:#FFE2BD;color:#333333;display:flex;flex-direction:column;
+  transform:translateX(102%);visibility:hidden;transition:transform .28s cubic-bezier(.2,.7,.2,1),visibility 0s linear .28s;box-shadow:-10px 0 34px rgba(60,35,15,.16)}
+body.dopen .drawer{transform:none;visibility:visible;transition:transform .28s cubic-bezier(.2,.7,.2,1)}
+@media (min-width:900px){body.dopen{padding-right:320px}}
+@media (max-width:899px){.drawer{width:min(340px,88vw)}body.dopen::after{content:"";position:fixed;inset:0;background:rgba(6,30,26,.45);z-index:25}}
+.drawer .dh{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:max(18px,env(safe-area-inset-top,0px)) 14px 14px 20px;border-bottom:3px solid #64402E}
+.drawer .dh b{display:block;font-weight:900;font-size:26px;line-height:1;color:#64402E;letter-spacing:-.01em}
+.drawer .dh span{display:block;margin-top:7px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#7A5A3C}
+.xbtn{flex:none;width:38px;height:38px;border-radius:50%;border:1px solid rgba(100,64,46,.35);background:transparent;color:#64402E;display:grid;place-items:center;cursor:pointer}
+.xbtn:hover{background:rgba(255,255,255,.6)}
+.xbtn svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:2.6;stroke-linecap:round}
+.dl{flex:1;min-height:0;overflow:auto;overscroll-behavior:contain;padding:4px 0 28px}
+.dg{display:flex;align-items:center;gap:10px;padding:16px 20px 6px;font-size:11px;font-weight:900;letter-spacing:.16em;text-transform:uppercase;color:#64402E}
+.dg::after{content:"";flex:1;height:1px;background:rgba(100,64,46,.3)}
+.ti{display:flex;align-items:center;gap:12px;margin:2px 10px;padding:9px 10px;border-radius:10px;text-decoration:none;color:#333333;transition:background .15s}
+.ti .pg{flex:none;width:32px;font-weight:900;font-size:21px;line-height:1;color:#64402E;text-align:right;font-variant-numeric:tabular-nums}
+.ti .tt{flex:1;min-width:0}
+.ti small{display:block;font-size:10px;letter-spacing:.12em;text-transform:uppercase;font-weight:900;color:#00806F;margin-bottom:3px}
+.ti b{display:block;font-size:13.5px;line-height:1.28;font-weight:700}
+.ti img{flex:none;width:46px;height:46px;object-fit:cover;border-radius:7px}
+.ti.old img{filter:sepia(.75)}
+.ti:hover{background:rgba(255,255,255,.55)}
+.ti.cur{background:#fff;box-shadow:0 4px 16px rgba(100,64,46,.16)}
+.ti.cur .pg{color:#00A693}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .drawer{background:#2E2418;color:#F3E7D7}:root:not([data-theme="light"]) .ti{color:#F3E7D7}:root:not([data-theme="light"]) .ti .pg,:root:not([data-theme="light"]) .drawer .dh b,:root:not([data-theme="light"]) .dg,:root:not([data-theme="light"]) .xbtn{color:#FFC98A}:root:not([data-theme="light"]) .ti small{color:#4AD5C2}:root:not([data-theme="light"]) .ti.cur{background:#45362A}:root:not([data-theme="light"]) .ti:hover{background:#3A2E22}}
+:root[data-theme="dark"] .drawer{background:#2E2418;color:#F3E7D7}
+.mh .cbtn svg{flex:none}
+@media (max-width:420px){.mh .cbtn span{display:none}.mh .cbtn{padding:0 11px}}
+
+/* the table of contents: the reader's pages 2-3 (sizes in page units), the front page's "In this wave" and the phone's
+   contents page (sizes in px) */
+.toc{background:var(--paper)}
+.tband{background:#00A693;color:#fff;padding:6cqw 7.5cqw 4.6cqw}
+.tband .tw{font-weight:900;font-size:2.4cqw;letter-spacing:.12em;text-transform:uppercase;color:#06302A}
+.tband .tw .ta{color:#FFE2BD}
+.tband h1{margin:1.4cqw 0 0;font-weight:900;font-size:14cqw;line-height:.88;letter-spacing:-.025em}
+.tband .ti2{display:block;margin-top:2.4cqw;font-size:2.1cqw;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#06302A}
+.tcover{flex:1;min-height:0;display:flex;flex-direction:column;text-decoration:none;color:inherit;margin:4.6cqw 7.5cqw 0}
+.tcover .im{position:relative;display:block;flex:1;min-height:0;overflow:hidden;border-radius:8px}
+.tcover img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.tcover:hover img{transform:scale(1.03)}
+.tcover .tb{display:grid;grid-template-columns:auto 1fr;column-gap:3cqw;padding:3.2cqw 0 2.4cqw}
+.tcover .k{grid-column:1/-1;font-size:2cqw;font-weight:900;letter-spacing:.13em;text-transform:uppercase;color:var(--teal-ink);margin-bottom:1.2cqw}
+.tcover .pgn{grid-row:span 3;font-weight:900;font-size:10cqw;line-height:.8;color:var(--orange);font-variant-numeric:tabular-nums}
+.tcover b{font-weight:900;font-size:4.4cqw;line-height:1.05;text-wrap:balance}
+.tcover .m{font-size:2.45cqw;line-height:1.42;color:var(--ink2);margin-top:1.4cqw}
+.tcover .go{display:inline-flex;align-items:center;gap:.8cqw;margin-top:1.6cqw;font-weight:900;font-size:2.4cqw;color:var(--teal-ink)}
+.tcover:hover b{color:var(--teal-ink)}
+.tlist{flex:1;min-height:0;padding:6.5cqw 7.5cqw 0;overflow:hidden}
+.tlist h2{margin:0 0 1cqw;font-weight:900;font-size:6.4cqw;line-height:1;letter-spacing:-.01em}
+.tg{display:flex;align-items:center;gap:2cqw;font-size:2cqw;font-weight:900;letter-spacing:.16em;text-transform:uppercase;margin:3.2cqw 0 .4cqw;break-after:avoid}
+.tg::after{content:"";flex:1;height:2px;background:var(--ink)}
+.te{display:flex;gap:3cqw;padding:1.8cqw 0;border-bottom:1px solid var(--rule);text-decoration:none;color:inherit;break-inside:avoid}
+.te .n{flex:none;width:7.4cqw;font-weight:900;font-size:5.4cqw;line-height:.9;color:var(--teal-ink);font-variant-numeric:tabular-nums}
+.te.mm .n{color:var(--burg)}.te.old .n{color:var(--brown)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .te.mm .n,:root:not([data-theme="light"]) .te.old .n{color:#E8B9A0}}
+.te .tx{min-width:0}
+.te small{display:block;font-size:1.85cqw;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);margin-bottom:.6cqw}
+.te b{font-weight:900;font-size:2.95cqw;line-height:1.18;text-wrap:balance}
+.te .sf{display:block;color:var(--ink2);line-height:1.42}
+.te .go{display:inline-flex;align-items:center;gap:6px;font-weight:900;color:var(--teal-ink);transition:gap .18s}
+.te:hover b{color:var(--teal-ink)}
+.te:hover .go{gap:11px}
+/* px sizes: the front page and the phone's contents page */
+.wave .tband,.pc .tband{padding:28px 24px 22px;border-radius:12px 12px 0 0}
+.pc .tband{border-radius:0}
+.wave .tcover,.pc .tcover{margin:0}
+.wave .tcover .im,.pc .tcover .im{flex:none;height:300px}
+.pc .tcover{margin:20px 22px 0}.pc .tcover .im{height:220px}
+.wave .tcover .tb,.pc .tcover .tb{column-gap:16px;padding:16px 0 8px}
+.wave .tcover .k,.pc .tcover .k{font-size:11px;margin-bottom:8px}
+.wave .tcover .pgn,.pc .tcover .pgn{font-size:56px}
+.wave .tcover b,.pc .tcover b{font-size:26px}.pc .tcover b{font-size:22px}
+.wave .tcover .m,.pc .tcover .m{font-size:15px;margin-top:8px}
+.wave .tcover .go,.pc .tcover .go{font-size:14px;margin-top:10px;gap:6px}
+.wave .tlist,.pc .tlist{padding:0;overflow:visible}
+.pc .tlist{padding:8px 22px 24px}
+.pc .tlist h2{font-size:30px;margin:18px 0 4px}
+.wave .tg,.pc .tg{font-size:12px;gap:12px;margin:0 0 4px;padding-top:4px}
+.wave .te,.pc .te{gap:16px;padding:16px 0}
+.wave .te .n,.pc .te .n{width:54px;font-size:42px}.pc .te .n{width:44px;font-size:32px}
+.wave .te small,.pc .te small{font-size:10.5px;margin-bottom:5px}
+.wave .te b,.pc .te b{font-size:20px}.pc .te b{font-size:17px}
+.wave .te .sf,.pc .te .sf{font-size:14.5px;margin-top:6px}
+.wave .te .go,.pc .te .go{font-size:13px;margin-top:8px}
+.pc{background:var(--paper);max-width:720px;margin:0 auto}
+/* the front page's "In this wave": a magazine contents page (Editor, Nov. 11, 2026) */
+.mtoc{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:44px;border-top:6px solid var(--ink);padding-top:26px}
+.mt-l{display:flex;flex-direction:column;gap:20px;min-width:0;position:sticky;top:84px;align-self:start}
+.wave .tcover{flex:none}
+@media (max-width:1099px){.mt-l{position:static}}
+.mt-l .pill{align-self:flex-start}
+.mt-h .tw{font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-ink)}
+.mt-h .tw .ta{color:var(--orange)}
+.mt-h h2{margin:10px 0 12px;font-weight:900;font-size:clamp(52px,6.4vw,92px);line-height:.86;letter-spacing:-.03em}
+.mt-h .meta{font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
+.mt-r .tlist{columns:2;column-gap:44px;column-rule:1px solid var(--rule)}
+.mt-r .tg{margin-top:0;padding-top:0}
+.mt-r .te + .tg{margin-top:22px}
+@media (max-width:1099px){.mtoc{grid-template-columns:1fr}}
+@media (max-width:699px){.mt-r .tlist{columns:1}.wave .te .n{width:44px;font-size:34px}.wave .te b{font-size:18px}}
+/* slightly rounded corners on the front page (Editor, Nov. 11, 2026) */
+.hero .in{border-radius:14px;overflow:hidden}
+.num,.minute{border-radius:14px}
+.card,.card .im{border-radius:12px}
+.card .im{border-bottom-left-radius:0;border-bottom-right-radius:0}
+@media (max-width:899px){.hero .in{border-radius:0}}
 .rmain{flex:1;min-width:0;display:flex;flex-direction:column}
 .stage{flex:1;min-height:0;display:flex;overflow:auto;padding:14px 24px 8px;touch-action:pan-y}
 .stage.zoomed{touch-action:auto;cursor:grab}
 .book{margin:auto;flex:none;display:flex;box-shadow:0 18px 50px var(--shade),0 2px 6px var(--shade);border-radius:3px;overflow:hidden;position:relative}
 .page{width:var(--pw);height:var(--ph);flex:none;background:var(--paper);position:relative;overflow:hidden;display:flex;flex-direction:column;
-  --fs:clamp(14px,calc(var(--pw) * .0285),17px);font-size:var(--fs);container-type:inline-size}
+  --fs:calc(16px * var(--fsx,1));font-size:var(--fs);container-type:inline-size}
 .book.two .page:first-child::after{content:"";position:absolute;inset:0 0 0 auto;width:40px;background:linear-gradient(to left,var(--shade),transparent);pointer-events:none;z-index:3}
 .book.two .page:last-child::before{content:"";position:absolute;inset:0 auto 0 0;width:26px;background:linear-gradient(to right,var(--shade),transparent);pointer-events:none;z-index:3}
 .turn-next{animation:inR .42s cubic-bezier(.2,.7,.2,1)}
@@ -415,7 +510,11 @@ dialog.sub-d::backdrop{background:rgba(6,30,26,.6)}
 .tools{display:flex;align-items:center;gap:6px}
 .tbtn{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid var(--rule);background:var(--paper);font-weight:700;font-size:13px;cursor:pointer;white-space:nowrap}
 .tbtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round}
-.rd.closed .tbtn{background:var(--teal);border-color:var(--teal);color:#06302A}
+body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#fff}
+.arrow.txt{position:relative;font-weight:900;line-height:1}
+.arrow.txt span{font-size:13px}.arrow.txt.big span{font-size:19px}
+.arrow.txt i{position:absolute;right:5px;top:4px;font-style:normal;font-size:11px;font-weight:900;color:var(--teal-ink)}
+.tools .sep{width:1px;height:24px;background:var(--rule);margin:0 6px}
 .arrow{width:44px;height:44px;border-radius:50%;border:1px solid var(--rule);background:var(--paper);display:grid;place-items:center;cursor:pointer;flex:none}
 .arrow.sm{width:38px;height:38px}
 .arrow:disabled{opacity:.35;cursor:default}
@@ -456,9 +555,10 @@ dialog.sub-d::backdrop{background:rgba(6,30,26,.6)}
   <a href="#home" aria-label="Amwaj Magazine, this issue"><img class="logo-l" src="logo.webp" alt="Amwaj.media" width="420" height="131"><img class="logo-d" src="logo-dark.webp" alt="Amwaj.media" width="420" height="131"></a>
   <a class="mag" href="#home">M<span class="ta" lang="ar">&#x200D;ة</span>gazine</a>
   <span class="iss" id="iss"></span>
-  <a class="pill" id="hdrbtn" href="#home">Front page</a>
+  <button class="pill cbtn" id="cbtn" type="button" aria-controls="drawer" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span>Contents</span></button>
   <button class="pill sub" type="button" data-sub>Subscribe</button>
 </div></header>
+<aside class="drawer" id="drawer" aria-label="Contents" inert></aside>
 <dialog class="sub-d" id="subd" aria-labelledby="subh"><div class="bar"></div>
   <form id="subf" novalidate>
     <h2 id="subh">Get the Week in Brief</h2>
@@ -706,7 +806,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       (F.at[i] || []).forEach(function (k) { h += out[k] ? '<span class="mk" data-k="' + k + '"></span>' : figHtml(p, byKey[k]); });
       if (i === F.pullAt && !out.pull) h += '<blockquote class="pull" data-k="pull">' + esc(p.pull) + '</blockquote>';
     });
-    h += '<p class="endmark"><a href="' + esc(p.url) + '" target="_blank" rel="noopener">Read it on amwaj.media</a></p>';
+    h += '<p class="endmark"><a href="' + esc(p.url) + '" target="_blank" rel="noopener">See the original on amwaj.media</a></p>';
     return h;
   }
   // a graphic page: one or two graphs (or the D style's photo, full bleed)
@@ -784,14 +884,53 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
 
   // ---------- page numbers: every story's pages are laid out once, at the one fixed page size, so a page number is the
   // same on every screen; the front page (1) comes first, then the stories in order (Editor, Nov. 11, 2026) ----------
+  // front page = 1, table of contents = 2-3, then the stories from page 4
   var LAST = 1;
+  var FS = [0.85, 1, 1.15, 1.3, 1.5], FKEY = 'amwaj-magazine-text', fi = 1;
+  try { var fv = parseFloat(localStorage.getItem(FKEY)); if (FS.indexOf(fv) >= 0) fi = FS.indexOf(fv); } catch (e) {}
+  document.documentElement.style.setProperty('--fsx', FS[fi]);
+  var TOCP = { no: 0, toc: true, short: 'Table of contents', region: 'Contents', start: 2, end: 3, pages: [] };
+  var SEQ = [TOCP].concat(P);
   function paginateAll() {
-    var w0 = wide; wide = true; var at = 2;
+    var w0 = wide; wide = true; var at = 4;
     P.forEach(function (p) { p.start = at; p.pages = storyPages(p); at += p.pages.length; p.end = at - 1; });
     wide = w0; LAST = at - 1;
+    TOCP.pages = tocPages();
+    fillDrawer();
   }
   var ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var kindOf = function (p) { return p.old ? 'Old News' : p.type === 'Media Monitor' ? 'Media Monitor' : p.category; };
+  // the buttons say different things for different kinds of piece, not "Read" every time (Editor, Nov. 11, 2026)
+  var goOf = function (p) { return p.old ? 'Step back in time' : p.type === 'Media Monitor' ? 'See what the media are saying' : 'Dig into the analysis'; };
+
+  // ---------- the table of contents: the front page's "In this wave", the reader's pages 2-3 and the phone's contents
+  // page all use it; stories grouped by region (A-Z after the cover), page numbers first, like a magazine ----------
+  function tocEntry(p, rich) {
+    return '<a class="te' + (p.old ? ' old' : '') + (p.type === 'Media Monitor' ? ' mm' : '') + '" href="#story-' + p.no + '"><span class="n">' + p.start + '</span><span class="tx">'
+      + '<small>' + esc(kindOf(p)) + ' · ' + esc(p.authors.join(' and ')) + '</small><b>' + esc(p.short) + '</b>'
+      + (rich ? '<span class="sf">' + esc(p.minute) + '</span><span class="go">' + goOf(p) + ' ' + ARROW + '</span>' : '') + '</span></a>';
+  }
+  function tocList(rich) {
+    return REG.map(function (r) {
+      var list = P.filter(function (p) { return p !== COVER && p.region === r; });
+      return list.length ? '<div class="tg">' + r + '</div>' + list.map(function (p) { return tocEntry(p, rich); }).join('') : '';
+    }).join('');
+  }
+  function tocCover() {
+    return '<a class="tcover" href="#story-1"><span class="im"><img src="' + esc(COVER.img) + '" alt="' + esc(COVER.alt) + '">' + cap(COVER, 'top') + '</span>'
+      + '<span class="tb"><span class="k">Cover story · ' + esc(COVER.region) + '</span><span class="pgn">' + COVER.start + '</span><b>' + esc(COVER.title) + '</b>'
+      + '<span class="m">' + esc(COVER.minute) + '</span><span class="go">Start with the cover story ' + ARROW + '</span></span></a>';
+  }
+  function tocHead(tag) {
+    return '<div class="tband"><span class="tw">Amwaj ' + WORD + ' · Issue ' + NO + '</span><' + tag + '>Contents</' + tag + '><span class="ti2">' + esc(RANGE) + ' · ' + P.length + ' stories · ' + LAST + ' pages</span></div>';
+  }
+  function tocPages() {
+    return ['<div class="page toc">' + tocHead('h1') + tocCover() + folio(2, 'Contents') + '</div>',
+      '<div class="page toc"><div class="tlist"><h2>In this wave</h2>' + tocList(false) + '</div>' + folio(3, 'Contents') + '</div>'];
+  }
+  function phoneContentsHtml() {
+    return '<article class="pc">' + tocHead('h1') + tocCover() + '<div class="tlist"><h2>In this wave</h2>' + tocList(true) + '</div></article>';
+  }
 
   // ---------- the front page ----------
   function homeHtml() {
@@ -818,22 +957,25 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       + '<span class="tag">' + esc(COVER.region) + ' · ' + esc(COVER.category) + '</span><h1>' + esc(COVER.title) + '</h1>'
       + '<p class="stand"><span>' + esc(COVER.minute) + '</span></p>'
       + '<span class="cby">By <b>' + esc(COVER.authors.join(' and ')) + '</b> · Page ' + COVER.start + '</span>'
-      + '<div class="act"><a class="pill" href="#story-1">Read the cover story ' + ARROW + '</a><button class="pill ghost" type="button" data-jump="wave">Browse this week’s edition in full</button></div></div>'
+      + '<div class="act"><a class="pill" href="#story-1">Start with the cover story ' + ARROW + '</a><a class="pill ghost" href="#contents">Browse this week’s edition</a></div></div>'
       + '<div class="shot"><img src="' + esc(COVER.img) + '" alt="' + esc(COVER.alt) + '"><div class="veil"></div>' + cap(COVER, 'bottom') + cap(COVER, 'top') + '<div class="ph-story">'
       + '<span class="tag">' + esc(COVER.region) + ' · ' + esc(COVER.category) + '</span><h2>' + esc(COVER.title) + '</h2><span class="by">By <b>' + esc(COVER.authors.join(' and ')) + '</b></span>'
       + '<div class="lines">' + mixed().slice(1, 4).map(function (p) { return '<a href="#story-' + p.no + '"><b>p. ' + p.start + '</b><span>' + esc(p.short) + '</span></a>'; }).join('') + '</div>'
-      + '<a class="pill" href="#story-1">Open this week’s issue</a></div></div></div></div></section>'
+      + '<a class="pill" href="#contents">Browse this week’s edition</a></div></div></div></div></section>'
       + '<section class="wk"><div class="wrap"><div class="in">'
-      + (NUMP ? '<div class="num"><b>Number of the week</b><span class="big">' + esc(NUM.big) + '</span><span>' + esc(NUM.text) + '</span><span class="from">From “' + esc(NUMP.short) + '”</span><a class="pill nb" href="#story-' + NUMP.no + '">Read the story · p. ' + NUMP.start + ' ' + ARROW + '</a></div>' : '')
+      + (NUMP ? '<div class="num"><b>Number of the week</b><span class="big">' + esc(NUM.big) + '</span><span>' + esc(NUM.text) + '</span><span class="from">From “' + esc(NUMP.short) + '”</span><a class="pill nb" href="#story-' + NUMP.no + '">Get the full story · p. ' + NUMP.start + ' ' + ARROW + '</a></div>' : '')
       + '<div class="minute"><div class="top"><h2>The week in a minute</h2><span class="count" id="mcount"></span>'
       + '<button class="arrow" type="button" id="mprev" aria-label="Earlier items"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>'
       + '<button class="arrow" type="button" id="mnext" aria-label="More items"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div><div class="list" id="mlist">' + mixed().map(function (p) {
-        return '<a href="#story-' + p.no + '"><b>' + esc(p.old ? 'Old News' : p.region) + '</b><span>' + esc(p.minute) + '</span><i>Read · p. ' + p.start + ' ' + ARROW + '</i></a>';
+        return '<a href="#story-' + p.no + '"><b>' + esc(p.old ? 'Old News' : p.region) + '</b><span>' + esc(p.minute) + '</span><i>Turn to p. ' + p.start + ' ' + ARROW + '</i></a>';
       }).join('') + '</div></div></div></div></section>'
-      + '<section class="wave" id="wave"><div class="wrap"><div class="wh"><h2>In this wave</h2><span class="meta">' + P.length + ' stories · ' + LAST + ' pages</span>'
-      + '<a class="pill go" href="#story-1">Start reading from page 2 ' + ARROW + '</a></div>' + cols + '</div></section>'
+      // "In this wave": a magazine contents page, not a grid of web cards (Editor, Nov. 11, 2026)
+      + '<section class="wave" id="wave"><div class="wrap"><div class="mtoc"><div class="mt-l"><div class="mt-h"><span class="tw">Amwaj ' + WORD + ' · Issue ' + NO + '</span>'
+      + '<h2>In this wave</h2><span class="meta">' + esc(RANGE) + ' · ' + P.length + ' stories · ' + LAST + ' pages</span></div>' + tocCover()
+      + '<a class="pill go" href="#contents">Open the contents spread · p. 2 ' + ARROW + '</a></div>'
+      + '<div class="mt-r"><div class="tlist">' + tocList(true) + '</div></div></div></div></section>'
       + '<footer class="foot"><div class="wrap"><div class="say"><b>One wave, every week.</b><span>Amwaj Magazine collects the week’s reporting and analysis from Amwaj.media on Iran, Iraq and the Arabian Peninsula.</span></div>'
-      + '<div class="btns"><button class="pill w" type="button" data-sub>Subscribe</button><a class="pill o" href="https://amwaj.media/en" target="_blank" rel="noopener">Read Amwaj.media</a><button class="pill o" type="button" id="fwd">Copy this issue’s link</button></div>'
+      + '<div class="btns"><button class="pill w" type="button" data-sub>Subscribe</button><a class="pill o" href="https://amwaj.media/en" target="_blank" rel="noopener">Visit Amwaj.media</a><button class="pill o" type="button" id="fwd">Copy this issue’s link</button></div>'
       + '<div class="soc"><a href="https://x.com/Amwajmedia" target="_blank" rel="noopener">X @Amwajmedia</a><a href="https://www.facebook.com/amwajdotmedia" target="_blank" rel="noopener">Facebook</a><a href="https://www.linkedin.com/company/amwajmedia/" target="_blank" rel="noopener">LinkedIn</a></div></div></footer>';
   }
 
@@ -844,7 +986,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       + '<div class="head"><div class="kk"><span class="r">' + esc(p.region) + '</span><span>' + esc(p.old ? 'Old News' : p.type) + '</span><span>' + esc(day(p.date)) + '</span><span>Pages ' + p.start + '–' + p.end + '</span></div>'
       + '<h1>' + esc(p.short) + '</h1><span class="byl">By <b>' + esc(p.authors.join(' and ')) + '</b></span></div>'
       + '<div class="flow c1">' + flowHtml(p, {}) + '</div>'
-      + '<div class="end"><a class="pill" href="#home">Contents</a>' + (next ? '<a class="pill go" href="#story-' + next.no + '">Next story</a>' : '<a class="pill go" href="#home">Back to the front page</a>') + '</div></article>';
+      + '<div class="end"><a class="pill" href="#contents">Contents</a>' + (next ? '<a class="pill go" href="#story-' + next.no + '">Next story</a>' : '<a class="pill go" href="#home">Back to the front page</a>') + '</div></article>';
   }
 
   // ---------- a story on a computer: its pages in spreads ----------
@@ -853,7 +995,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   var PW = 560, PH = 800, story = null, ZL = [1, 1.25, 1.5, 2, 2.5], zi = 0;
   function size() {
     var st = $('stage'), b = $('book'); if (!st || !b) return;
-    var cs = getComputedStyle(st), n = b.children.length || 2;
+    var cs = getComputedStyle(st);
     var W = st.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
     var H = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
     var fit = Math.max(0.3, Math.min(W / (PW * 2), H / PH));
@@ -861,8 +1003,19 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     st.classList.toggle('zoomed', zi > 0);
     $('zl').textContent = Math.round(ZL[zi] * 100) + '%';
     $('zout').disabled = zi === 0; $('zin').disabled = zi === ZL.length - 1;
+    $('fdn').disabled = fi === 0; $('fup').disabled = fi === FS.length - 1;
   }
   function zoom(d) { zi = Math.max(0, Math.min(ZL.length - 1, zi + d)); size(); }
+  // text size (A- / A+): only the text gets bigger or smaller; the stories are laid out again and the page numbers
+  // follow (Editor, Nov. 11, 2026); the choice is remembered in this browser
+  function textSize(d) {
+    var ni = Math.max(0, Math.min(FS.length - 1, fi + d)); if (ni === fi) return;
+    fi = ni; try { localStorage.setItem(FKEY, String(FS[fi])); } catch (e) {}
+    document.documentElement.style.setProperty('--fsx', FS[fi]);
+    var cur = story && story.p, frac = story ? story.at / Math.max(1, Math.ceil(story.pages.length / 2)) : 0;
+    paginateAll();
+    if (cur) openStory(cur, Math.floor(frac * Math.ceil(cur.pages.length / 2)));
+  }
   function storyPages(p) {
     var m = measure(p), body = flowHtml(p, m.out), byKey = {}, pages = [];
     figures(p).list.forEach(function (g) { byKey[g.key] = g; });
@@ -885,33 +1038,54 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     b.className = 'book' + (list.length === 2 ? ' two' : '');
     b.innerHTML = list.join('');
     if (dir) { void b.offsetWidth; b.classList.add(dir > 0 ? 'turn-next' : 'turn-prev'); }
-    var n = story.pages.length, spreads = Math.ceil(n / 2), p = story.p, a = p.start + s * 2, z = a + list.length - 1;
-    $('prev').disabled = p.no === 1 && s === 0;
-    $('next').disabled = p.no === P.length && s === spreads - 1;
+    var n = story.pages.length, spreads = Math.ceil(n / 2), p = story.p, a = p.start + s * 2, z = a + list.length - 1, idx = SEQ.indexOf(p);
+    $('prev').disabled = idx === 0 && s === 0;
+    $('next').disabled = idx === SEQ.length - 1 && s === spreads - 1;
     $('bar').style.width = ((z / LAST) * 100) + '%';
     $('lbl').textContent = (a === z ? 'Page ' + a : 'Pages ' + a + '–' + z) + ' of ' + LAST + ' · ' + p.short;
-    [].forEach.call(document.querySelectorAll('.ti'), function (t) { var on = +t.dataset.no === p.no; t.classList.toggle('cur', on); if (on) t.setAttribute('aria-current', 'true'); else t.removeAttribute('aria-current'); });
-    var cur = document.querySelector('.ti.cur'); if (cur && cur.scrollIntoView) cur.scrollIntoView({ block: 'nearest' });
+    curKey = p.toc ? 'contents' : 'story-' + p.no; markDrawer();
     $('stage').scrollTop = 0; $('stage').scrollLeft = 0;
     size();
-    try { history.replaceState(null, '', '#story-' + p.no + (s ? '-p' + (s + 1) : '')); } catch (e) {}
+    try { history.replaceState(null, '', p.toc ? '#contents' : '#story-' + p.no + (s ? '-p' + (s + 1) : '')); } catch (e) {}
   }
-  // the contents drawer: open while reading unless the reader closes it (remembered in this browser only)
-  var DKEY = 'amwaj-magazine-drawer';
-  function drawerOpen() { try { return localStorage.getItem(DKEY) !== 'closed'; } catch (e) { return true; } }
-  function setDrawer(open) {
-    try { localStorage.setItem(DKEY, open ? 'open' : 'closed'); } catch (e) {}
-    $('rd').classList.toggle('closed', !open);
-    $('dtog').setAttribute('aria-expanded', open ? 'true' : 'false');
-    $('dtog').lastChild.textContent = open ? ' Hide contents' : ' Contents';
-    size();
+  // ---------- the contents drawer, on the right (Editor, Nov. 11, 2026): docked beside the page on a computer (front
+  // page included), over the page on a phone; the header's Contents button opens it from anywhere in one click. While
+  // reading it is open unless the reader closed it (remembered in this browser only).
+  var DKEY = 'amwaj-magazine-drawer', curKey = 'home';
+  function drawerPref() { try { return localStorage.getItem(DKEY) !== 'closed'; } catch (e) { return true; } }
+  function setDrawer(open, persist) {
+    if (persist) { try { localStorage.setItem(DKEY, open ? 'open' : 'closed'); } catch (e) {} }
+    document.body.classList.toggle('dopen', open);
+    $('drawer').inert = !open;
+    $('cbtn').setAttribute('aria-expanded', open ? 'true' : 'false');
+    if ($('dtog')) { $('dtog').setAttribute('aria-expanded', open ? 'true' : 'false'); $('dtog').lastChild.textContent = open ? ' Hide contents' : ' Contents'; }
+    if (open) markDrawer();
+    size(); setTimeout(size, 300);
   }
-  function drawerHtml() {
-    return '<aside class="drawer" id="drawer" aria-label="Contents"><div class="dh"><b>In this issue</b><button class="xbtn" type="button" id="dclose" aria-label="Hide contents"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button></div>'
-      + '<a class="ti front" href="#home"><span class="pg">1</span><span class="tt"><small>Issue ' + NO + ' · ' + esc(RANGE) + '</small><b>Front page</b></span></a>'
-      + P.map(function (p) {
-        return '<a class="ti" data-no="' + p.no + '" href="#story-' + p.no + '"><span class="pg">' + p.start + '</span><span class="tt"><small>' + esc(p.region) + ' · ' + esc(kindOf(p)) + '</small><b>' + esc(p.short) + '</b></span></a>';
-      }).join('') + '</aside>';
+  function dItem(key, href, pg, kick, title, p) {
+    return '<a class="ti' + (p && p.old ? ' old' : '') + '" data-key="' + key + '" href="' + href + '"><span class="pg">' + pg + '</span>'
+      + '<span class="tt"><small>' + esc(kick) + '</small><b>' + esc(title) + '</b></span>' + (p ? '<img src="' + esc(p.img) + '" alt="">' : '') + '</a>';
+  }
+  function fillDrawer() {
+    var last = null;
+    $('drawer').innerHTML = '<div class="dh"><div><b>In this issue</b><span>Issue ' + NO + ' · ' + esc(RANGE) + '</span></div>'
+      + '<button class="xbtn" type="button" id="dclose" aria-label="Hide contents"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>'
+      + '<nav class="dl">' + dItem('home', '#home', 1, 'Issue ' + NO, 'Front page') + dItem('contents', '#contents', 2, 'Pages 2–3', 'Table of contents')
+      + P.map(function (p, i) {
+        var g = i === 0 ? 'Cover story' : p.region, h = g !== last ? '<div class="dg">' + esc(g) + '</div>' : '';
+        last = g;
+        return h + dItem('story-' + p.no, '#story-' + p.no, p.start, i === 0 ? p.region + ' · ' + kindOf(p) : kindOf(p), p.short, p);
+      }).join('') + '</nav>';
+    $('dclose').onclick = function () { setDrawer(false, document.body.classList.contains('reading')); };
+    markDrawer();
+  }
+  function markDrawer() {
+    [].forEach.call(document.querySelectorAll('#drawer .ti'), function (t) {
+      var on = t.dataset.key === curKey; t.classList.toggle('cur', on);
+      if (on) t.setAttribute('aria-current', 'page'); else t.removeAttribute('aria-current');
+    });
+    var c = document.querySelector('#drawer .ti.cur');
+    if (c && document.body.classList.contains('dopen')) c.scrollIntoView({ block: 'nearest' });
   }
   function fullOn() { return !!(document.fullscreenElement || document.webkitFullscreenElement); }
   function toggleFull() {
@@ -925,8 +1099,8 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     if (!story) return;
     var spreads = Math.ceil(story.pages.length / 2), s = story.at + d;
     if (s >= 0 && s < spreads) return showSpread(s, d);
-    // past the last spread: the next story; before the first: the previous story's last spread
-    var other = P[story.p.no - 1 + d];
+    // past the last spread: the next story; before the first: the previous story's last spread (the contents come first)
+    var other = SEQ[SEQ.indexOf(story.p) + d];
     if (other) openStory(other, d > 0 ? 0 : -1, d);
   }
   function openStory(p, spread, dir) {
@@ -937,10 +1111,12 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
 
   // ---------- routing: #home, #story-N, #story-N-pS ----------
   function route() {
-    var m = /^#story-(\d+)(?:-p(\d+))?$/.exec(location.hash), v = $('view');
+    var m = /^#story-(\d+)(?:-p(\d+))?$/.exec(location.hash), isToc = /^#contents/.test(location.hash), v = $('view');
     wide = window.matchMedia('(min-width:900px)').matches;
-    $('hdrbtn').style.display = m ? '' : 'none';
-    if (!m) {
+    curKey = m ? 'story-' + (+m[1]) : isToc ? 'contents' : 'home';
+    if (!wide) setDrawer(false);
+    if (!m && !isToc) {
+      markDrawer();
       story = null;
       document.body.classList.remove('reading');
       v.innerHTML = homeHtml();
@@ -969,11 +1145,11 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       window.scrollTo(0, 0);
       return;
     }
-    var p = P[+m[1] - 1] || P[0];
+    var p = isToc ? TOCP : (P[+m[1] - 1] || P[0]);
     if (!wide) {
       story = null;
       document.body.classList.remove('reading');
-      v.innerHTML = phoneStoryHtml(p);
+      v.innerHTML = isToc ? phoneContentsHtml() : phoneStoryHtml(p);
       window.scrollTo(0, 0);
       return;
     }
@@ -982,14 +1158,16 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     v = $('view');
     if (!$('stage')) {
       var canFull = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
-      v.innerHTML = '<div class="rd' + (drawerOpen() ? '' : ' closed') + '" id="rd">' + drawerHtml() + '<div class="rmain">'
+      v.innerHTML = '<div class="rd" id="rd"><div class="rmain">'
         + '<main class="stage" id="stage"><div class="book" id="book" aria-live="polite"></div></main>'
         + '<nav class="nav" aria-label="Pages">'
         + '<button class="tbtn" type="button" id="dtog" aria-controls="drawer"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg> Contents</button>'
         + '<span class="pager"><button class="arrow" id="prev" type="button" aria-label="Previous pages"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>'
         + '<span class="where"><span class="lbl" id="lbl"></span><span class="track"><i id="bar"></i></span></span>'
         + '<button class="arrow" id="next" type="button" aria-label="Next pages"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></span>'
-        + '<span class="tools"><button class="arrow sm" id="zout" type="button" aria-label="Zoom out"><svg viewBox="0 0 24 24"><path d="M6 12h12"/></svg></button>'
+        + '<span class="tools"><button class="arrow sm txt" id="fdn" type="button" aria-label="Smaller text" title="Smaller text"><span>A</span><i>−</i></button>'
+        + '<button class="arrow sm txt big" id="fup" type="button" aria-label="Larger text" title="Larger text"><span>A</span><i>+</i></button><span class="sep" aria-hidden="true"></span>'
+        + '<button class="arrow sm" id="zout" type="button" aria-label="Zoom out" title="Zoom out"><svg viewBox="0 0 24 24"><path d="M6 12h12"/></svg></button>'
         + '<button class="zl" id="zl" type="button" title="Fit to screen">100%</button>'
         + '<button class="arrow sm" id="zin" type="button" aria-label="Zoom in"><svg viewBox="0 0 24 24"><path d="M6 12h12M12 6v12"/></svg></button>'
         + (canFull ? '<button class="arrow sm" id="full" type="button" aria-label="Full screen"><svg viewBox="0 0 24 24"><path id="fullp" d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>' : '')
@@ -1000,9 +1178,10 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       $('zin').onclick = function () { zoom(1); };
       $('zl').onclick = function () { zi = 0; size(); };
       if ($('full')) $('full').onclick = toggleFull;
-      $('dtog').onclick = function () { setDrawer($('rd').classList.contains('closed')); };
-      $('dclose').onclick = function () { setDrawer(false); };
-      setDrawer(drawerOpen());
+      $('fdn').onclick = function () { textSize(-1); };
+      $('fup').onclick = function () { textSize(1); };
+      $('dtog').onclick = function () { setDrawer(!document.body.classList.contains('dopen'), true); };
+      setDrawer(drawerPref());
       // a swipe turns the page, unless the page is zoomed in (then a drag moves around it)
       var sx = null, sy = 0;
       $('stage').addEventListener('pointerdown', function (e) { sx = e.clientX; sy = e.clientY; });
@@ -1011,9 +1190,17 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
         if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) step(dx < 0 ? 1 : -1);
       });
     }
-    if (!story || story.p !== p) openStory(p, m[2] ? +m[2] - 1 : 0);
-    else if (m[2] && +m[2] - 1 !== story.at) showSpread(Math.min(+m[2] - 1, Math.ceil(story.pages.length / 2) - 1));
+    if (!story || story.p !== p) openStory(p, m && m[2] ? +m[2] - 1 : 0);
+    else if (m && m[2] && +m[2] - 1 !== story.at) showSpread(Math.min(+m[2] - 1, Math.ceil(story.pages.length / 2) - 1));
   }
+  // the header's Contents button opens and closes the drawer from any page
+  $('cbtn').onclick = function () { setDrawer(!document.body.classList.contains('dopen'), document.body.classList.contains('reading')); };
+  // on a phone the drawer lies over the page: a tap outside it closes it
+  document.addEventListener('click', function (e) {
+    if (wide || !document.body.classList.contains('dopen') || !e.target.closest) return;
+    if (e.target.closest('#drawer') || e.target.closest('#cbtn')) return;
+    setDrawer(false);
+  });
   // ---------- Subscribe: the Weekly newsletter through the app's subscribe.php (same Mailchimp audience and groups) ----------
   var SUB_API = 'https://readingtehran.com/app-api/subscribe.php';
   var dlg = $('subd'), form = $('subf'), msg = $('submsg');
