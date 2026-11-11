@@ -1014,6 +1014,8 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     wide = w0; LAST = at - 1;
     TOCP.pages = tocPages();
     fillDrawer();
+    // the page count after the issue number (Editor, Nov. 11, 2026)
+    $('iss').textContent = 'Issue ' + NO + ' · ' + LAST + ' pages · ' + RANGE;
   }
   var ARROW = '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var kindOf = function (p) { return p.old ? 'Old News' : p.type === 'Media Monitor' ? 'Media Monitor' : p.category; };
@@ -1080,7 +1082,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       + (regs.length ? '<div class="rg-row">' + regs.map(function (x) { return '<div class="rg">' + head(x) + '<div class="cards">' + x.list.map(function (p) { return card(p); }).join('') + '</div></div>'; }).join('') + '</div>' : '');
     return '<section class="hero"><div class="wrap"><div class="in">'
       + '<div class="panel"><div class="word"><span>Amwaj</span><span>' + WORD + '</span></div>'
-      + '<div class="issline"><span>Issue ' + NO + '</span><span>' + esc(RANGE) + '</span><span>' + P.length + ' stories</span></div>'
+      + '<div class="issline"><span>Issue ' + NO + ' · ' + LAST + ' pages</span><span>' + esc(RANGE) + '</span><span>' + P.length + ' stories</span></div>'
       + '<span class="tag">' + esc(COVER.region) + ' · ' + esc(COVER.category) + '</span><h1>' + esc(COVER.title) + '</h1>'
       + '<p class="stand"><span>' + esc(COVER.minute) + '</span></p>'
       + '<span class="cby">By <b>' + esc(COVER.authors.join(' and ')) + '</b> · Page ' + COVER.start + '</span>'
@@ -1200,7 +1202,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   }
   function fillDrawer() {
     var last = null, head = function (g) { return '<div class="dg ' + gKey(g) + '"><span>' + esc(g) + '</span></div>'; };
-    $('drawer').innerHTML = '<div class="dh"><div><b>In this issue</b><span>Issue ' + NO + ' · ' + esc(RANGE) + '</span></div>'
+    $('drawer').innerHTML = '<div class="dh"><div><b>In this issue</b><span>Issue ' + NO + ' · ' + LAST + ' pages · ' + esc(RANGE) + '</span></div>'
       + '<button class="xbtn" type="button" id="dclose" aria-label="Minimize contents" title="Minimize"><svg viewBox="0 0 24 24"><path d="M6 6l6 6-6 6M13 6l6 6-6 6"/></svg></button></div>'
       + '<nav class="dl">' + head('Opening pages') + dItem('home', '#home', 1, 'Issue ' + NO, 'Front page', null, 'Opening pages') + dItem('contents', '#contents', 2, 'Pages 2–3', 'Table of contents', null, 'Opening pages')
       + P.map(function (p, i) {
