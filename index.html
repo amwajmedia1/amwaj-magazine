@@ -12,7 +12,8 @@
 <meta property="og:image" content="https://magazine.amwaj.media/img/02.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:site" content="@Amwajmedia">
-<link rel="icon" href="logo.png">
+<link rel="icon" href="logo-mark.svg" type="image/svg+xml">
+<link rel="icon" href="logo.png" type="image/png">
 <link rel="canonical" href="https://magazine.amwaj.media/">
 <meta name="robots" content="index,follow">
 <style>*{box-sizing:border-box}body{margin:0}</style>
@@ -20,7 +21,6 @@
 <body>
 <title>Amwaj Magazine</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@900&amp;display=swap">
 <style>
 /* Amwaj Magazine, v5 (Nov. 11, 2026), in the design Claude Desktop mocked up for the Editor
    (https://claude.ai/artifact/5pf4iWjbGsCLQnSi2UVBzQ): a web-style issue front page (turquoise wordmark cover,
@@ -103,6 +103,8 @@ body.reading{background:var(--desk);height:100vh;height:100dvh;overflow:hidden;d
 .band .gx-svg,.band .gx-img{max-height:calc(var(--ph) * .42);width:100%;height:auto;object-fit:contain;margin:0 auto}
 .band .fig.photo img{max-height:calc(var(--ph) * .42);width:100%;object-fit:cover}
 .bsp{display:block;break-inside:avoid}
+/* maps: a solid orange stroke on top, as graphs have a turquoise one (Editor, Nov. 11, 2026) */
+.gx-map{border-top:6px solid #FFA333;border-radius:4px 4px 0 0;padding-top:.6em;background:#fff}
 /* the opener on a computer (Nov. 11, 2026): photo edge to edge with the headline over it, across the top of the first
    text page; the Bottom Line under it when it fits */
 .band.opband{left:0;right:0;top:0;z-index:2;font-size:inherit;line-height:normal;background:transparent}
@@ -220,7 +222,6 @@ button{font:inherit;color:inherit}
 :focus-visible{outline:3px solid var(--orange);outline-offset:2px}
 .wrap{max-width:1320px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 @media (min-width:900px){.wrap{padding-left:40px;padding-right:40px}}
-.ta{display:inline-block;font-family:"Noto Kufi Arabic",sans-serif;font-weight:900;font-size:.86em;line-height:.8;margin:0 .02em}
 .pill{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 18px;border-radius:999px;font-weight:700;font-size:14px;text-decoration:none;cursor:pointer;border:1px solid var(--rule);background:var(--paper);color:var(--ink)}
 .pill.go{background:var(--teal);border-color:var(--teal);color:var(--teal-deep);font-weight:900}
 
@@ -274,7 +275,6 @@ dialog.sub-d::backdrop{background:rgba(6,30,26,.6)}
 .hero .panel{flex:1 1 420px;min-width:0;padding:40px 44px;display:flex;flex-direction:column;gap:18px;color:#fff}
 /* the cover wordmark: enough line spacing that the "j" of Amwaj never touches the "i" of Mةgazine (Editor, Nov. 11, 2026) */
 .word{display:flex;flex-direction:column;white-space:nowrap;font-weight:900;line-height:.965;letter-spacing:-.03em}
-.word .ta{color:#FFE2BD}
 .hero .word{font-size:clamp(64px,7vw,90px)}
 .issline{display:flex;justify-content:space-between;gap:10px;border-top:2px solid #06302A;padding-top:10px;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#06302A}
 .tag{align-self:flex-start;background:var(--orange);color:#2A1A05;font-weight:900;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px}
@@ -424,6 +424,18 @@ dialog.sub-d::backdrop{background:rgba(6,30,26,.6)}
 @media (max-width:599px){.minute h2{font-size:24px}.minute .top{gap:8px}}
 .minute .list a i{margin-top:auto;padding-top:6px;font-style:normal;display:inline-flex;align-items:center;gap:6px;font-weight:900;font-size:13px;color:var(--g)}
 .minute .list a:hover i{gap:10px}
+/* computer (Editor, Nov. 11, 2026): less space above and below "The week in a minute", a stroke under its heading,
+   bigger text in the cards */
+@media (min-width:900px){
+  .wk{padding-top:20px}
+  .minute{padding:20px 28px 8px;gap:12px}
+  .minute .top{position:relative;padding-bottom:12px;border-bottom:2px solid var(--rule)}
+  .minute .top::after{content:"";position:absolute;left:0;bottom:-2px;width:96px;height:4px;background:var(--teal);border-radius:2px}
+  .minute .list{padding:6px 6px 10px}
+  .minute .list a{padding:14px 18px 14px;font-size:16.5px;line-height:1.45}
+  .minute .list a b{font-size:12px}
+  .minute .list a .bigp{font-size:46px;padding-top:8px}
+}
 .wave .wh{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 18px;margin-bottom:6px}
 .wave .wh h2{margin:0}
 .wave .wh .meta{font-size:15px;color:var(--ink2);padding-bottom:6px}
@@ -561,7 +573,6 @@ body.dopen .dtab{display:none}
 .toc{background:var(--paper)}
 .tband{background:#00A693;color:#fff;padding:6cqw 7.5cqw 4.6cqw}
 .tband .tw{font-weight:900;font-size:2.4cqw;letter-spacing:.12em;text-transform:uppercase;color:#06302A}
-.tband .tw .ta{color:#FFE2BD}
 .tband h1{margin:1.4cqw 0 0;font-weight:900;font-size:14cqw;line-height:.88;letter-spacing:-.025em}
 .tband .ti2{display:block;margin-top:2.4cqw;font-size:2.1cqw;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#06302A}
 .tcover{flex:1;min-height:0;display:flex;flex-direction:column;text-decoration:none;color:inherit;margin:4.6cqw 7.5cqw 0}
@@ -617,7 +628,6 @@ body.dopen .dtab{display:none}
 /* "Browse this week's edition": one compact header row, then a panel per desk in the desk's colour (Editor, Nov. 11, 2026) */
 .mt-h{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 32px;margin-bottom:22px}
 .mt-h .tw{font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-ink)}
-.mt-h .tw .ta{color:var(--orange)}
 .mt-h h2{margin:8px 0 10px;font-weight:900;font-size:clamp(36px,4.4vw,56px);line-height:.95;letter-spacing:-.02em}
 .mt-h .meta{font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
 .mt-r .tlist{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:22px;align-items:start}
@@ -681,6 +691,19 @@ body.dopen .dtab{display:none}
 .coverp .cv-tag{align-self:flex-start;background:#06302A;color:#FFE2BD;font-weight:900;font-size:2.1cqw;letter-spacing:.12em;text-transform:uppercase;padding:1cqw 1.8cqw}
 .coverp .cv-tx b{font-family:var(--display);font-weight:900;font-size:7.6cqw;line-height:1.02;text-wrap:balance}
 .coverp .cv-by{font-size:2.6cqw;opacity:.9}
+/* cover + contents on one page: a shorter turquoise top and photo, the list below on paper */
+.page.ctoc{background:var(--paper);color:var(--ink)}
+.ctoc .cv-top{background:#00A693;color:#fff;padding:4cqw 6.5cqw 2.6cqw}
+.ctoc .cv-word{font-size:8.6cqw}
+.ctoc .cv-iss{margin-top:2cqw;padding-top:1.4cqw}
+.ctoc .cv-ph{flex:none;height:calc(var(--ph) * .25)}
+.ctoc .cv-tx{left:6.5cqw;right:6.5cqw;bottom:3.4cqw;gap:1.2cqw}
+.ctoc .cv-tx b{font-size:5cqw}
+.ctoc .tlist{flex:1;min-height:0;padding:1cqw 6.5cqw 0}
+.ctoc .tg{margin:1.6cqw 0 0}
+.ctoc .te{padding:.7cqw 0}
+.ctoc .te b{font-size:2.5cqw}
+.ctoc .te small{font-size:1.65cqw}
 /* the back page (Editor, Nov. 11, 2026): turquoise, the front page's closing text */
 .page.backp{background:#00A693;color:#06302A}
 .backp .bk-in{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:4.4cqw;padding:9cqw 8cqw 4cqw}
@@ -826,6 +849,9 @@ body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#ff
    with the source line). Checked by _timeline-check.js. */
 .arif .ax-top,.arif .ax-t,.arif .ax-s{break-after:avoid}
 .ax-te:first-child,.ax-te:nth-child(2),.ax-te:last-child,.arif .ax-foot{break-before:avoid}
+/* a timeline whose last point would otherwise be left alone: its points a little closer together (reuse3.js) */
+.tl.tight .ax-te{padding:.15em 0 .3em;line-height:1.3}
+.tl.tight .ax-s{margin-bottom:.4em}
 .ax-te{display:grid;grid-template-columns:6.6em 1fr;gap:0 1.3em;position:relative;padding:.35em 0 .55em;break-inside:avoid;font-size:.9em;line-height:1.42}
 .ax-te::before{content:"";position:absolute;left:calc(6.6em + .62em);top:0;bottom:0;width:2px;background:#00A693;opacity:.45}
 .ax-te:first-child::before{top:.85em}.ax-te:last-child::before{bottom:auto;height:.85em}
@@ -848,33 +874,35 @@ body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#ff
    "Amwaj / Mةgazine", then "from" + the Amwaj.media logo; issue line and buttons as before ---------- */
 .mh .wrap{padding-block:14px}
 .mh .brand{display:flex;align-items:center;gap:14px;text-decoration:none;flex:none}
-.mh .tile{width:48px;height:48px;border-radius:10px;background:#00A693;display:grid;place-items:center;flex:none;overflow:hidden}
-.mh .tile .ta{display:block;margin:0;font-size:36px;line-height:1;color:#fff;transform:translateY(-2px)}
-/* line-height 1.06: the "j" of Amwaj no longer touches the dot of the "i" below it (Editor, Nov. 11, 2026) */
-.mh .wm{display:flex;flex-direction:column;font-weight:900;font-size:22px;line-height:1.15;letter-spacing:-.01em;white-space:nowrap;color:#2F3333}
-.mh .wm .l2{color:#007D6E}
-.mh .wm .ta{color:inherit}
+/* "The spread" (Editor, Nov. 11, 2026): the left half of the Amwaj.media symbol plus its mirror image; never stretched */
+.mh .mh-mark{display:block;flex:none;width:94px;height:30px}
+.mh .wm{display:flex;flex-direction:column;font-weight:900;font-size:22px;line-height:.9;letter-spacing:-.01em;white-space:nowrap;color:#333333}
+.mh .wm .l2{color:#FFA333;font-size:17px}
+.hero .cv-mark{display:block;flex:none;width:140px;height:45px}
 .mh .credit{display:flex;align-items:center;gap:8px;border-left:2px solid #D9E1DF;padding-left:14px;text-decoration:none;font-size:13px;color:#5C6567;flex:none}
 .mh .credit img{height:20px;width:auto}
 .mh .sub,#subgo{color:#fff}   /* white, the Editor's choice (Nov. 11, 2026) */
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .mh .wm{color:var(--ink)}:root:not([data-theme="light"]) .mh .wm .l2{color:var(--teal-ink)}:root:not([data-theme="light"]) .mh .credit{border-color:var(--rule);color:var(--ink2)}}
-:root[data-theme="dark"] .mh .wm{color:var(--ink)}:root[data-theme="dark"] .mh .wm .l2{color:var(--teal-ink)}:root[data-theme="dark"] .mh .credit{border-color:var(--rule);color:var(--ink2)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .mh .wm{color:var(--ink)}:root:not([data-theme="light"]) .mh .mh-mark .wave{stroke:var(--teal)}:root:not([data-theme="light"]) .mh .credit{border-color:var(--rule);color:var(--ink2)}}
+:root[data-theme="dark"] .mh .wm{color:var(--ink)}:root[data-theme="dark"] .mh .mh-mark .wave{stroke:var(--teal)}:root[data-theme="dark"] .mh .credit{border-color:var(--rule);color:var(--ink2)}
 @media (max-width:899px){
   .mh .wrap{padding-block:10px}
   .mh .brand{gap:10px;margin-right:auto}
-  .mh .tile{width:40px;height:40px;border-radius:9px}
-  .mh .tile .ta{font-size:30px;transform:translateY(-2px)}
+  .mh .mh-mark{width:75px;height:24px}
   .mh .wm{font-size:18px}
+  .mh .wm .l2{font-size:14px}
   .mh .credit{display:none}
+  .hero .cv-mark{width:100px;height:32px;margin-bottom:6px}
 }
-@media (max-width:339px){.mh .wm{font-size:16px}.mh .brand{gap:8px}}
+@media (max-width:339px){.mh .wm{font-size:16px}.mh .wm .l2{font-size:12.5px}.mh .brand{gap:8px}.mh .mh-mark{width:62px;height:20px}}
 /* the reader's Close button on a phone always shows its word */
 .mh .cbtn.closing span{display:inline !important}
 .mh .cbtn.closing{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-/* "Continue reading": a pill floating at the bottom of the front page */
-.resume{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:28;display:flex;align-items:center;
-  max-width:calc(100vw - 32px);background:#06302A;color:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.28);animation:rsIn .35s ease}
-@keyframes rsIn{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translateX(-50%)}}
+/* "Continue reading": a slim bar at the top of the front page, under the header (Editor, Nov. 11, 2026: it floated at
+   the bottom of the screen and got in the way); it scrolls away with the page */
+.resume-w{padding-top:12px;width:100%;box-sizing:border-box;align-self:stretch}
+.resume{display:flex;align-items:center;justify-content:space-between;background:#06302A;color:#fff;border-radius:12px;animation:rsIn .3s ease}
+@keyframes rsIn{from{opacity:0}to{opacity:1}}
+.resume a{flex:1}
 .resume a{display:flex;align-items:center;gap:12px;padding:11px 6px 11px 16px;color:inherit;text-decoration:none;min-width:0}
 .resume a svg{flex:none;color:#FFE2BD}
 .resume span{display:flex;flex-direction:column;min-width:0}
@@ -882,7 +910,7 @@ body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#ff
 .resume small{font-size:12.5px;opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:62vw}
 .resume button{flex:none;width:40px;height:40px;margin-right:4px;border:0;background:none;color:#fff;opacity:.75;display:grid;place-items:center;cursor:pointer}
 .resume button:hover{opacity:1}
-@media (min-width:900px){body.dopen .resume{left:calc(50% - 160px)}.resume small{max-width:420px}}
+@media (min-width:900px){.resume small{max-width:none}.resume span{flex-direction:row;align-items:baseline;gap:10px}}
 @keyframes inRp{from{opacity:.4;transform:translateX(40px)}to{opacity:1;transform:none}}
 @keyframes inLp{from{opacity:.4;transform:translateX(-40px)}to{opacity:1;transform:none}}
 /* phone captions never on top of a photo (Editor, Nov. 11, 2026): the cover's goes under the photo, the contents page's to its foot */
@@ -930,7 +958,11 @@ body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#ff
 </style>
 
 <header class="mh"><div class="wrap">
-  <a class="brand" href="#home" aria-label="Amwaj Magazine, this issue"><span class="tile" aria-hidden="true"><span class="ta" lang="ar">&#x200D;ة</span></span><span class="wm" aria-hidden="true"><span>Amwaj</span><span class="l2">M<span class="ta" lang="ar">&#x200D;ة</span>gazine</span></span></a>
+  <a class="brand" href="#home" aria-label="Amwaj Magazine, this issue"><svg class="mh-mark" viewBox="0 0 233.8 75.3" width="94" height="30" aria-hidden="true">
+  <rect x="0" y="35.3" width="40" height="40" fill="#FFA333"/>
+  <path class="wave" d="M40,17.4 C74.6,17.4 63.1,57.9 116.9,57.9 C170.7,57.9 159.2,17.4 193.8,17.4" fill="none" stroke="#00A693" stroke-width="34.8"/>
+  <rect x="193.8" y="35.3" width="40" height="40" fill="#FFA333"/>
+</svg><span class="wm" aria-hidden="true"><span>Amwaj</span><span class="l2">Magazine</span></span></a>
   <a class="credit" href="https://amwaj.media" target="_blank" rel="noopener" aria-label="Amwaj.media"><span>from</span><img class="logo-l" src="logo.webp" alt="" width="420" height="131"><img class="logo-d" src="logo-dark.webp" alt="" width="420" height="131"></a>
   <span class="iss" id="iss"></span>
   <a class="pill cbtn" id="cbtn" href="#contents"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5c3-1.3 6-1.3 9 .5 3-1.8 6-1.8 9-.5V19c-3-1.3-6-1.3-9 .5-3-1.8-6-1.8-9-.5zM12 6v13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Open reader</span></a>
@@ -1154,7 +1186,8 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   if (ISSUE.pick && ISSUE.pick.length) M.pieces = M.pieces.filter(function (p) { return ISSUE.pick.indexOf(p.url) >= 0; });
   var NO = ISSUE.number || M.week, RANGE = ISSUE.range || 'Nov. 2–8, 2026';
   $('iss').textContent = 'Issue ' + NO + ' · ' + RANGE;
-  var WORD = 'M<span class="ta" lang="ar">&#x200D;ة</span>gazine';
+  var WORD = 'Magazine';   // plain letters since the "spread" logo (Editor, Nov. 11, 2026); was the joined Arabic ة as the first "a"
+  var MARK_W = '<svg class="cv-mark" viewBox="0 0 233.8 75.3" width="140" height="45" aria-hidden="true"><rect x="0" y="35.3" width="40" height="40" fill="#FFA333"/><path d="M40,17.4 C74.6,17.4 63.1,57.9 116.9,57.9 C170.7,57.9 159.2,17.4 193.8,17.4" fill="none" stroke="#FFFFFF" stroke-width="34.8"/><rect x="193.8" y="35.3" width="40" height="40" fill="#FFA333"/></svg>';
 
   // ---------- the issue's order: the cover story first, then by region (A-Z): Articles, Media Monitors, Old News ----------
   var REG = ['Iran', 'Iraq', 'Peninsula'];
@@ -1211,7 +1244,9 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     var f = { list: [], at: {}, pullAt: p.pull ? pIdx[Math.floor(pIdx.length * 0.45)] : -1 };
     p.blocks.forEach(function (b, i) {
       var k = 'g' + i;
-      if (b.t === 'chart') { f.list.push({ key: k, html: '<img class="gx-img" src="' + esc(b.src) + '" width="' + b.w + '" height="' + b.h + '" alt="' + esc(b.title) + '">', kind: 'dw' }); f.at[i] = (f.at[i] || []).concat(k); }
+      // Datawrapper images (all maps so far): a house-style orange stroke on top, as graphs have a turquoise one
+      // (Editor, Nov. 11, 2026)
+      if (b.t === 'chart') { f.list.push({ key: k, html: '<div class="gx-map"><img class="gx-img" src="' + esc(b.src) + '" width="' + b.w + '" height="' + b.h + '" alt="' + esc(b.title) + '"></div>', kind: 'dw' }); f.at[i] = (f.at[i] || []).concat(k); }
       if (b.t === 'graph' && GR[b.id] && !MagGraph.isFlow(GR[b.id])) { f.list.push({ key: k, html: MagGraph.html(GR[b.id], p), kind: GR[b.id].kind }); f.at[i] = (f.at[i] || []).concat(k); }
     });
     // (the D style's photo used to go into the text; since Nov. 11, 2026 it fills the opener below the headline)
@@ -1363,6 +1398,31 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     });
     return out;
   }
+  // First choice (Editor, Nov. 11, 2026: a pushed timeline left empty space at the foot of a column): move the timeline
+  // down past the next paragraph(s), so the text fills the column; a forced break only when that does not work
+  function moveTimelines(fl, moves) {
+    var tls = [].slice.call(fl.querySelectorAll('.tl'));
+    tls.forEach(function (tl, i) {
+      for (var n = moves[i] || 0; n > 0; n--) {
+        var nx = tl.nextElementSibling;
+        while (nx && (nx.classList.contains('mk') || nx.classList.contains('bsp'))) nx = nx.nextElementSibling;
+        if (!nx || nx.classList.contains('tl') || nx.classList.contains('endmark') || nx.tagName === 'FIGURE') break;
+        nx.parentNode.insertBefore(tl, nx.nextSibling);
+      }
+    });
+  }
+  // the empty space at the foot of the column before a timeline whose header starts the next column (0 if none)
+  function gapsBefore(fl, G) {
+    var col = function (r) { return Math.floor((r.left - G.left + 2) / (G.colW + G.gap)); };
+    var top = fl.getBoundingClientRect().top;
+    return [].map.call(fl.querySelectorAll('.tl'), function (tl) {
+      var head = tl.querySelector('.ax-t') || tl.querySelector('.ax-top'), prev = tl.previousElementSibling;
+      while (prev && (prev.classList.contains('mk') || prev.classList.contains('bsp'))) prev = prev.previousElementSibling;
+      if (!head || !prev) return 0;
+      var rs = prev.getClientRects(), lr = rs[rs.length - 1]; if (!lr) return 0;
+      return col(lr) === col(head.getBoundingClientRect()) - 1 ? Math.max(0, fl.clientHeight - (lr.bottom - top)) : 0;
+    });
+  }
   function applyTimelineBreaks(fl, fixes) {
     var tls = fl.querySelectorAll('.tl');
     fixes.forEach(function (f) {
@@ -1375,10 +1435,12 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     var box = $('measure'), F = figures(p), byKey = {}, out = { _bl: true };
     F.list.forEach(function (g) { out[g.key] = true; byKey[g.key] = g; });
     var blHtml = p.bottomLine.length ? '<div class="blbox"><h4>Bottom line</h4><ul>' + p.bottomLine.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul></div>' : '';
-    var tlFix = [];
-    for (var round = 0; round < 8; round++) {
+    var tlFix = [], tlMove = {}, tlSearch = null, tlDone = [], tlForce = [], tlTight = {};
+    for (var round = 0; round < 40; round++) {
       box.innerHTML = '<div class="page' + (p.tpl === 'o' ? ' oldnews' : '') + '"><div class="fview"><div class="flow c2">' + flowHtml(p, out) + '</div></div>' + folio(1) + '</div>';
       var fv = box.querySelector('.fview'), fl = box.querySelector('.flow'), colH = fv.clientHeight, figmax = Math.round(colH * 0.62);
+      [].forEach.call(fl.querySelectorAll('.tl'), function (tl, i) { if (tlTight[i]) tl.classList.add('tight'); });
+      moveTimelines(fl, tlMove);
       applyTimelineBreaks(fl, tlFix);
       fl.style.setProperty('--figmax', figmax + 'px');
       var G = bandsAt(fl, fv), below = Math.round(parseFloat(getComputedStyle(fl).fontSize) * 1.3);
@@ -1428,10 +1490,35 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
         placeSpacer(fl, fvTop, G.colL(2 * k + 1), sh);
         bands.push({ page: k, html: lastBand, cls: cls });
       }
-      if (blDropped && round < 7) continue;             // laid out again with the Bottom Line in the text
-      // a timeline split against the hard rule: force a column break and lay the story out again
-      var tb = brokenTimelines(fl, G).filter(function (f) { return tlFix.indexOf(f) < 0; });
-      if (tb.length && round < 7) { tlFix = tlFix.concat(tb); continue; }
+      if (blDropped && round < 38) continue;            // laid out again with the Bottom Line in the text
+      // A timeline split against the hard rule, or one that leaves a gap of more than ~3 lines before it: try it 0-6
+      // paragraphs further down and keep the position that keeps the rule with the smallest gap; only when none keeps
+      // the rule, force a column break (Editor, Nov. 11, 2026). One timeline at a time.
+      var broken = brokenTimelines(fl, G), gaps = gapsBefore(fl, G), changed = false;
+      if (tlSearch) {
+        var si = tlSearch.i;
+        tlSearch.res.push({ m: tlMove[si] || 0, ok: !broken.some(function (f) { return +f.split(':')[0] === si; }), gap: gaps[si] || 0 });
+        if ((tlMove[si] || 0) < 6) { tlMove[si] = (tlMove[si] || 0) + 1; changed = true; }
+        else {
+          var okRes = tlSearch.res.filter(function (r) { return r.ok; }).sort(function (a, b) { return a.gap - b.gap || a.m - b.m; });
+          if (okRes.length) { tlMove[si] = okRes[0].m; tlDone.push(si); tlSearch = null; }
+          // no position keeps the rule: search again with the timeline's points set closer together, before forcing
+          else if (!tlTight[si]) { tlTight[si] = true; tlMove[si] = 0; tlSearch = { i: si, res: [] }; }
+          else { tlMove[si] = 0; tlForce.push(si); tlDone.push(si); tlSearch = null; }
+          changed = true;
+        }
+      } else {
+        var next = -1;
+        broken.concat(gaps.map(function (g, i) { return g > 60 ? i + ':gap' : null; }).filter(Boolean)).forEach(function (f) {
+          var i = +f.split(':')[0]; if (next < 0 && tlDone.indexOf(i) < 0) next = i;
+        });
+        if (next >= 0) { tlSearch = { i: next, res: [] }; tlMove[next] = 0; changed = true; }
+        else broken.forEach(function (f) {                  // searched and still broken: forced column break
+          var i = +f.split(':')[0];
+          if (tlForce.indexOf(i) >= 0 && tlFix.indexOf(f) < 0) { tlFix.push(f); changed = true; }
+        });
+      }
+      if (changed && round < 38) continue;
       // graphs whose marker falls after the last text page still need a place
       pending.forEach(function (k2) { gp.push({ key: k2, page: pages() - 1 }); });
       // a pull quote that starts a column while the text before it ended high up: drop it
@@ -1445,7 +1532,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
         var rs = prev.getClientRects(), last = rs[rs.length - 1];
         if (last && last.bottom < top + colH * 0.9) gapper = el;
       });
-      if (gapper && round < 7) { out.pull = true; continue; }
+      if (gapper && round < 38) { out.pull = true; continue; }
       // the story ends on the page with its last line (the "See the original" link): a spacer or a column's leftover
       // width could make the flow look one page longer, which showed as an empty last page (Editor, Nov. 11, 2026)
       var endEl = fl.querySelector('.endmark'), n = pages();
@@ -1524,11 +1611,11 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   var FS = [0.85, 1, 1.15, 1.3, 1.5], FKEY = 'amwaj-magazine-text', fi = 1;
   try { var fv = parseFloat(localStorage.getItem(FKEY)); if (FS.indexOf(fv) >= 0) fi = FS.indexOf(fv); } catch (e) {}
   document.documentElement.style.setProperty('--fsx', FS[fi]);
-  var TOCP = { no: 0, toc: true, short: 'Table of contents', region: 'Contents', start: 2, end: 2, pages: [] };
-  // page 1 in the reader: the cover, so the reader starts at the beginning (Editor, Nov. 11, 2026: "doesn't make any
-  // sense for the reader to stop at page 3")
-  var COVERP = { no: -1, toc: true, cover: true, short: 'Cover', region: 'Cover', start: 1, end: 1, pages: [] };
-  var SEQ = [COVERP, TOCP].concat(P);
+  // page 1 in the reader: the cover and the table of contents on one page, so the reader starts at the beginning
+  // (Editor, Nov. 11, 2026: "doesn't make any sense for the reader to stop at page 3"; then "make the front page and
+  // table of contents on the same page in the reader"). #cover and #contents both open it.
+  var TOCP = { no: 0, toc: true, short: 'Cover and contents', region: 'Contents', start: 1, end: 1, pages: [] };
+  var SEQ = [TOCP].concat(P);
   // HARD RULE (Editor, Nov. 11, 2026): an issue is at most 40 pages. Laid out as designed first; when longer, again one
   // step tighter at a time (dens-1..3 in reuse3.css) until it fits
   var MAXP = 40, DENS = 0;
@@ -1536,14 +1623,13 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     var w0 = wide, root = document.documentElement; wide = true;
     for (var d = 0; d <= 3; d++) {
       root.classList.remove('dens-1', 'dens-2', 'dens-3'); if (d) root.classList.add('dens-' + d);
-      var at = 3;   // cover 1, contents 2, stories from 3
+      var at = 2;   // cover and contents 1, stories from 2
       P.forEach(function (p) { p.start = at; p.pages = storyPages(p); at += p.pages.length; p.end = at - 1; });
       DENS = d;
       if (at - 1 <= MAXP) break;
     }
     wide = w0; LAST = at - 1;
-    TOCP.pages = tocPages();
-    COVERP.pages = [coverPage()];
+    TOCP.pages = [coverPage()];
     fillDrawer();
     // the page count after the issue number (Editor, Nov. 11, 2026)
     $('iss').textContent = 'Issue ' + NO + ' · ' + LAST + ' pages · ' + RANGE;
@@ -1612,7 +1698,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     var cols = (big ? '<div class="rg">' + head(big) + '<div class="cards big">' + big.list.map(function (p, i) { return card(p, i === 0); }).join('') + '</div></div>' : '')
       + (regs.length ? '<div class="rg-row">' + regs.map(function (x) { return '<div class="rg">' + head(x) + '<div class="cards">' + x.list.map(function (p) { return card(p); }).join('') + '</div></div>'; }).join('') + '</div>' : '');
     return '<section class="hero"><div class="wrap"><div class="in">'
-      + '<div class="panel"><div class="word"><span>Amwaj</span><span>' + WORD + '</span></div>'
+      + '<div class="panel">' + MARK_W + '<div class="word"><span>Amwaj</span><span>' + WORD + '</span></div>'
       + '<div class="issline"><span>Issue ' + NO + ' · ' + LAST + ' pages</span><span>' + esc(RANGE) + '</span><span>' + P.length + ' stories</span></div>'
       + '<span class="tag">' + esc(COVER.region) + ' · ' + esc(COVER.category) + '</span><h1><a class="hlink" href="#story-1">' + esc(COVER.title) + '</a></h1>'
       + '<p class="stand"><span>' + esc(COVER.minute) + '</span></p>'
@@ -1692,11 +1778,13 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   }
   // phone: no issue page numbers in the folios (a phone page is a screen, not a magazine page)
   function coverPage() {
-    return '<div class="page coverp"><div class="cv-top"><div class="cv-word">Amwaj<br>' + WORD + '</div>'
-      + '<div class="cv-iss"><span>Issue ' + esc(String(NO)) + '</span><span>' + esc(RANGE) + '</span><span>' + P.length + ' stories</span></div></div>'
+    // the cover and the table of contents on one page (Editor, Nov. 11, 2026)
+    return '<div class="page coverp toc ctoc"><div class="cv-top"><div class="cv-word">Amwaj<br>' + WORD + '</div>'
+      + '<div class="cv-iss"><span>Issue ' + esc(String(NO)) + '</span><span>' + esc(RANGE) + '</span><span>' + LAST + ' pages</span></div></div>'
       + '<a class="cv-ph" href="#story-1"><img src="' + esc(COVER.img) + '" alt="' + esc(COVER.alt) + '"><span class="cv-veil"></span>'
-      + '<span class="cv-tx"><span class="cv-tag">' + esc(COVER.region) + ' · ' + esc(COVER.category) + '</span><b>' + esc(COVER.title) + '</b>'
-      + '<span class="cv-by">By ' + esc(COVER.authors.join(' and ')) + ' · Page ' + COVER.start + '</span></span></a></div>';
+      + '<span class="cv-tx"><span class="cv-tag">Cover story · ' + esc(COVER.region) + '</span><b>' + esc(COVER.title) + '</b>'
+      + '<span class="cv-by">By ' + esc(COVER.authors.join(' and ')) + ' · Page ' + COVER.start + '</span></span></a>'
+      + '<div class="tlist">' + tocList(false) + '</div>' + folio(1, 'Contents') + '</div>';
   }
   function backPage(n) {
     return '<div class="page backp"><div class="bk-in"><div class="bk-word">Amwaj<br>' + WORD + '</div>'
@@ -1755,10 +1843,10 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     $('bar').style.width = ((wide ? z / LAST : (s + 1) / n) * 100) + '%';
     $('lbl').textContent = wide ? (a === z ? 'Page ' + a : 'Pages ' + a + '–' + z) + ' of ' + LAST + ' · ' + p.short
       : 'Page ' + (s + 1) + ' of ' + n;
-    curKey = p.cover ? 'home' : p.toc ? 'contents' : 'story-' + p.no; markDrawer();
+    curKey = p.toc ? 'contents' : 'story-' + p.no; markDrawer();
     $('stage').scrollTop = 0; $('stage').scrollLeft = 0;
     size();
-    try { history.replaceState(null, '', p.cover ? '#cover' : p.toc ? '#contents' : '#story-' + p.no + (s ? '-p' + (s + 1) : '')); } catch (e) {}
+    try { history.replaceState(null, '', p.toc ? '#contents' : '#story-' + p.no + (s ? '-p' + (s + 1) : '')); } catch (e) {}
     saveLast(p, s);
   }
   // ---------- the contents drawer, on the right (Editor, Nov. 11, 2026): docked beside the page on a computer (front
@@ -1787,7 +1875,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     var last = null, head = function (g) { return '<div class="dg ' + gKey(g) + '"><span>' + esc(g) + '</span></div>'; };
     $('drawer').innerHTML = '<div class="dh"><div><b>In this issue</b><span>Issue ' + NO + ' · ' + LAST + ' pages · ' + esc(RANGE) + '</span></div>'
       + '<button class="xbtn" type="button" id="dclose" aria-label="Minimize contents" title="Minimize"><svg viewBox="0 0 24 24"><path d="M6 6l6 6-6 6M13 6l6 6-6 6"/></svg></button></div>'
-      + '<nav class="dl">' + head('Opening pages') + dItem('home', '#home', 1, 'Issue ' + NO, 'Front page', null, 'Opening pages') + dItem('contents', '#contents', 2, 'Page 2', 'Table of contents', null, 'Opening pages')
+      + '<nav class="dl">' + head('Opening pages') + dItem('home', '#home', '', 'Issue ' + NO, 'Front page', null, 'Opening pages') + dItem('contents', '#contents', 1, 'Page 1', 'Cover and contents', null, 'Opening pages')
       + P.map(function (p, i) {
         var g = i === 0 ? 'Cover story' : p.region, h = g !== last ? head(g) : '';
         last = g;
@@ -1820,7 +1908,6 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     // past the last spread: the next story; before the first: the previous story's last spread (the contents come first;
     // on a phone the contents are their own page)
     var other = SEQ[SEQ.indexOf(story.p) + d];
-    if (other && other.cover && !wide) { location.hash = '#home'; return; }   // a phone's cover is the front page
     if (other && other.toc && !wide) { location.hash = '#contents'; return; }
     if (other) openStory(other, d > 0 ? 0 : -1, d);
   }
@@ -1839,13 +1926,14 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     if (isCover) isToc = true;
     curKey = m ? 'story-' + (+m[1]) : isToc ? 'contents' : 'home';
     headerBtn();
-    if (curKey === 'home') resumeBar(); else if ($('resume')) $('resume').remove();
+    if (curKey !== 'home' && $('resume')) $('resume').remove();
     if (!wide) setDrawer(false);
     if (!m && !isToc) {
       markDrawer();
       story = null;
       document.body.classList.remove('reading');
       v.innerHTML = homeHtml();
+      resumeBar();
       // the minute strip: arrows step one card; the count says which cards are in view
       var ml = $('mlist');
       if (ml) {
@@ -1874,7 +1962,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       window.scrollTo(0, 0);
       return;
     }
-    var p = isCover ? COVERP : isToc ? TOCP : (P[+m[1] - 1] || P[0]);
+    var p = isToc ? TOCP : (P[+m[1] - 1] || P[0]);
     // a phone shows the contents as their own scrolling page; stories open in the phone reader
     if (!wide && isToc) {
       story = null;
@@ -1957,10 +2045,10 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     try { if (sessionStorage.getItem(LKEY + '-hide')) return; } catch (e) {}
     var p = last && P[last.no - 1]; if (!p) return;
     var el = document.createElement('div');
-    el.id = 'resume'; el.className = 'resume';
-    el.innerHTML = '<a href="#story-' + p.no + (last.s ? '-p' + (last.s + 1) : '') + '">' + ICON_BOOK + '<span><b>Continue reading</b><small>' + esc(p.short) + '</small></span></a>'
-      + '<button type="button" aria-label="Dismiss">' + ICON_X + '</button>';
-    document.body.appendChild(el);
+    el.id = 'resume'; el.className = 'resume-w wrap';
+    el.innerHTML = '<div class="resume"><a href="#story-' + p.no + (last.s ? '-p' + (last.s + 1) : '') + '">' + ICON_BOOK + '<span><b>Continue reading</b><small>' + esc(p.short) + '</small></span></a>'
+      + '<button type="button" aria-label="Dismiss">' + ICON_X + '</button></div>';
+    var v = $('view'); v.insertBefore(el, v.firstChild);   // at the top of the front page, under the header
     el.querySelector('button').onclick = function () { try { sessionStorage.setItem(LKEY + '-hide', '1'); } catch (e) {} el.remove(); };
   }
   // on a phone the drawer lies over the page: a tap outside it closes it
