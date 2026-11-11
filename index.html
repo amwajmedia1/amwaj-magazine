@@ -818,7 +818,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       + '<span class="tag">' + esc(COVER.region) + ' · ' + esc(COVER.category) + '</span><h1>' + esc(COVER.title) + '</h1>'
       + '<p class="stand"><span>' + esc(COVER.minute) + '</span></p>'
       + '<span class="cby">By <b>' + esc(COVER.authors.join(' and ')) + '</b> · Page ' + COVER.start + '</span>'
-      + '<div class="act"><a class="pill" href="#story-1">Read the cover story ' + ARROW + '</a><button class="pill ghost" type="button" data-jump="wave">Browse all ' + P.length + ' stories</button></div></div>'
+      + '<div class="act"><a class="pill" href="#story-1">Read the cover story ' + ARROW + '</a><button class="pill ghost" type="button" data-jump="wave">Browse this week’s edition in full</button></div></div>'
       + '<div class="shot"><img src="' + esc(COVER.img) + '" alt="' + esc(COVER.alt) + '"><div class="veil"></div>' + cap(COVER, 'bottom') + cap(COVER, 'top') + '<div class="ph-story">'
       + '<span class="tag">' + esc(COVER.region) + ' · ' + esc(COVER.category) + '</span><h2>' + esc(COVER.title) + '</h2><span class="by">By <b>' + esc(COVER.authors.join(' and ')) + '</b></span>'
       + '<div class="lines">' + mixed().slice(1, 4).map(function (p) { return '<a href="#story-' + p.no + '"><b>p. ' + p.start + '</b><span>' + esc(p.short) + '</span></a>'; }).join('') + '</div>'
