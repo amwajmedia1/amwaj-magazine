@@ -182,7 +182,38 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 :root[data-theme="dark"] .mh .logo-l{display:none}:root[data-theme="dark"] .mh .logo-d{display:block}
 .mh .mag{white-space:nowrap;font-weight:900;font-size:21px;color:var(--teal-ink);text-decoration:none;border-left:2px solid var(--rule);padding-left:14px}
 .mh .iss{margin-left:auto;font-size:14px;color:var(--ink2)}
-@media (max-width:899px){.mh .iss{display:none}.mh .mag{font-size:18px}.mh img{height:24px}.mh .pill{margin-left:auto}}
+.mh .sub{background:var(--teal);border-color:var(--teal);color:#06302A;font-weight:900}
+@media (max-width:899px){.mh .wrap{flex-wrap:nowrap}.mh .iss{display:none}.mh .mag{font-size:18px;margin-right:auto}.mh img{height:24px}.mh .pill{min-height:40px;padding:0 14px;font-size:13px}}
+@media (max-width:420px){.mh .wrap{gap:8px}.mh .mag{padding-left:8px;font-size:16px}.mh img{height:20px}.mh .pill{padding:0 10px;font-size:12px}}
+
+/* the sign-up form: the existing Weekly newsletter (Week in Brief) in English, Arabic and/or Persian, through the app's
+   subscribe.php, which sets the same Mailchimp groups as the website's form (Editor, Nov. 11, 2026) */
+dialog.sub-d{border:0;padding:0;width:min(460px,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;background:var(--paper);color:var(--ink);box-shadow:0 24px 70px rgba(0,0,0,.35)}
+dialog.sub-d::backdrop{background:rgba(6,30,26,.6)}
+.sub-d .bar{height:8px;background:var(--brown)}
+.sub-d form{padding:24px 24px 26px;display:flex;flex-direction:column;gap:14px}
+.sub-d h2{margin:0;font-weight:900;font-size:26px;line-height:1.05;color:var(--brown)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sub-d h2{color:#E8C9A8}}
+:root[data-theme="dark"] .sub-d h2{color:#E8C9A8}
+.sub-d p{margin:0;font-size:15px;line-height:1.45;color:var(--ink2)}
+.sub-d label.f{display:flex;flex-direction:column;gap:5px;font-size:13px;font-weight:700}
+.sub-d input[type=text],.sub-d input[type=email]{font:inherit;font-size:16px;font-weight:400;min-height:46px;padding:0 12px;border:1px solid var(--rule);background:var(--paper);color:var(--ink);border-radius:4px}
+.sub-d fieldset{border:0;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.sub-d legend{font-size:13px;font-weight:700;margin-bottom:7px;padding:0}
+.sub-d .lang{position:relative}
+.sub-d .lang input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.sub-d .lang span{display:inline-flex;align-items:center;gap:6px;min-height:42px;padding:0 14px;border:1px solid var(--rule);border-radius:999px;font-size:14px;font-weight:700}
+.sub-d .lang input:checked+span{background:var(--teal);border-color:var(--teal);color:#06302A}
+.sub-d .lang input:focus-visible+span{outline:3px solid var(--orange);outline-offset:2px}
+.sub-d .terms{display:flex;gap:10px;align-items:flex-start;font-size:14px;line-height:1.4}
+.sub-d .terms input{width:20px;height:20px;margin:1px 0 0;accent-color:var(--teal);flex:none}
+.sub-d .terms a{color:var(--teal-ink)}
+.sub-d .row{display:flex;gap:10px;margin-top:4px}
+.sub-d .row .pill{flex:1}
+.sub-d .msg{font-size:14px;font-weight:700;min-height:1.2em}
+.sub-d .msg.err{color:#B23B2A}.sub-d .msg.ok{color:var(--teal-ink)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .sub-d .msg.err{color:#F09A86}}
+:root[data-theme="dark"] .sub-d .msg.err{color:#F09A86}
 
 /* ---------- the front page ---------- */
 .hero{padding-top:32px}
@@ -194,9 +225,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .issline{display:flex;justify-content:space-between;gap:10px;border-top:2px solid #06302A;padding-top:10px;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#06302A}
 .tag{align-self:flex-start;background:var(--orange);color:#2A1A05;font-weight:900;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px}
 .hero h1{margin:0;font-weight:900;font-size:clamp(30px,3.4vw,46px);line-height:1.02;text-wrap:balance}
-/* the line under the headline: black on white, line by line, like the social media cards (Editor, Nov. 11, 2026) */
+/* the line under the headline: black on a peach strip, line by line, like the social media cards (Editor, Nov. 11, 2026) */
 .hero .stand{margin:0;font-size:18px;line-height:1.75;font-weight:700;max-width:34em}
-.hero .stand span{background:#fff;color:#333333;padding:3px 10px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.hero .stand span{background:#E07A5F;color:#222;padding:3px 10px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .hero .act{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:auto;padding-top:10px}
 .hero .act .pill{background:#fff;border-color:#fff;color:#00463D;font-weight:900;font-size:16px;min-height:50px;padding:0 24px}
 .hero .act span{font-size:15px;color:#06302A}
@@ -325,7 +356,24 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
   <a class="mag" href="#home">M<span class="ta" lang="ar">&#x200D;ة</span>gazine</a>
   <span class="iss" id="iss"></span>
   <a class="pill" id="hdrbtn" href="#home">Contents</a>
+  <button class="pill sub" type="button" data-sub>Subscribe</button>
 </div></header>
+<dialog class="sub-d" id="subd" aria-labelledby="subh"><div class="bar"></div>
+  <form id="subf" novalidate>
+    <h2 id="subh">Get the Week in Brief</h2>
+    <p>The week’s reporting and analysis from Amwaj.media, once a week, in your inbox. Free.</p>
+    <label class="f">Full name<input type="text" name="name" autocomplete="name" required maxlength="100"></label>
+    <label class="f">Email<input type="email" name="email" autocomplete="email" required></label>
+    <fieldset><legend>Languages</legend>
+      <label class="lang"><input type="checkbox" name="lang" value="english" checked><span>English</span></label>
+      <label class="lang"><input type="checkbox" name="lang" value="arabic"><span lang="ar">العربية</span></label>
+      <label class="lang"><input type="checkbox" name="lang" value="farsi"><span lang="fa">فارسی</span></label>
+    </fieldset>
+    <label class="terms"><input type="checkbox" name="terms"><span>I have read and accept the <a href="https://amwaj.media/en/terms-and-conditions" target="_blank" rel="noopener">Ts &amp; Cs</a>.</span></label>
+    <div class="msg" id="submsg" role="status" aria-live="polite"></div>
+    <div class="row"><button class="pill" type="button" id="subx">Close</button><button class="pill go" type="submit" id="subgo">Subscribe</button></div>
+  </form>
+</dialog>
 <div id="view"></div>
 <div id="measure" aria-hidden="true" style="position:absolute;left:-30000px;top:0;visibility:hidden"></div>
 
@@ -603,6 +651,21 @@ window.GRAPHS = {"7605259":{"title":"Shiite Coordination Framework","subtitle":"
   }
 
 
+  // "The week in a minute" mixes the regions (Editor, Nov. 11, 2026): the cover story first, then each time the region
+  // with the most pieces left that isn't the one just shown, so the same region never comes twice in a row while
+  // another still has pieces (the region with the most pieces spreads across the strip instead of piling up at its end)
+  function mixed() {
+    var b = {}, out = [COVER], prev = COVER.region;
+    REG.forEach(function (r) { b[r] = P.filter(function (p) { return p !== COVER && p.region === r; }); });
+    while (out.length < P.length) {
+      var pick = null;
+      REG.forEach(function (r) { if (r !== prev && b[r].length && (!pick || b[r].length > b[pick].length)) pick = r; });
+      if (!pick) pick = prev;
+      out.push(b[pick].shift()); prev = pick;
+    }
+    return out;
+  }
+
   // ---------- the front page ----------
   function homeHtml() {
     var others = P.filter(function (p) { return p !== COVER; });
@@ -634,12 +697,12 @@ window.GRAPHS = {"7605259":{"title":"Shiite Coordination Framework","subtitle":"
       + (NUMP ? '<div class="num"><b>Number of the week</b><span class="big">' + esc(NUM.big) + '</span><span>' + esc(NUM.text) + '</span><a href="#story-' + NUMP.no + '">Read: ' + esc(NUMP.short) + '</a></div>' : '')
       + '<div class="minute"><div class="top"><h2>The week in a minute</h2><span class="count" id="mcount"></span>'
       + '<button class="arrow" type="button" id="mprev" aria-label="Earlier items"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>'
-      + '<button class="arrow" type="button" id="mnext" aria-label="More items"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div><div class="list" id="mlist">' + P.map(function (p) {
+      + '<button class="arrow" type="button" id="mnext" aria-label="More items"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div><div class="list" id="mlist">' + mixed().map(function (p) {
         return '<a href="#story-' + p.no + '"><b>' + esc(p.old ? 'Old News' : p.region) + '</b><span>' + esc(p.minute) + '</span></a>';
       }).join('') + '</div></div></div></div></section>'
       + '<section class="wave"><div class="wrap"><h2>In this wave</h2><div class="cols">' + cols + '</div></div></section>'
       + '<footer class="foot"><div class="wrap"><div class="say"><b>One wave, every week.</b><span>Amwaj Magazine collects the week’s reporting and analysis from Amwaj.media on Iran, Iraq and the Arabian Peninsula.</span></div>'
-      + '<div class="btns"><a class="pill w" href="https://amwaj.media/en" target="_blank" rel="noopener">Read Amwaj.media</a><button class="pill o" type="button" id="fwd">Copy this issue’s link</button></div>'
+      + '<div class="btns"><button class="pill w" type="button" data-sub>Subscribe</button><a class="pill o" href="https://amwaj.media/en" target="_blank" rel="noopener">Read Amwaj.media</a><button class="pill o" type="button" id="fwd">Copy this issue’s link</button></div>'
       + '<div class="soc"><a href="https://x.com/Amwajmedia" target="_blank" rel="noopener">X @Amwajmedia</a><a href="https://www.facebook.com/amwajdotmedia" target="_blank" rel="noopener">Facebook</a><a href="https://www.linkedin.com/company/amwajmedia/" target="_blank" rel="noopener">LinkedIn</a></div></div></footer>';
   }
 
@@ -710,7 +773,7 @@ window.GRAPHS = {"7605259":{"title":"Shiite Coordination Framework","subtitle":"
   function route() {
     var m = /^#story-(\d+)(?:-p(\d+))?$/.exec(location.hash), v = $('view');
     wide = window.matchMedia('(min-width:900px)').matches;
-    $('hdrbtn').style.visibility = m ? 'visible' : 'hidden';
+    $('hdrbtn').style.display = m ? '' : 'none';
     if (!m) {
       story = null;
       document.body.classList.remove('reading');
@@ -769,8 +832,39 @@ window.GRAPHS = {"7605259":{"title":"Shiite Coordination Framework","subtitle":"
     if (!story || story.p !== p) openStory(p, m[2] ? +m[2] - 1 : 0);
     else if (m[2] && +m[2] - 1 !== story.at) showSpread(Math.min(+m[2] - 1, Math.ceil(story.pages.length / 2) - 1));
   }
+  // ---------- Subscribe: the Weekly newsletter through the app's subscribe.php (same Mailchimp audience and groups) ----------
+  var SUB_API = 'https://readingtehran.com/app-api/subscribe.php';
+  var dlg = $('subd'), form = $('subf'), msg = $('submsg');
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest || !e.target.closest('[data-sub]')) return;
+    msg.textContent = ''; msg.className = 'msg'; $('subgo').disabled = false; $('subgo').textContent = 'Subscribe';
+    if (dlg.showModal) dlg.showModal(); else dlg.setAttribute('open', '');
+    form.elements.name.focus();
+  });
+  $('subx').onclick = function () { dlg.close ? dlg.close() : dlg.removeAttribute('open'); };
+  dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var f = form.elements, langs = [].filter.call(form.querySelectorAll('input[name=lang]'), function (i) { return i.checked; }).map(function (i) { return i.value; });
+    var say = function (t, ok) { msg.textContent = t; msg.className = 'msg ' + (ok ? 'ok' : 'err'); };
+    if (f.name.value.trim().length < 2) return say('Please enter your full name.');
+    if (!/^\S+@\S+\.\S+$/.test(f.email.value.trim())) return say('Please enter a valid email address.');
+    if (!langs.length) return say('Please choose at least one language.');
+    if (!f.terms.checked) return say('Please accept the terms and conditions.');
+    var go = $('subgo'); go.disabled = true; go.textContent = 'Signing you up…'; say('', true);
+    fetch(SUB_API, { method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name: f.name.value.trim(), email: f.email.value.trim(), languages: langs, frequency: 'weekly', acceptTerms: true }) })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { return { ok: r.ok, j: j }; }); })
+      .then(function (x) {
+        if (x.ok) { say(x.j.message || 'You have been subscribed to our newsletter!', true); go.textContent = 'Done'; return; }
+        go.disabled = false; go.textContent = 'Subscribe';
+        say(x.j.error || 'We could not sign you up right now. Please try again later.');
+        if (x.j.resubscribeUrl) { var a = document.createElement('a'); a.href = x.j.resubscribeUrl; a.target = '_blank'; a.rel = 'noopener'; a.textContent = ' Open amwaj.media'; msg.appendChild(a); }
+      }, function () { go.disabled = false; go.textContent = 'Subscribe'; say('We could not reach the sign-up. Please check your connection and try again.'); });
+  });
+
   document.addEventListener('keydown', function (e) {
-    if (!story) return;
+    if (!story || (dlg && dlg.open)) return;
     if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); step(1); }
     if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); step(-1); }
   });
