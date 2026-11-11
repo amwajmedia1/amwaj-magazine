@@ -216,7 +216,7 @@ dialog.sub-d::backdrop{background:rgba(6,30,26,.6)}
 :root[data-theme="dark"] .sub-d .msg.err{color:#F09A86}
 
 /* ---------- the front page ---------- */
-.hero{padding-top:32px}
+.hero{padding-top:14px}
 .hero .in{display:flex;flex-wrap:wrap;background:#00A693}
 .hero .panel{flex:1 1 420px;min-width:0;padding:40px 44px;display:flex;flex-direction:column;gap:18px;color:#fff}
 .word{display:flex;flex-direction:column;white-space:nowrap;font-weight:900;line-height:.84;letter-spacing:-.03em}
@@ -560,7 +560,9 @@ body.dopen .dtab{display:none}
 .card .im{border-bottom-left-radius:0;border-bottom-right-radius:0}
 @media (max-width:899px){.hero .in{border-radius:0}}
 .rmain{flex:1;min-width:0;display:flex;flex-direction:column}
-.stage{flex:1;min-height:0;display:flex;overflow:auto;padding:14px 24px 8px;touch-action:pan-y}
+.stage{flex:1;min-height:0;display:flex;overflow:auto;padding:8px 24px 8px;touch-action:pan-y}
+/* the pages sit right under the header, not centred with a gap above (Editor, Nov. 11, 2026) */
+.stage .book{margin:0 auto auto}
 .stage.zoomed{touch-action:auto;cursor:grab}
 .book{margin:auto;flex:none;display:flex;box-shadow:0 18px 50px var(--shade),0 2px 6px var(--shade);border-radius:3px;overflow:hidden;position:relative}
 .page{width:var(--pw);height:var(--ph);flex:none;background:var(--paper);position:relative;overflow:hidden;display:flex;flex-direction:column;
