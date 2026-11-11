@@ -707,9 +707,14 @@ body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#ff
   .where .lbl{font-size:11.5px}
   .tools{gap:4px}
   #zout,#zin,#zl,#full,.tools .sep{display:none}
-  #ntoc{display:grid}
+  /* the reader's Contents button on a phone: prominent, on the sand of the ة (Editor, Nov. 11, 2026) */
+  #ntoc{display:inline-flex;align-items:center;gap:6px;height:40px;padding:0 12px;border:0;border-radius:10px;background:#FFE2BD;color:#64402E;
+    font:inherit;font-weight:900;font-size:12.5px;letter-spacing:.02em;cursor:pointer;box-shadow:0 2px 8px rgba(100,64,46,.22);flex:none}
+  #ntoc svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.6;stroke-linecap:round}
+  body.dopen #ntoc{background:#64402E;color:#FFE2BD}
   .turn-next{animation-name:inRp}.turn-prev{animation-name:inLp}
 }
+@media (max-width:374px){#ntoc span{display:none}#ntoc{padding:0 11px}}
 @keyframes inRp{from{opacity:.4;transform:translateX(40px)}to{opacity:1;transform:none}}
 @keyframes inLp{from{opacity:.4;transform:translateX(-40px)}to{opacity:1;transform:none}}
 /* phone captions never on top of a photo (Editor, Nov. 11, 2026): the cover's goes under the photo, the contents page's to its foot */
@@ -1277,7 +1282,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     $('next').disabled = idx === SEQ.length - 1 && s === spreads - 1;
     $('bar').style.width = ((wide ? z / LAST : (s + 1) / n) * 100) + '%';
     $('lbl').textContent = wide ? (a === z ? 'Page ' + a : 'Pages ' + a + '–' + z) + ' of ' + LAST + ' · ' + p.short
-      : (s + 1) + ' / ' + n + ' · ' + p.short;
+      : 'Page ' + (s + 1) + ' of ' + n;
     curKey = p.toc ? 'contents' : 'story-' + p.no; markDrawer();
     $('stage').scrollTop = 0; $('stage').scrollLeft = 0;
     size();
@@ -1417,7 +1422,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
         + '<button class="zl" id="zl" type="button" title="Fit to screen">100%</button>'
         + '<button class="arrow sm" id="zin" type="button" aria-label="Zoom in"><svg viewBox="0 0 24 24"><path d="M6 12h12M12 6v12"/></svg></button>'
         + (canFull ? '<button class="arrow sm" id="full" type="button" aria-label="Full screen"><svg viewBox="0 0 24 24"><path id="fullp" d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>' : '')
-        + '<button class="arrow sm" id="ntoc" type="button" aria-label="Contents" aria-controls="drawer"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg></button>'
+        + '<button id="ntoc" type="button" aria-label="Contents" aria-controls="drawer"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span>Contents</span></button>'
         + '</span></nav></div></div>';
       $('ntoc').onclick = function () { setDrawer(!document.body.classList.contains('dopen')); };
       // phone: a tap on the left or right quarter of the page turns it, like a magazine app
