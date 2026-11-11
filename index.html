@@ -715,6 +715,28 @@ body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#ff
   .turn-next{animation-name:inRp}.turn-prev{animation-name:inLp}
 }
 @media (max-width:374px){#ntoc span{display:none}#ntoc{padding:0 11px}}
+/* phone: smaller caption type everywhere (Editor, Nov. 11, 2026) */
+@media (max-width:899px){
+  .pcap,.ps .hero-im .pcap,.card .pcap,.pc .tcover .pcap.top{font-size:10px}
+  .hero .ph-story .ccap{font-size:10.5px}
+  .book.one .pcap-in{font-size:10.5px}
+  .pcap.below{font-size:10px}
+}
+/* the reader's Close button on a phone always shows its word */
+.mh .cbtn.closing span{display:inline !important}
+.mh .cbtn.closing{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+/* "Continue reading": a pill floating at the bottom of the front page */
+.resume{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:28;display:flex;align-items:center;
+  max-width:calc(100vw - 32px);background:#06302A;color:#fff;border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.28);animation:rsIn .35s ease}
+@keyframes rsIn{from{opacity:0;transform:translate(-50%,16px)}to{opacity:1;transform:translateX(-50%)}}
+.resume a{display:flex;align-items:center;gap:12px;padding:11px 6px 11px 16px;color:inherit;text-decoration:none;min-width:0}
+.resume a svg{flex:none;color:#FFE2BD}
+.resume span{display:flex;flex-direction:column;min-width:0}
+.resume b{font-size:14px;font-weight:900;color:#FFE2BD}
+.resume small{font-size:12.5px;opacity:.9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:62vw}
+.resume button{flex:none;width:40px;height:40px;margin-right:4px;border:0;background:none;color:#fff;opacity:.75;display:grid;place-items:center;cursor:pointer}
+.resume button:hover{opacity:1}
+@media (min-width:900px){body.dopen .resume{left:calc(50% - 160px)}.resume small{max-width:420px}}
 @keyframes inRp{from{opacity:.4;transform:translateX(40px)}to{opacity:1;transform:none}}
 @keyframes inLp{from{opacity:.4;transform:translateX(-40px)}to{opacity:1;transform:none}}
 /* phone captions never on top of a photo (Editor, Nov. 11, 2026): the cover's goes under the photo, the contents page's to its foot */
@@ -1287,6 +1309,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     $('stage').scrollTop = 0; $('stage').scrollLeft = 0;
     size();
     try { history.replaceState(null, '', p.toc ? '#contents' : '#story-' + p.no + (s ? '-p' + (s + 1) : '')); } catch (e) {}
+    saveLast(p, s);
   }
   // ---------- the contents drawer, on the right (Editor, Nov. 11, 2026): docked beside the page on a computer (front
   // page included), over the page on a phone; the header's Contents button opens it from anywhere in one click. While
@@ -1362,6 +1385,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     wide = window.matchMedia('(min-width:900px)').matches;
     curKey = m ? 'story-' + (+m[1]) : isToc ? 'contents' : 'home';
     headerBtn();
+    if (curKey === 'home') resumeBar(); else if ($('resume')) $('resume').remove();
     if (!wide) setDrawer(false);
     if (!m && !isToc) {
       markDrawer();
@@ -1372,6 +1396,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       var ml = $('mlist');
       if (ml) {
         var cards = ml.children, upd = function () {
+          if (!document.body.contains(ml)) { window.removeEventListener('resize', upd); return; }
           var w = cards[0].getBoundingClientRect().width + parseFloat(getComputedStyle(ml).columnGap || 24);
           var first = Math.round(ml.scrollLeft / w), shown = Math.max(1, Math.round((ml.clientWidth + 24) / w));
           $('mcount').textContent = (first + 1) + (shown > 1 ? '–' + Math.min(cards.length, first + shown) : '') + ' of ' + cards.length;
@@ -1455,10 +1480,34 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   // the minimized drawer: a tab floating on the right edge brings it back
   $('dtab').onclick = function () { setDrawer(true); };
   // the header's button: "Open reader" (the contents spread) on the front page, "Front page" anywhere else (Editor, Nov. 11, 2026)
+  // the header's button: "Open reader" on the front page; inside the reader "Front page" on a computer and a clear
+  // "Close" on a phone (Editor, Nov. 11, 2026: no gentle way out on a phone); the place is kept for "Continue reading"
+  var ICON_BOOK = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5c3-1.3 6-1.3 9 .5 3-1.8 6-1.8 9-.5V19c-3-1.3-6-1.3-9 .5-3-1.8-6-1.8-9-.5zM12 6v13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>';
+  var ICON_X = '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></svg>';
   function headerBtn() {
-    var home = curKey === 'home', b = $('cbtn');
+    var home = curKey === 'home', b = $('cbtn'), close = !home && !window.matchMedia('(min-width:900px)').matches;
     b.href = home ? '#contents' : '#home';
-    b.lastChild.textContent = home ? 'Open reader' : 'Front page';
+    b.classList.toggle('closing', close);
+    b.innerHTML = (close ? ICON_X : ICON_BOOK) + '<span>' + (home ? 'Open reader' : close ? 'Close' : 'Front page') + '</span>';
+    b.setAttribute('aria-label', home ? 'Open reader' : close ? 'Close the reader' : 'Front page');
+  }
+  // "Continue reading": the last page read, remembered in this browser only
+  var LKEY = 'amwaj-magazine-last-' + NO;
+  function saveLast(p, s) {
+    if (p.toc) return;
+    try { localStorage.setItem(LKEY, JSON.stringify({ no: p.no, s: s, n: (story && story.pages.length) || 1 })); } catch (e) {}
+  }
+  function resumeBar() {
+    var old = $('resume'); if (old) old.remove();
+    var last = null; try { last = JSON.parse(localStorage.getItem(LKEY) || 'null'); } catch (e) {}
+    try { if (sessionStorage.getItem(LKEY + '-hide')) return; } catch (e) {}
+    var p = last && P[last.no - 1]; if (!p) return;
+    var el = document.createElement('div');
+    el.id = 'resume'; el.className = 'resume';
+    el.innerHTML = '<a href="#story-' + p.no + (last.s ? '-p' + (last.s + 1) : '') + '">' + ICON_BOOK + '<span><b>Continue reading</b><small>' + esc(p.short) + '</small></span></a>'
+      + '<button type="button" aria-label="Dismiss">' + ICON_X + '</button>';
+    document.body.appendChild(el);
+    el.querySelector('button').onclick = function () { try { sessionStorage.setItem(LKEY + '-hide', '1'); } catch (e) {} el.remove(); };
   }
   // on a phone the drawer lies over the page: a tap outside it closes it
   document.addEventListener('click', function (e) {
