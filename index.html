@@ -722,6 +722,29 @@ body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#ff
   .book.one .pcap-in{font-size:10.5px}
   .pcap.below{font-size:10px}
 }
+/* ---------- the masthead (Editor's brief, Nov. 11, 2026): a turquoise tile with a white ة, the two-line wordmark
+   "Amwaj / Mةgazine", then "from" + the Amwaj.media logo; issue line and buttons as before ---------- */
+.mh .wrap{padding-block:14px}
+.mh .brand{display:flex;align-items:center;gap:14px;text-decoration:none;flex:none}
+.mh .tile{width:48px;height:48px;border-radius:10px;background:#00A693;display:grid;place-items:center;flex:none;overflow:hidden}
+.mh .tile .ta{display:block;margin:0;font-size:36px;line-height:1;color:#fff;transform:translateY(-2px)}
+.mh .wm{display:flex;flex-direction:column;font-weight:900;font-size:22px;line-height:.92;letter-spacing:-.01em;white-space:nowrap;color:#2F3333}
+.mh .wm .l2{color:#007D6E}
+.mh .wm .ta{color:inherit}
+.mh .credit{display:flex;align-items:center;gap:8px;border-left:2px solid #D9E1DF;padding-left:14px;text-decoration:none;font-size:13px;color:#5C6567;flex:none}
+.mh .credit img{height:20px;width:auto}
+.mh .sub,#subgo{color:#06302A}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .mh .wm{color:var(--ink)}:root:not([data-theme="light"]) .mh .wm .l2{color:var(--teal-ink)}:root:not([data-theme="light"]) .mh .credit{border-color:var(--rule);color:var(--ink2)}}
+:root[data-theme="dark"] .mh .wm{color:var(--ink)}:root[data-theme="dark"] .mh .wm .l2{color:var(--teal-ink)}:root[data-theme="dark"] .mh .credit{border-color:var(--rule);color:var(--ink2)}
+@media (max-width:899px){
+  .mh .wrap{padding-block:10px}
+  .mh .brand{gap:10px;margin-right:auto}
+  .mh .tile{width:40px;height:40px;border-radius:9px}
+  .mh .tile .ta{font-size:30px;transform:translateY(-2px)}
+  .mh .wm{font-size:18px}
+  .mh .credit{display:none}
+}
+@media (max-width:339px){.mh .wm{font-size:16px}.mh .brand{gap:8px}}
 /* the reader's Close button on a phone always shows its word */
 .mh .cbtn.closing span{display:inline !important}
 .mh .cbtn.closing{background:var(--ink);border-color:var(--ink);color:var(--paper)}
@@ -774,8 +797,8 @@ body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#ff
 </style>
 
 <header class="mh"><div class="wrap">
-  <a href="#home" aria-label="Amwaj Magazine, this issue"><img class="logo-l" src="logo.webp" alt="Amwaj.media" width="420" height="131"><img class="logo-d" src="logo-dark.webp" alt="Amwaj.media" width="420" height="131"></a>
-  <a class="mag" href="#home">M<span class="ta" lang="ar">&#x200D;ة</span>gazine</a>
+  <a class="brand" href="#home" aria-label="Amwaj Magazine, this issue"><span class="tile" aria-hidden="true"><span class="ta" lang="ar">&#x200D;ة</span></span><span class="wm" aria-hidden="true"><span>Amwaj</span><span class="l2">M<span class="ta" lang="ar">&#x200D;ة</span>gazine</span></span></a>
+  <a class="credit" href="https://amwaj.media" target="_blank" rel="noopener" aria-label="Amwaj.media"><span>from</span><img class="logo-l" src="logo.webp" alt="" width="420" height="131"><img class="logo-d" src="logo-dark.webp" alt="" width="420" height="131"></a>
   <span class="iss" id="iss"></span>
   <a class="pill cbtn" id="cbtn" href="#contents"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5c3-1.3 6-1.3 9 .5 3-1.8 6-1.8 9-.5V19c-3-1.3-6-1.3-9 .5-3-1.8-6-1.8-9-.5zM12 6v13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Open reader</span></a>
   <button class="pill sub" type="button" data-sub>Subscribe</button>
