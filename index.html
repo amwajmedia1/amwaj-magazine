@@ -334,6 +334,16 @@ dialog.sub-d::backdrop{background:rgba(6,30,26,.6)}
 .minute .list a .bigp{margin-top:auto;padding-top:12px;align-self:center;text-align:center}
 .minute .list a .bigp small{font-size:.5em;letter-spacing:0;margin-right:.08em}
 .minute .list a b{color:var(--g)}
+/* Nov. 11 (Editor): a stroke under the desk name; a bigger page number; wider cards (about two and a half in view, so
+   there are fewer lines and less empty space) so the strip is no taller than the brown box; the brown box's button right
+   under its last line, its content centred when the two boxes are stretched to the same height */
+.minute .list a b{padding-bottom:7px;border-bottom:2px solid var(--g);align-self:stretch}
+.minute .list a .bigp{font-size:56px}
+.minute .list{grid-auto-columns:calc((100% - 48px) / 2.45)}
+@media (max-width:1199px){.minute .list{grid-auto-columns:calc((100% - 24px) / 1.6)}}
+@media (max-width:599px){.minute .list{grid-auto-columns:85%}}
+.num{justify-content:center}
+.num .pill.nb{margin-top:6px}
 .minute .count{white-space:nowrap}
 @media (max-width:599px){.minute h2{font-size:24px}.minute .top{gap:8px}}
 .minute .list a i{margin-top:auto;padding-top:6px;font-style:normal;display:inline-flex;align-items:center;gap:6px;font-weight:900;font-size:13px;color:var(--g)}
