@@ -713,7 +713,23 @@ body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#ff
 @keyframes inRp{from{opacity:.4;transform:translateX(40px)}to{opacity:1;transform:none}}
 @keyframes inLp{from{opacity:.4;transform:translateX(-40px)}to{opacity:1;transform:none}}
 /* phone captions never on top of a photo (Editor, Nov. 11, 2026): the cover's goes under the photo, the contents page's to its foot */
-.hero .ph-cap{display:none}
+/* phone: less space around the brown "Number of the week" box (Editor, Nov. 11, 2026) */
+@media (max-width:899px){.wk{padding-top:14px}.wk .in{gap:14px}.wave{padding-top:28px}}
+/* phone: "The week in a minute" without the extra space: each card as tall as its own text, the page number right
+   under it, tighter padding (Editor, Nov. 11, 2026) */
+@media (max-width:899px){
+  .minute{padding:16px 14px 6px;gap:10px}
+  .minute .list{align-items:start;padding:4px 6px 12px;overflow-y:hidden;transition:height .25s ease}
+  .minute .list a{padding:14px 16px 14px}
+  .minute .list a .bigp{margin-top:6px;padding-top:4px;font-size:48px}
+  .minute h2{font-size:22px}
+}
+/* the cover story's caption under the author's name, not on the photo (Editor, Nov. 11, 2026) */
+.hero .shot .pcap{display:none !important}
+.hero .ccap{font-size:12.5px;line-height:1.45;color:rgba(255,255,255,.78);margin-top:-8px;max-width:40em}
+.hero .ph-story .ccap{margin-top:-4px;font-size:11.5px}
+.hero .panel .ccap{display:block}
+@media (max-width:899px){.hero .panel .ccap{display:none}}
 .pcap-in{display:none}
 .book.one .pcap.top{display:none}
 .book.one .pcap-in{display:block;margin-top:3cqw;font-size:max(11px,2.9cqw);line-height:1.4;color:rgba(255,255,255,.82)}
@@ -1153,12 +1169,14 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       + '<span class="tag">' + esc(COVER.region) + ' · ' + esc(COVER.category) + '</span><h1><a class="hlink" href="#story-1">' + esc(COVER.title) + '</a></h1>'
       + '<p class="stand"><span>' + esc(COVER.minute) + '</span></p>'
       + '<span class="cby">By <b>' + esc(COVER.authors.join(' and ')) + '</b> · Page ' + COVER.start + '</span>'
+      + (COVER.capText ? '<span class="ccap">' + esc(COVER.capText) + '</span>' : '')
       + '<div class="act"><a class="pill" href="#story-1">Start with the cover story ' + ARROW + '</a><a class="pill ghost" href="#contents">Browse this week’s edition</a></div></div>'
       + '<div class="shot"><img src="' + esc(COVER.img) + '" alt="' + esc(COVER.alt) + '"><div class="veil"></div><a class="shot-link" href="#story-1" aria-label="' + esc(COVER.title) + '"></a>' + cap(COVER, 'bottom') + cap(COVER, 'top') + '<div class="ph-story">'
       + '<span class="tag">' + esc(COVER.region) + ' · ' + esc(COVER.category) + '</span><h2><a class="hlink" href="#story-1">' + esc(COVER.title) + '</a></h2><span class="by">By <b>' + esc(COVER.authors.join(' and ')) + '</b></span>'
+      + (COVER.capText ? '<span class="ccap">' + esc(COVER.capText) + '</span>' : '')
       + '<div class="lines">' + mixed().slice(1, 4).map(function (p) { return '<a href="#story-' + p.no + '"><b>p. ' + p.start + '</b><span>' + esc(p.short) + '</span></a>'; }).join('') + '</div>'
       + '<a class="pill" href="#contents">Browse this week’s edition</a></div></div>'
-      + (COVER.capText ? '<div class="ph-cap">' + esc(COVER.capText) + '</div>' : '') + '</div></div></section>'
+      + '</div></div></section>'
       + '<section class="wk"><div class="wrap"><div class="in">'
       + (NUMP ? '<div class="num"><b>Number of the week</b><span class="big">' + esc(NUM.big) + '</span><span>' + esc(NUM.text) + '</span><span class="from">From “' + esc(NUMP.short) + '”</span><a class="pill nb" href="#story-' + NUMP.no + '">Get the full story · p. ' + NUMP.start + ' ' + ARROW + '</a></div>' : '')
       + '<div class="minute"><div class="top"><h2>The week in a minute</h2><span class="count" id="mcount"></span>'
@@ -1352,6 +1370,8 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
           var w = cards[0].getBoundingClientRect().width + parseFloat(getComputedStyle(ml).columnGap || 24);
           var first = Math.round(ml.scrollLeft / w), shown = Math.max(1, Math.round((ml.clientWidth + 24) / w));
           $('mcount').textContent = (first + 1) + (shown > 1 ? '–' + Math.min(cards.length, first + shown) : '') + ' of ' + cards.length;
+          // phone: the strip is as tall as the card in view, not the tallest card (Editor, Nov. 11, 2026)
+          ml.style.height = wide ? '' : (cards[Math.min(cards.length - 1, first)].offsetHeight + 16) + 'px';
           $('mprev').disabled = ml.scrollLeft < 4;
           $('mnext').disabled = ml.scrollLeft + ml.clientWidth > ml.scrollWidth - 4;
         };
