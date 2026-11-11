@@ -194,7 +194,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .issline{display:flex;justify-content:space-between;gap:10px;border-top:2px solid #06302A;padding-top:10px;font-weight:700;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#06302A}
 .tag{align-self:flex-start;background:var(--orange);color:#2A1A05;font-weight:900;font-size:12px;letter-spacing:.12em;text-transform:uppercase;padding:6px 10px}
 .hero h1{margin:0;font-weight:900;font-size:clamp(30px,3.4vw,46px);line-height:1.02;text-wrap:balance}
-.hero .stand{margin:0;font-size:18px;line-height:1.45;color:#06302A;font-weight:700;max-width:34em}
+/* the line under the headline: black on white, line by line, like the social media cards (Editor, Nov. 11, 2026) */
+.hero .stand{margin:0;font-size:18px;line-height:1.75;font-weight:700;max-width:34em}
+.hero .stand span{background:#fff;color:#333333;padding:3px 10px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .hero .act{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:auto;padding-top:10px}
 .hero .act .pill{background:#fff;border-color:#fff;color:#00463D;font-weight:900;font-size:16px;min-height:50px;padding:0 24px}
 .hero .act span{font-size:15px;color:#06302A}
@@ -225,13 +227,19 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .num span{font-size:17px;line-height:1.4}
 .num a{margin-top:auto;color:#FFC98A;font-weight:700;font-size:15px}
 .minute{flex:2.4 1 560px;min-width:0;background:var(--paper);padding:28px 32px}
-.minute h2{margin:0 0 14px;font-weight:900;font-size:30px}
-.minute .list{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr));column-gap:32px}
-.minute a{display:flex;gap:12px;padding:12px 0;border-top:1px solid var(--rule);font-size:15.5px;line-height:1.4;text-decoration:none}
-.minute a b{flex:none;width:76px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-ink);padding-top:3px}
-.minute a:hover span{color:var(--teal-ink)}
-.wk .in{align-items:flex-start}
-@media (max-width:599px){.minute{padding:22px 18px}.minute a{flex-direction:column;gap:4px}.minute a b{width:auto;padding:0}.num .big{font-size:84px}}
+/* "The week in a minute" is never taller than the brown box (Editor, Nov. 11, 2026): one row of cards, swiped or
+   stepped with the arrows, rather than a long list */
+.minute{display:flex;flex-direction:column;gap:14px}
+.minute .top{display:flex;align-items:center;gap:10px}
+.minute h2{margin:0 auto 0 0;font-weight:900;font-size:30px;line-height:1}
+.minute .list{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 48px) / 3);gap:24px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;overscroll-behavior-x:contain}
+.minute .list::-webkit-scrollbar{display:none}
+.minute .list a{scroll-snap-align:start;display:flex;flex-direction:column;gap:6px;padding-top:12px;border-top:3px solid var(--teal);font-size:15px;line-height:1.42;text-decoration:none}
+.minute .list a b{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal-ink)}
+.minute .list a:hover span{color:var(--teal-ink)}
+.minute .count{font-size:13px;color:var(--ink2);font-variant-numeric:tabular-nums;margin-right:4px}
+@media (max-width:1199px){.minute .list{grid-auto-columns:calc((100% - 24px) / 2)}}
+@media (max-width:599px){.minute{padding:22px 18px}.minute .list{grid-auto-columns:85%;gap:16px}.num .big{font-size:84px}}
 .wave{padding-top:48px}
 .wave h2{margin:0 0 22px;font-weight:900;font-size:clamp(40px,5vw,56px);line-height:.9;letter-spacing:-.02em}
 .wave .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr));gap:32px}
@@ -615,8 +623,8 @@ window.GRAPHS = {"7605259":{"title":"Shiite Coordination Framework","subtitle":"
     return '<section class="hero"><div class="wrap"><div class="in">'
       + '<div class="panel"><div class="word"><span>Amwaj</span><span>' + WORD + '</span></div>'
       + '<div class="issline"><span>Issue ' + NO + '</span><span>' + esc(RANGE) + '</span><span>' + P.length + ' stories</span></div>'
-      + '<span class="tag">Cover story · ' + esc(COVER.region) + ' · ' + esc(COVER.category) + '</span><h1>' + esc(COVER.title) + '</h1>'
-      + '<p class="stand">' + esc(COVER.minute) + '</p>'
+      + '<span class="tag">' + esc(COVER.region) + ' · ' + esc(COVER.category) + '</span><h1>' + esc(COVER.title) + '</h1>'
+      + '<p class="stand"><span>' + esc(COVER.minute) + '</span></p>'
       + '<div class="act"><a class="pill" href="#story-1">Read the cover story <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></a><span>By <b>' + esc(COVER.authors.join(' and ')) + '</b></span></div></div>'
       + '<div class="shot"><img src="' + esc(COVER.img) + '" alt="' + esc(COVER.alt) + '"><div class="veil"></div><div class="ph-story">'
       + '<span class="tag">' + esc(COVER.region) + ' · ' + esc(COVER.category) + '</span><h2>' + esc(COVER.title) + '</h2><span class="by">By <b>' + esc(COVER.authors.join(' and ')) + '</b></span>'
@@ -624,7 +632,9 @@ window.GRAPHS = {"7605259":{"title":"Shiite Coordination Framework","subtitle":"
       + '<a class="pill" href="#story-1">Open this week’s issue</a></div></div></div></div></section>'
       + '<section class="wk"><div class="wrap"><div class="in">'
       + (NUMP ? '<div class="num"><b>Number of the week</b><span class="big">' + esc(NUM.big) + '</span><span>' + esc(NUM.text) + '</span><a href="#story-' + NUMP.no + '">Read: ' + esc(NUMP.short) + '</a></div>' : '')
-      + '<div class="minute"><h2>The week in a minute</h2><div class="list">' + P.map(function (p) {
+      + '<div class="minute"><div class="top"><h2>The week in a minute</h2><span class="count" id="mcount"></span>'
+      + '<button class="arrow" type="button" id="mprev" aria-label="Earlier items"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>'
+      + '<button class="arrow" type="button" id="mnext" aria-label="More items"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div><div class="list" id="mlist">' + P.map(function (p) {
         return '<a href="#story-' + p.no + '"><b>' + esc(p.old ? 'Old News' : p.region) + '</b><span>' + esc(p.minute) + '</span></a>';
       }).join('') + '</div></div></div></div></section>'
       + '<section class="wave"><div class="wrap"><h2>In this wave</h2><div class="cols">' + cols + '</div></div></section>'
@@ -705,6 +715,23 @@ window.GRAPHS = {"7605259":{"title":"Shiite Coordination Framework","subtitle":"
       story = null;
       document.body.classList.remove('reading');
       v.innerHTML = homeHtml();
+      // the minute strip: arrows step one card; the count says which cards are in view
+      var ml = $('mlist');
+      if (ml) {
+        var cards = ml.children, upd = function () {
+          var w = cards[0].getBoundingClientRect().width + parseFloat(getComputedStyle(ml).columnGap || 24);
+          var first = Math.round(ml.scrollLeft / w), shown = Math.max(1, Math.round((ml.clientWidth + 24) / w));
+          $('mcount').textContent = (first + 1) + (shown > 1 ? '–' + Math.min(cards.length, first + shown) : '') + ' of ' + cards.length;
+          $('mprev').disabled = ml.scrollLeft < 4;
+          $('mnext').disabled = ml.scrollLeft + ml.clientWidth > ml.scrollWidth - 4;
+        };
+        var by = function (d) { ml.scrollBy({ left: d * (cards[0].getBoundingClientRect().width + 24), behavior: 'smooth' }); };
+        $('mprev').onclick = function () { by(-1); };
+        $('mnext').onclick = function () { by(1); };
+        ml.addEventListener('scroll', function () { requestAnimationFrame(upd); }, { passive: true });
+        window.addEventListener('resize', upd);
+        upd();
+      }
       var f = $('fwd');
       if (f) f.onclick = function () {
         var u = location.href.split('#')[0];
