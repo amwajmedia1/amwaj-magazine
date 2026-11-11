@@ -227,7 +227,7 @@ dialog.sub-d::backdrop{background:rgba(6,30,26,.6)}
 .hero h1{margin:0;font-weight:900;font-size:clamp(30px,3.4vw,46px);line-height:1.02;text-wrap:balance}
 /* the line under the headline: black on a peach strip, line by line, like the social media cards (Editor, Nov. 11, 2026) */
 .hero .stand{margin:0;font-size:18px;line-height:1.75;font-weight:700;max-width:34em}
-.hero .stand span{background:#FFE2BD;color:#333333;padding:3px 10px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.hero .stand span{background:#FFE2BD;color:#4A2F22;padding:3px 10px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .hero .act{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-top:auto;padding-top:10px}
 .hero .act .pill{background:#fff;border-color:#fff;color:#00463D;font-weight:900;font-size:16px;min-height:50px;padding:0 24px}
 .hero .act span{font-size:15px;color:#06302A}
@@ -310,7 +310,12 @@ dialog.sub-d::backdrop{background:rgba(6,30,26,.6)}
 .foot .soc a:hover{text-decoration:underline}
 
 /* ---------- front page: buttons, page numbers, story cards (Editor, Nov. 11, 2026) ---------- */
-.hero .cby{font-size:15px;color:#06302A}
+/* the cover's colours in one family (Editor, Nov. 11, 2026): white headline and byline, the category on a dark green chip
+   in the masthead's sand, the line under the headline in dark brown on that sand */
+.hero .cby{font-size:15px;color:rgba(255,255,255,.88)}
+.hero .cby b{color:#fff}
+.hero .panel .tag{background:#06302A;color:#FFE2BD;border-radius:4px}
+.hero h1{color:#fff}
 .hero .act .pill.ghost{background:transparent;border:2px solid #fff;color:#fff}
 .hero .act .pill.ghost:hover{background:rgba(255,255,255,.14)}
 .pill svg{flex:none}
@@ -498,24 +503,44 @@ body.dopen .dtab{display:none}
 .wave .te .go,.pc .te .go{font-size:13px;margin-top:8px}
 .pc{background:var(--paper);max-width:720px;margin:0 auto}
 /* the front page's "In this wave": a magazine contents page (Editor, Nov. 11, 2026) */
-.mtoc{border-top:6px solid var(--ink);padding-top:26px}
-.mt-h{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:18px 32px;padding-bottom:26px;border-bottom:1px solid var(--rule);margin-bottom:26px}
+/* "Browse this week's edition": one compact header row, then a panel per desk in the desk's colour (Editor, Nov. 11, 2026) */
+.mt-h{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:14px 32px;margin-bottom:22px}
 .mt-h .tw{font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-ink)}
 .mt-h .tw .ta{color:var(--orange)}
-.mt-h h2{margin:10px 0 12px;font-weight:900;font-size:clamp(40px,5.6vw,80px);line-height:.9;letter-spacing:-.03em;text-wrap:balance}
+.mt-h h2{margin:8px 0 10px;font-weight:900;font-size:clamp(36px,4.4vw,56px);line-height:.95;letter-spacing:-.02em}
 .mt-h .meta{font-size:12.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}
-.mt-r .tlist{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:30px 44px}
+.mt-r .tlist{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:22px;align-items:start}
 .mt-r .tlist:has(.tr-big){grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
-.tr-big .tr-g{columns:2;column-gap:44px;column-rule:1px solid var(--rule)}
-.tr-big .tg{column-span:all}
-.tr-rest{display:flex;flex-direction:column;gap:30px;min-width:0}
-.mt-r .tg{margin-top:0;padding-top:0}
-@media (max-width:1099px){.mt-r .tlist:has(.tr-big){grid-template-columns:1fr}.tr-rest{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:30px 44px}}
-@media (max-width:699px){.tr-big .tr-g{columns:1}.wave .te .n{width:44px;font-size:34px}.wave .te b{font-size:18px}}
+.tr-rest{display:flex;flex-direction:column;gap:22px;min-width:0}
+.mt-r .tr-g{border-radius:14px;overflow:hidden;background:color-mix(in srgb,var(--g) 9%,var(--paper));border:1px solid color-mix(in srgb,var(--g) 30%,transparent)}
+.mt-r .tg{margin:0;padding:12px 20px;background:var(--g);color:#fff;font-size:14px;letter-spacing:.16em}
+.mt-r .tg::after{display:none}
+.mt-r .tg .cnt{margin-left:auto;font-size:11px;letter-spacing:.1em;opacity:.85}
+.mt-r .tes{padding:4px 20px 8px}
+.tr-big .tes{columns:2;column-gap:36px;column-rule:1px solid color-mix(in srgb,var(--g) 25%,transparent)}
+.mt-r .te{border-bottom-color:color-mix(in srgb,var(--g) 22%,transparent)}
+.mt-r .te:last-child{border-bottom:0}
+.tr-big .te:last-child{border-bottom:1px solid transparent}
+.mt-r .te .n,.mt-r .te.mm .n,.mt-r .te.old .n{color:var(--g)}
+.mt-r .te .go{color:var(--g)}
+.mt-r .te:hover b{color:var(--g)}
+.te .kb{font-style:normal;display:inline-block;margin-right:7px;padding:1px 6px;border-radius:4px;background:#64402E;color:#FFE2BD;letter-spacing:.08em}
+.te.old .kb{background:#3A2A1C}
+.tr-g.g-iran{--g:#007D6E}.tr-g.g-iraq{--g:#4E6E81}.tr-g.g-peninsula{--g:#9B4F4F}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tr-g.g-iran{--g:#1DA58F}:root:not([data-theme="light"]) .tr-g.g-iraq{--g:#6C8FA4}:root:not([data-theme="light"]) .tr-g.g-peninsula{--g:#B86A6A}}
+@media (max-width:1099px){.mt-r .tlist:has(.tr-big){grid-template-columns:1fr}.tr-rest{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:22px}}
+@media (max-width:699px){.tr-big .tes{columns:1}.wave .te .n{width:44px;font-size:34px}.wave .te b{font-size:18px}.mt-r .tes{padding:2px 16px 6px}}
 /* the desk headings in the contents: the drawer's desk colours */
 .tg.g-iran{--g:#007D6E}.tg.g-iraq{--g:#4E6E81}.tg.g-peninsula{--g:#9B4F4F}
 .tg[class*="g-"]{color:var(--g)}
 .tg[class*="g-"]::after{background:var(--g)}
+.mt-r .tg[class*="g-"]{color:#fff}
+/* the reader's contents page: tighter, so every story fits on page 3 */
+.page.toc{font-size:16px}
+.toc .te{padding:1.05cqw 0}
+.toc .te b{font-size:2.75cqw}
+.toc .tg{margin:2.4cqw 0 .2cqw}
+.toc .tlist h2{font-size:5.6cqw}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tg.g-iran{--g:#4AD5C2}:root:not([data-theme="light"]) .tg.g-iraq{--g:#9FC0D3}:root:not([data-theme="light"]) .tg.g-peninsula{--g:#E8A0A0}}
 /* slightly rounded corners on the front page (Editor, Nov. 11, 2026) */
 .hero .in{border-radius:14px;overflow:hidden}
@@ -588,7 +613,7 @@ body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#ff
   <a href="#home" aria-label="Amwaj Magazine, this issue"><img class="logo-l" src="logo.webp" alt="Amwaj.media" width="420" height="131"><img class="logo-d" src="logo-dark.webp" alt="Amwaj.media" width="420" height="131"></a>
   <a class="mag" href="#home">M<span class="ta" lang="ar">&#x200D;ة</span>gazine</a>
   <span class="iss" id="iss"></span>
-  <button class="pill cbtn" id="cbtn" type="button" aria-controls="drawer" aria-expanded="false"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg><span>Contents</span></button>
+  <a class="pill cbtn" id="cbtn" href="#contents"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5c3-1.3 6-1.3 9 .5 3-1.8 6-1.8 9-.5V19c-3-1.3-6-1.3-9 .5-3-1.8-6-1.8-9-.5zM12 6v13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg><span>Open reader</span></a>
   <button class="pill sub" type="button" data-sub>Subscribe</button>
 </div></header>
 <aside class="drawer" id="drawer" aria-label="Contents" inert></aside>
@@ -943,14 +968,17 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   // page all use it; stories grouped by region (A-Z after the cover), page numbers first, like a magazine ----------
   function tocEntry(p, rich) {
     return '<a class="te' + (p.old ? ' old' : '') + (p.type === 'Media Monitor' ? ' mm' : '') + '" href="#story-' + p.no + '"><span class="n">' + p.start + '</span><span class="tx">'
-      + '<small>' + esc(kindOf(p)) + ' · ' + esc(p.authors.join(' and ')) + '</small><b>' + esc(p.short) + '</b>'
+      + '<small>' + (p.old || p.type === 'Media Monitor' ? '<em class="kb">' + esc(kindOf(p)) + '</em>' : esc(kindOf(p)) + ' · ') + esc(p.authors.join(' and ')) + '</small><b>' + esc(p.short) + '</b>'
       + (rich ? '<span class="sf">' + esc(p.minute) + '</span><span class="go">' + goOf(p) + ' ' + ARROW + '</span>' : '') + '</span></a>';
   }
   // the stories by desk (cover story left out: it leads the page). On the front page a desk with at least twice as many
   // stories as any other gets two columns under one heading, the others stack beside it (Editor, Nov. 11, 2026)
   function tocList(rich, front) {
     var gs = REG.map(function (r) { return { r: r, list: P.filter(function (p) { return p !== COVER && p.region === r; }) }; }).filter(function (g) { return g.list.length; });
-    var one = function (g) { return '<div class="tr-g"><div class="tg g-' + g.r.toLowerCase() + '">' + g.r + '</div>' + g.list.map(function (p) { return tocEntry(p, rich); }).join('') + '</div>'; };
+    var one = function (g) {
+      return '<div class="tr-g g-' + g.r.toLowerCase() + '"><div class="tg g-' + g.r.toLowerCase() + '">' + g.r + '<span class="cnt">' + g.list.length + (g.list.length === 1 ? ' story' : ' stories') + '</span></div>'
+        + '<div class="tes">' + g.list.map(function (p) { return tocEntry(p, rich); }).join('') + '</div></div>';
+    };
     if (front && gs.length > 1) {
       var big = gs.slice().sort(function (a, b) { return b.list.length - a.list.length; })[0];
       var rest = gs.filter(function (g) { return g !== big; });
@@ -1101,7 +1129,6 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     if (persist) { try { localStorage.setItem(DKEY, open ? 'open' : 'closed'); } catch (e) {} }
     document.body.classList.toggle('dopen', open);
     $('drawer').inert = !open;
-    $('cbtn').setAttribute('aria-expanded', open ? 'true' : 'false');
     $('dtab').setAttribute('aria-expanded', open ? 'true' : 'false');
     if (open) markDrawer();
     size(); setTimeout(size, 300);
@@ -1164,6 +1191,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     var m = /^#story-(\d+)(?:-p(\d+))?$/.exec(location.hash), isToc = /^#contents/.test(location.hash), v = $('view');
     wide = window.matchMedia('(min-width:900px)').matches;
     curKey = m ? 'story-' + (+m[1]) : isToc ? 'contents' : 'home';
+    headerBtn();
     if (!wide) setDrawer(false);
     if (!m && !isToc) {
       markDrawer();
@@ -1244,8 +1272,12 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   }
   // the minimized drawer: a tab floating on the right edge brings it back
   $('dtab').onclick = function () { setDrawer(true); };
-  // the header's Contents button opens and closes the drawer from any page
-  $('cbtn').onclick = function () { setDrawer(!document.body.classList.contains('dopen'), document.body.classList.contains('reading')); };
+  // the header's button: "Open reader" (the contents spread) on the front page, "Front page" anywhere else (Editor, Nov. 11, 2026)
+  function headerBtn() {
+    var home = curKey === 'home', b = $('cbtn');
+    b.href = home ? '#contents' : '#home';
+    b.lastChild.textContent = home ? 'Open reader' : 'Front page';
+  }
   // on a phone the drawer lies over the page: a tap outside it closes it
   document.addEventListener('click', function (e) {
     if (wide || !document.body.classList.contains('dopen') || !e.target.closest) return;
