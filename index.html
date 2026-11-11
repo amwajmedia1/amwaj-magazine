@@ -182,6 +182,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 :root[data-theme="dark"] .mh .logo-l{display:none}:root[data-theme="dark"] .mh .logo-d{display:block}
 .mh .mag{white-space:nowrap;font-weight:900;font-size:21px;color:var(--teal-ink);text-decoration:none;border-left:2px solid var(--rule);padding-left:14px}
 .mh .iss{margin-left:auto;font-size:14px;color:var(--ink2)}
+.pill.openr{color:#fff}
 .mh .sub,#subgo{background:var(--teal);border-color:var(--teal);color:#fff;font-weight:900}
 @media (max-width:899px){.mh .wrap{flex-wrap:nowrap}.mh .iss{display:none}.mh .mag{font-size:18px;margin-right:auto}.mh img{height:24px}.mh .pill{min-height:40px;padding:0 14px;font-size:13px}}
 @media (max-width:420px){.mh .wrap{gap:8px}.mh .mag{padding-left:8px;font-size:16px}.mh img{height:20px}.mh .pill{padding:0 10px;font-size:12px}}
@@ -1082,7 +1083,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       // the cover story is left out here: it is already at the top of the page (Editor, Nov. 11, 2026)
       + '<section class="wave" id="wave"><div class="wrap"><div class="mtoc"><div class="mt-h"><div><span class="tw">Amwaj ' + WORD + ' · Issue ' + NO + '</span>'
       + '<h2>Browse this week’s edition</h2><span class="meta">' + esc(RANGE) + ' · ' + P.length + ' stories · ' + LAST + ' pages</span></div>'
-      + '<a class="pill go" href="#contents">Open the contents spread · p. 2 ' + ARROW + '</a></div>'
+      + '<a class="pill go openr" href="#contents">Open reader ' + ARROW + '</a></div>'
       + '<div class="mt-r"><div class="tlist">' + tocList(true, true) + '</div></div></div></div></section>'
       + '<footer class="foot"><div class="wrap"><div class="say"><b>One wave, every week.</b><span>Amwaj Magazine collects the week’s reporting and analysis from Amwaj.media on Iran, Iraq and the Arabian Peninsula.</span></div>'
       + '<div class="btns"><button class="pill w" type="button" data-sub>Subscribe</button><a class="pill o" href="https://amwaj.media/en" target="_blank" rel="noopener">Visit Amwaj.media</a><button class="pill o" type="button" id="fwd">Copy this issue’s link</button></div>'
