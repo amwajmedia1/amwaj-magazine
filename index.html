@@ -430,6 +430,14 @@ body.dopen .drawer{transform:none;visibility:visible;transition:transform .28s c
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .drawer{background:#2E2418;color:#F3E7D7}:root:not([data-theme="light"]) .ti{color:#F3E7D7}:root:not([data-theme="light"]) .ti .pg,:root:not([data-theme="light"]) .drawer .dh b,:root:not([data-theme="light"]) .dg,:root:not([data-theme="light"]) .xbtn{color:#FFC98A}:root:not([data-theme="light"]) .ti small{color:#4AD5C2}:root:not([data-theme="light"]) .ti.cur{background:#45362A}:root:not([data-theme="light"]) .ti:hover{background:#3A2E22}}
 :root[data-theme="dark"] .drawer{background:#2E2418;color:#F3E7D7}
 .mh .cbtn svg{flex:none}
+/* the minimized drawer: a sand tab on the right edge (computer only; a phone uses the header's Contents button) */
+.dtab{position:fixed;right:0;top:50%;z-index:29;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:10px;padding:14px 9px 16px;
+  border:0;border-radius:12px 0 0 12px;background:#FFE2BD;color:#64402E;box-shadow:-6px 4px 22px rgba(60,35,15,.22);cursor:pointer;font-weight:900;font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.dtab span{writing-mode:vertical-rl;transform:rotate(180deg)}
+.dtab svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.dtab:hover{background:#FFD6A3;padding-right:13px}
+body.dopen .dtab{display:none}
+@media (max-width:899px){.dtab{display:none}}
 @media (max-width:420px){.mh .cbtn span{display:none}.mh .cbtn{padding:0 11px}}
 
 /* the table of contents: the reader's pages 2-3 (sizes in page units), the front page's "In this wave" and the phone's
@@ -556,7 +564,7 @@ body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#ff
   font-size:11.5px;line-height:1.38;color:rgba(255,255,255,.9);text-shadow:0 1px 2px rgba(0,0,0,.55);pointer-events:none;text-align:left;font-weight:400;letter-spacing:0;text-transform:none}
 .pcap.bottom{bottom:0;background:linear-gradient(180deg,rgba(4,14,12,0),rgba(4,14,12,.78) 62%)}
 .pcap.top{top:0;padding:11px 16px 30px;background:linear-gradient(0deg,rgba(4,14,12,0),rgba(4,14,12,.72) 60%)}
-.pcap .ct{flex:1 1 260px;min-width:0;max-width:62em}
+.pcap .ct{flex:1 1 auto;min-width:0}
 .pcap .cr{flex:none;display:inline-flex;align-items:center;gap:6px;font-size:.84em;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:#fff;white-space:nowrap}
 .pcap .cr::before{content:"";width:7px;height:7px;background:var(--orange);flex:none}
 .pcap.below{position:static;padding:8px 0 0;background:none;text-shadow:none;color:var(--ink2);font-size:.78em}
@@ -584,6 +592,7 @@ body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#ff
   <button class="pill sub" type="button" data-sub>Subscribe</button>
 </div></header>
 <aside class="drawer" id="drawer" aria-label="Contents" inert></aside>
+<button class="dtab" id="dtab" type="button" aria-controls="drawer" aria-expanded="false" title="Show contents"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6l-6 6 6 6M11 6l-6 6 6 6"/></svg><span>Contents</span></button>
 <dialog class="sub-d" id="subd" aria-labelledby="subh"><div class="bar"></div>
   <form id="subf" novalidate>
     <h2 id="subh">Get the Week in Brief</h2>
@@ -787,11 +796,13 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     var c = ((CAPS[p.url.split('/').pop()] || {}).caption || '').trim();
     var m = /^(.*?)\s*\(((?:Source|Photo|Image|Courtesy)[^()]*)\)\.?\s*$/i.exec(c);
     p.cap = m ? { t: m[1], c: m[2] } : { t: c, c: '' };
+    p.capText = c;
     if (!p.alt) p.alt = c;
   });
+  // the whole caption as one run of text, credit in its brackets as written (Editor, Nov. 11, 2026)
   function cap(p, pos) {
-    if (!p.cap.t && !p.cap.c) return '';
-    return '<span class="pcap ' + pos + '">' + (p.cap.t ? '<span class="ct">' + esc(p.cap.t) + '</span>' : '') + (p.cap.c ? '<span class="cr">' + esc(p.cap.c) + '</span>' : '') + '</span>';
+    if (!p.capText) return '';
+    return '<span class="pcap ' + pos + '"><span class="ct">' + esc(p.capText) + '</span></span>';
   }
 
   var GR = window.GRAPHS || {};
@@ -1091,7 +1102,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     document.body.classList.toggle('dopen', open);
     $('drawer').inert = !open;
     $('cbtn').setAttribute('aria-expanded', open ? 'true' : 'false');
-    if ($('dtog')) { $('dtog').setAttribute('aria-expanded', open ? 'true' : 'false'); $('dtog').lastChild.textContent = open ? ' Hide contents' : ' Contents'; }
+    $('dtab').setAttribute('aria-expanded', open ? 'true' : 'false');
     if (open) markDrawer();
     size(); setTimeout(size, 300);
   }
@@ -1107,7 +1118,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   function fillDrawer() {
     var last = null, head = function (g) { return '<div class="dg ' + gKey(g) + '"><span>' + esc(g) + '</span></div>'; };
     $('drawer').innerHTML = '<div class="dh"><div><b>In this issue</b><span>Issue ' + NO + ' · ' + esc(RANGE) + '</span></div>'
-      + '<button class="xbtn" type="button" id="dclose" aria-label="Hide contents"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>'
+      + '<button class="xbtn" type="button" id="dclose" aria-label="Minimize contents" title="Minimize"><svg viewBox="0 0 24 24"><path d="M6 6l6 6-6 6M13 6l6 6-6 6"/></svg></button></div>'
       + '<nav class="dl">' + head('Opening pages') + dItem('home', '#home', 1, 'Issue ' + NO, 'Front page', null, 'Opening pages') + dItem('contents', '#contents', 2, 'Pages 2–3', 'Table of contents', null, 'Opening pages')
       + P.map(function (p, i) {
         var g = i === 0 ? 'Cover story' : p.region, h = g !== last ? head(g) : '';
@@ -1200,7 +1211,6 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       v.innerHTML = '<div class="rd" id="rd"><div class="rmain">'
         + '<main class="stage" id="stage"><div class="book" id="book" aria-live="polite"></div></main>'
         + '<nav class="nav" aria-label="Pages">'
-        + '<button class="tbtn" type="button" id="dtog" aria-controls="drawer"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h10"/></svg> Contents</button>'
         + '<span class="pager"><button class="arrow" id="prev" type="button" aria-label="Previous pages"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>'
         + '<span class="where"><span class="lbl" id="lbl"></span><span class="track"><i id="bar"></i></span></span>'
         + '<button class="arrow" id="next" type="button" aria-label="Next pages"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></span>'
@@ -1219,8 +1229,8 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       if ($('full')) $('full').onclick = toggleFull;
       $('fdn').onclick = function () { textSize(-1); };
       $('fup').onclick = function () { textSize(1); };
-      $('dtog').onclick = function () { setDrawer(!document.body.classList.contains('dopen'), true); };
-      setDrawer(drawerPref());
+      // the reader always opens with the contents drawer out (Editor, Nov. 11, 2026)
+      setDrawer(true);
       // a swipe turns the page, unless the page is zoomed in (then a drag moves around it)
       var sx = null, sy = 0;
       $('stage').addEventListener('pointerdown', function (e) { sx = e.clientX; sy = e.clientY; });
@@ -1232,6 +1242,8 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     if (!story || story.p !== p) openStory(p, m && m[2] ? +m[2] - 1 : 0);
     else if (m && m[2] && +m[2] - 1 !== story.at) showSpread(Math.min(+m[2] - 1, Math.ceil(story.pages.length / 2) - 1));
   }
+  // the minimized drawer: a tab floating on the right edge brings it back
+  $('dtab').onclick = function () { setDrawer(true); };
   // the header's Contents button opens and closes the drawer from any page
   $('cbtn').onclick = function () { setDrawer(!document.body.classList.contains('dopen'), document.body.classList.contains('reading')); };
   // on a phone the drawer lies over the page: a tap outside it closes it
