@@ -328,6 +328,9 @@ dialog.sub-d::backdrop{background:rgba(6,30,26,.6)}
 .minute .list a.g-iraq{--g:#4E6E81}.minute .list a.g-peninsula{--g:#9B4F4F}.minute .list a.g-old{--g:#64402E}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .minute .list a{--g:#4AD5C2}:root:not([data-theme="light"]) .minute .list a.g-iraq{--g:#9FC0D3}:root:not([data-theme="light"]) .minute .list a.g-peninsula{--g:#E8A0A0}:root:not([data-theme="light"]) .minute .list a.g-old{--g:#E8C9A8}}
 .minute .list a .bigp{font-style:normal;font-weight:900;font-size:46px;line-height:.9;letter-spacing:-.02em;color:var(--g);font-variant-numeric:tabular-nums}
+/* text justified, the page number under it, centred (Editor, Nov. 11, 2026) */
+.minute .list a span{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+.minute .list a .bigp{margin-top:auto;padding-top:12px;align-self:center;text-align:center}
 .minute .list a .bigp small{font-size:.5em;letter-spacing:0;margin-right:.08em}
 .minute .list a b{color:var(--g)}
 .minute .count{white-space:nowrap}
@@ -618,6 +621,28 @@ body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#ff
 @media (max-width:899px){.hero .shot .pcap.bottom{display:none}.hero .shot .pcap.top{display:flex}}
 @media (min-width:900px){.hero .shot .pcap.top{display:none}}
 .ps .hero-im .pcap{font-size:11px}
+/* house colours for the desks (Editor, Nov. 11, 2026): Iran turquoise #00A693, Iraq orange #FFA333, Peninsula light
+   brown #C09B5C. Fills (headers, chips, edges) use them exactly; page numbers and links use a deeper tone of the same
+   colour (--gt) so they stay readable on white; text on a fill uses --gon. The cover story moves to the cover's dark green. */
+.g-iran,.ti.g-iran,.dg.g-iran,.tr-g.g-iran,.tg.g-iran,.minute .list a.g-iran,.minute .list a{--g:#00A693;--gt:#007D6E;--gon:#fff}
+.g-iraq,.ti.g-iraq,.dg.g-iraq,.tr-g.g-iraq,.tg.g-iraq,.minute .list a.g-iraq{--g:#FFA333;--gt:#B8650A;--gon:#2A1A05}
+.g-peninsula,.ti.g-peninsula,.dg.g-peninsula,.tr-g.g-peninsula,.tg.g-peninsula,.minute .list a.g-peninsula{--g:#C09B5C;--gt:#86662F;--gon:#2A1A05}
+.minute .list a.g-old{--g:#64402E;--gt:#64402E}
+.g-cover-story,.ti.g-cover-story,.dg.g-cover-story{--g:#06302A;--gt:#06302A;--gon:#FFE2BD}
+.dg.g-cover-story span{background:#06302A;color:#FFE2BD}
+.dg span{color:var(--gon,#fff)}
+.ti .pg,.ti.cur .pg{color:var(--gt,var(--g))}
+.minute .list a .bigp,.minute .list a b,.minute .list a i{color:var(--gt,var(--g))}
+.mt-r .te .n,.mt-r .te.mm .n,.mt-r .te.old .n,.mt-r .te .go,.mt-r .te:hover b{color:var(--gt,var(--g))}
+.tg[class*="g-"]{color:var(--gt,var(--g))}
+.mt-r .tg[class*="g-"]{color:var(--gon,#fff)}
+.mt-r .tr-g{background:color-mix(in srgb,var(--g) 10%,var(--paper))}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]) .g-iran,:root:not([data-theme="light"]) .tr-g.g-iran,:root:not([data-theme="light"]) .tg.g-iran,:root:not([data-theme="light"]) .minute .list a,:root:not([data-theme="light"]) .minute .list a.g-iran{--g:#00A693;--gt:#3FD3BF}
+  :root:not([data-theme="light"]) .g-iraq,:root:not([data-theme="light"]) .tr-g.g-iraq,:root:not([data-theme="light"]) .tg.g-iraq,:root:not([data-theme="light"]) .minute .list a.g-iraq{--g:#FFA333;--gt:#FFB65C}
+  :root:not([data-theme="light"]) .g-peninsula,:root:not([data-theme="light"]) .tr-g.g-peninsula,:root:not([data-theme="light"]) .tg.g-peninsula,:root:not([data-theme="light"]) .minute .list a.g-peninsula{--g:#C09B5C;--gt:#D9B87E}
+  :root:not([data-theme="light"]) .g-cover-story{--g:#FFE2BD;--gt:#FFE2BD}
+  :root:not([data-theme="light"]) .dg.g-cover-story span{background:#FFE2BD;color:#06302A}}
 .eyebrow{font-size:2.3cqw;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--teal-ink)}
 
 </style>
@@ -1051,7 +1076,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       + '<div class="minute"><div class="top"><h2>The week in a minute</h2><span class="count" id="mcount"></span>'
       + '<button class="arrow" type="button" id="mprev" aria-label="Earlier items"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>'
       + '<button class="arrow" type="button" id="mnext" aria-label="More items"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button></div><div class="list" id="mlist">' + mixed().map(function (p) {
-        return '<a class="' + (p.old ? 'g-old' : 'g-' + p.region.toLowerCase()) + '" href="#story-' + p.no + '"><em class="bigp"><small>p.</small>' + p.start + '</em><b>' + esc(p.old ? 'Old News' : p.region) + '</b><span>' + esc(p.minute) + '</span><i>Turn to the page ' + ARROW + '</i></a>';
+        return '<a class="' + (p.old ? 'g-old' : 'g-' + p.region.toLowerCase()) + '" href="#story-' + p.no + '"><b>' + esc(p.old ? 'Old News' : p.region) + '</b><span>' + esc(p.minute) + '</span><em class="bigp"><small>p.</small>' + p.start + '</em></a>';
       }).join('') + '</div></div></div></div></section>'
       // "In this wave": a magazine contents page, not a grid of web cards (Editor, Nov. 11, 2026)
       // the cover story is left out here: it is already at the top of the page (Editor, Nov. 11, 2026)
