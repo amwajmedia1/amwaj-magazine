@@ -89,9 +89,9 @@ body.reading{background:var(--desk);height:100vh;height:100dvh;overflow:hidden;d
 /* ---------- the text flow ---------- */
 /* setting F of the type test (Editor, Nov. 11, 2026): two columns, 13 px on the 560 px page, line spacing 1.4,
    left-aligned, smaller margins. The phone reader (one column) keeps its own text size. */
-/* the text stops clear of the folio rule: 2.6cqw (~15px on a 560px page) of breathing room under the last line
-   (Editor, Nov. 12, 2026: text on pages such as 4 sat too close to the bottom, 3-6px above the rule) */
-.fview{flex:1;min-height:0;overflow:hidden;margin:4.5cqw 5.5cqw 2.6cqw;position:relative}
+/* the text stops clear of the folio rule: 1.2cqw (~7px on a 560px page) under the last line, ~10px to the rule
+   (Editor, Nov. 12, 2026: 3-6px was too close to the bottom; then 2.6cqw, ~18px, "too big now") */
+.fview{flex:1;min-height:0;overflow:hidden;margin:4.5cqw 5.5cqw 1.2cqw;position:relative}
 .flow{height:100%;width:100%;column-gap:var(--gap,22px);column-fill:auto;line-height:1.56;hyphens:auto;-webkit-hyphens:auto}
 /* (no will-change:transform here: it made the browser paint the text once at the page's own size and stretch that
    image when the page is scaled up on a big screen, so text and graphics looked blurred; Editor, Nov. 11, 2026) */
