@@ -113,9 +113,13 @@ body.reading{background:var(--desk);height:100vh;height:100dvh;overflow:hidden;d
 .flow.c1 p{orphans:2;widows:2}
 .flow.c1 .tl,.flow.c1 .gx{font-size:.86em}
 .flow.c1 .ax-te{padding:.2em 0 .35em;line-height:1.34}
-.flow.c1 .ax-te{grid-template-columns:5.2em 1fr;gap:0 1em}
-.flow.c1 .ax-te::before{left:calc(5.2em + .47em)}
-.flow.c1 .ax-te::after{left:calc(5.2em + .47em - 5px)}
+/* timeline: the dot and the rail sit in the middle of a fixed 30px gap, so they never touch the date or the entry
+   (HARD RULE, Editor, Nov. 12, 2026: text and timeline graphic overlapped on phones) */
+.ax-tl .ax-te{grid-template-columns:var(--tld,6.6em) 1fr;gap:0 30px}
+.ax-tl .ax-te::before{left:calc(var(--tld,6.6em) + 14px)}
+.ax-tl .ax-te::after{left:calc(var(--tld,6.6em) + 9px)}
+.ax-tl .ax-te.last .ax-tx{margin-left:0}
+.flow.c1 .ax-tl .ax-te{--tld:5em}
 .flow.c1 .fig{margin:.5em 0 .9em}
 /* phone sliders: four small cards a row, so a slider shares its page with text (Editor, Nov. 11, 2026: "the graph
    (slider) also looks terrible") */
@@ -123,6 +127,14 @@ body.reading{background:var(--desk);height:100vh;height:100dvh;overflow:hidden;d
 .flow.c1 .gx-cards{gap:.7em .4em}
 .flow.c1 .gx-cards:not(.wide) .gx-card{flex:0 0 calc(25% - .3em)}
 .flow.c1 .gx-cards.one-row .gx-card{flex:1 1 0}
+/* graphics adapt to every screen size (Editor, Nov. 12, 2026): on short phones the cards get smaller, so a big grid
+   still shares its page with text */
+@media (max-height:760px){
+  .flow.c1 .gx-card img{width:2.7em;height:2.7em}
+  .flow.c1 .gx-cards{gap:.45em .4em}
+  .flow.c1 .gx.kind-cards{font-size:.7em}
+}
+.flow.c1 .gx-cards.per:not(.wide) .gx-card{flex:0 0 calc((100% - (var(--per) - 1) * .4em) / var(--per))}
 .flow.c1 .gx-card img{width:3.4em;height:3.4em}
 .flow.c1 .gx-card b{font-size:.92em;line-height:1.15}
 .flow.c1 .gx-card .sub,.flow.c1 .gx-card .txt{font-size:.82em;line-height:1.2}
@@ -143,6 +155,11 @@ html.dens-3 .band{--mapmax:calc(var(--ph) * .28)}
    text page; the Bottom Line under it when it fits */
 .band.opband{left:0;right:0;top:0;z-index:2;font-size:inherit;line-height:normal;background:transparent}
 .page.oldnews .band.opband{background:transparent}
+/* every Old News page is cream, bands included (HARD RULE, Nov. 11) */
+.page.oldnews .band{background:var(--paper-old,#F6F0E3)}
+/* the Old News note sits above the Bottom Line (HARD RULE, Editor, Nov. 12, 2026) */
+.onintro{margin:0 0 .9em}
+.band .onintro{padding:0 .1em}
 /* the photo is at least this tall and grows with the headline, so the kicker and headline are never cut off */
 .opb-ph{position:relative;min-height:min(calc(var(--ph) * .4), calc(var(--pw) * .7));overflow:hidden;background:#06302A;display:flex;flex-direction:column;justify-content:flex-end}
 .opb-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -157,6 +174,20 @@ html.dens-3 .band{--mapmax:calc(var(--ph) * .28)}
 .opb.old .opb-tx .kick .y{background:#333333;border:1px solid #333333;color:#FFFFFF;border-radius:3px;padding:.3cqw 1.2cqw}
 .opb-tx .by{font-size:2.3cqw;margin-top:1.6cqw;opacity:.9}
 .opb-cap{font-size:1.9cqw;line-height:1.35;color:var(--ink2);padding:1.4cqw 5.5cqw 0}
+/* HARD RULE (Editor, Nov. 12, 2026): text never covers a photo. On a phone the photo stands on its own at its own shape
+   and the label, headline and byline go BELOW it (photo, caption, then the headline) */
+@media (max-width:899px){
+  .opb{display:flex;flex-direction:column}
+  .opb-ph{display:contents}
+  /* a fixed height (about a 3:2 photo's own shape), so the layout measures the same before the photo has loaded */
+  .opb-ph img{position:static;order:1;display:block;width:100%;height:min(calc(var(--pw) * .66), calc(var(--ph) * .36));object-fit:cover}
+  .opb-veil{display:none}
+  .opb-cap{order:2}
+  .opb-tx{order:3;color:var(--ink);padding:2.6cqw 5.5cqw 0}
+  .opb-tx .kick{color:var(--ink2)}
+  .opb-tx .kick .r{color:var(--teal-ink)}
+  .opb-tx .by{opacity:1;color:var(--ink2)}
+}
 .page.oldnews .opb-cap{color:#7a6650}
 .opb-bl{padding:3cqw 5.5cqw 0;font-size:.8125em;line-height:1.45}
 .opb-bl .blbox{margin:0;font-size:1.06em;padding:1em 1.3em .5em}
@@ -164,6 +195,14 @@ html.dens-3 .band{--mapmax:calc(var(--ph) * .28)}
    tighter at a time (class dens-1..3 on <html>, set by paginateAll) until it fits */
 html.dens-1 .opb-ph{min-height:calc(var(--ph) * .32)}
 html.dens-1 .band .gx-svg,html.dens-1 .band .gx-img{max-height:calc(var(--ph) * .35)}
+/* one story at a time (Nov. 12, 2026, no page limit any more): when a story would end on an almost empty page, its
+   photo and graph bands get a little smaller (never the text) and it is laid out again; kept only if it saves the page */
+.page.dens-1 .band{--mapmax:calc(var(--ph) * .35)}
+.page.dens-1 .opb-ph{min-height:calc(var(--ph) * .32)}
+.page.dens-1 .band .gx-svg,.page.dens-1 .band .gx-img{max-height:calc(var(--ph) * .35)}
+.page.dens-2 .band{--mapmax:calc(var(--ph) * .29)}
+.page.dens-2 .opb-ph{min-height:calc(var(--ph) * .27)}
+.page.dens-2 .band .gx-svg,.page.dens-2 .band .gx-img{max-height:calc(var(--ph) * .29)}
 html.dens-2 .opb-ph{min-height:calc(var(--ph) * .28)}
 html.dens-2 .band .gx-svg,html.dens-2 .band .gx-img{max-height:calc(var(--ph) * .31)}
 html.dens-2 .flow.c2,html.dens-2 .band:not(.opband),html.dens-2 .opb-bl{font-size:.78em}
@@ -1171,7 +1210,11 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   }
   function arifHead(g, p, kicker) {
     var same = g.subtitle && g.title && g.subtitle.trim().toLowerCase() === g.title.trim().toLowerCase();
-    return '<div class="ax-top"><span class="ax-lab">' + esc((p && p.region) || '') + '</span>' + (kicker ? '<span class="ax-kick">' + esc(kicker) + '</span>' : '') + '</div>'
+    // no region badge when the title already names the place ("Iran" badge over "Iran's ..."; Editor, Nov. 12, 2026)
+    var reg = (p && p.region) || '';
+    if (reg && g.title && new RegExp('(^|[^A-Za-z])' + reg.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i').test(g.title)) reg = '';
+    var top = (reg ? '<span class="ax-lab">' + esc(reg) + '</span>' : '') + (kicker ? '<span class="ax-kick">' + esc(kicker) + '</span>' : '');
+    return (top ? '<div class="ax-top">' + top + '</div>' : '')
       + (g.title ? '<div class="ax-t">' + esc(g.title) + '</div>' : '') + (g.subtitle && !same ? '<div class="ax-s">' + esc(g.subtitle) + '</div>' : '');
   }
   function arifFoot(g) {
@@ -1232,7 +1275,10 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   var REG = ['Iran', 'Iraq', 'Peninsula'];
   var rank = function (p) { return /^Old News/.test(p.title) ? 2 : p.type === 'Media Monitor' ? 1 : 0; };
   var COVER = M.pieces.filter(function (p) { return ISSUE.cover ? p.url === ISSUE.cover : /Zaidi/.test(p.title); })[0] || M.pieces[0];
+  // an issue chosen in the builder (issue.ordered: true) keeps the order the Editor set there: its `pick` list, the
+  // cover story still first (Editor, Nov. 11-12, 2026: full control of the order of every story)
   var P = [COVER].concat(M.pieces.filter(function (p) { return p !== COVER; }).sort(function (a, b) {
+    if (ISSUE.ordered && ISSUE.pick) return ISSUE.pick.indexOf(a.url) - ISSUE.pick.indexOf(b.url);
     return REG.indexOf(a.region) - REG.indexOf(b.region) || rank(a) - rank(b) || (a.date < b.date ? 1 : -1);
   }));
   var turn = 0;
@@ -1296,17 +1342,31 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     return '<figure class="fig" data-k="' + g.key + '">' + g.html + '</figure>';
   }
   // the first letter capitalised, after any opening quote mark ("reduce ..." becomes "Reduce ...")
-  function capFirst(s) { return String(s || '').replace(/^([“"‘'(\[\s]*)([a-z])/, function (m, a, c) { return a + c.toUpperCase(); }); }
+  // a pull quote starts with a capital (HARD RULE, Nov. 11) and never ends with a comma (HARD RULE, Nov. 12, 2026):
+  // a trailing comma (before any closing quote marks or tags) becomes a full stop
+  function noEndComma(s) { return String(s || '').replace(/[,;:]\s*((?:<\/[^>]+>|[”"’'\s])*)$/, '.$1'); }
+  function capFirst(s) { return noEndComma(String(s || '').replace(/^([“"‘'(\[\s]*)([a-z])/, function (m, a, c) { return a + c.toUpperCase(); })); }
+  // HARD RULE (Editor, Nov. 12, 2026): in Old News the bold note "Old News is a new initiative ..." goes ABOVE the
+  // Bottom Line, not at the top of the main text. Returns the index of that block (or -1).
+  function onIntro(p) {
+    if (!(p.old || p.tpl === 'o')) return -1;
+    for (var i = 0; i < Math.min(3, p.blocks.length); i++) if (p.blocks[i].t === 'p' && /Old News is a new initiative/i.test(p.blocks[i].html.replace(/<[^>]+>/g, ''))) return i;
+    return -1;
+  }
+  function onIntroHtml(p) { var i = onIntro(p); return i < 0 ? '' : '<p class="onintro">' + p.blocks[i].html + '</p>'; }
+  window.MagOnIntro = onIntroHtml;
   function flowHtml(p, out) {
     out = out || {};
-    var h = '', firstDone = false, F = figures(p), byKey = {};
+    var h = '', firstDone = false, F = figures(p), byKey = {}, skip = onIntro(p);
     F.list.forEach(function (g) { byKey[g.key] = g; });
+    if (!out._bl) h += onIntroHtml(p);
     if (p.bottomLine.length && !out._bl) h += '<div class="blbox"><h4>Bottom line</h4><ul>' + p.bottomLine.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul></div>';
     p.blocks.forEach(function (b, i) {
+      if (i === skip) { (F.at[i] || []).forEach(function (k) { h += out[k] ? '<span class="mk" data-k="' + k + '"></span>' : figHtml(p, byKey[k]); }); return; }
       if (b.t === 'p') { h += '<p' + (!firstDone ? ' class="first"' : '') + '>' + b.html + '</p>'; firstDone = true; }
       else if (b.t === 'h') h += '<h3>' + esc(b.text) + '</h3>';
       else if (b.t === 'ul') h += '<ul>' + b.items.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul>';
-      else if (b.t === 'q') h += '<blockquote class="pull">' + b.html.replace(/^((?:<[^>]+>|[“"‘'(\[\s])*)([a-z])/, function (m, a, c) { return a + c.toUpperCase(); }) + '</blockquote>';
+      else if (b.t === 'q') h += '<blockquote class="pull">' + noEndComma(b.html).replace(/^((?:<[^>]+>|[“"‘'(\[\s])*)([a-z])/, function (m, a, c) { return a + c.toUpperCase(); }) + '</blockquote>';
       else if (b.t === 'graph' && GR[b.id] && MagGraph.isFlow(GR[b.id])) h += MagGraph.timeline(GR[b.id], p);
       (F.at[i] || []).forEach(function (k) { h += out[k] ? '<span class="mk" data-k="' + k + '"></span>' : figHtml(p, byKey[k]); });
       // a pull quote always begins with a capital letter (HARD RULE, Editor, Nov. 11, 2026)
@@ -1417,11 +1477,19 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   // a row; then all its cards go on one row. Rows are centred (CSS). Runs wherever a grid is laid out.
   function fixCards(root) {
     [].forEach.call(root.querySelectorAll('.gx-cards:not(.wide)'), function (g) {
-      if (g.classList.contains('one-row')) return;
+      if (g.classList.contains('one-row') || g.classList.contains('per')) return;
       var tops = [].map.call(g.children, function (c) { return c.offsetTop; });
       if (tops.length < 2) return;
       var lastTop = tops[tops.length - 1], onLast = tops.filter(function (t) { return t === lastTop; }).length;
-      if (lastTop > tops[0] && onLast === 1) g.classList.add('one-row');
+      if (!(lastTop > tops[0] && onLast === 1)) return;
+      // HARD RULE (Editor, Nov. 12, 2026): never squeeze many cards into one row (9 in a row overlapped on a phone).
+      // Fewer cards a row instead, so the rows come out even (9 = 3+3+3, 5 = 3+2); one row only for 4 cards or fewer.
+      var n = tops.length, c = tops.filter(function (t) { return t === tops[0]; }).length, k = c - 1;
+      while (k >= 2 && n % k === 1) k--;
+      if (k < 2) { if (n <= 4) g.classList.add('one-row'); return; }
+      if (g.closest('.flow.c1')) { g.classList.add('per'); g.style.setProperty('--per', k); return; }
+      var w = g.children[0].getBoundingClientRect().width, cg = parseFloat(getComputedStyle(g).columnGap) || 0;
+      g.classList.add('per'); g.style.maxWidth = Math.ceil(k * w + (k - 1) * cg + 2) + 'px'; g.style.marginLeft = g.style.marginRight = 'auto';
     });
   }
   window.MagFixCards = fixCards;
@@ -1476,10 +1544,10 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   function measure2(p) {
     var box = $('measure'), F = figures(p), byKey = {}, out = { _bl: true };
     F.list.forEach(function (g) { out[g.key] = true; byKey[g.key] = g; });
-    var blHtml = p.bottomLine.length ? '<div class="blbox"><h4>Bottom line</h4><ul>' + p.bottomLine.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul></div>' : '';
+    var blHtml = onIntroHtml(p) + (p.bottomLine.length ? '<div class="blbox"><h4>Bottom line</h4><ul>' + p.bottomLine.map(function (t) { return '<li>' + t + '</li>'; }).join('') + '</ul></div>' : '');
     var tlFix = [], tlMove = {}, tlSearch = null, tlDone = [], tlForce = [], tlTight = {};
     for (var round = 0; round < 40; round++) {
-      box.innerHTML = '<div class="page' + (p.tpl === 'o' ? ' oldnews' : '') + '"><div class="fview"><div class="flow c2">' + flowHtml(p, out) + '</div></div>' + folio(1) + '</div>';
+      box.innerHTML = '<div class="page' + (p.tpl === 'o' ? ' oldnews' : '') + (p.dens ? ' dens-' + p.dens : '') + '"><div class="fview"><div class="flow c2">' + flowHtml(p, out) + '</div></div>' + folio(1) + '</div>';
       var fv = box.querySelector('.fview'), fl = box.querySelector('.flow'), colH = fv.clientHeight, figmax = Math.round(colH * 0.62);
       [].forEach.call(fl.querySelectorAll('.tl'), function (tl, i) { if (tlTight[i]) tl.classList.add('tight'); });
       moveTimelines(fl, tlMove);
@@ -1600,7 +1668,9 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   var FIGSEL = '.fig, .tl, .pull';
   function moveEls(fl, moves) {
     var els = [].slice.call(fl.querySelectorAll(FIGSEL));
-    els.forEach(function (el, i) {
+    // last first, so two graphs in a row can move down together (the later one clears the way for the earlier one)
+    els.slice().reverse().forEach(function (el, ri) {
+      var i = els.length - 1 - ri;
       for (var n = moves[i] || 0; n > 0; n--) {
         var nx = el.nextElementSibling;
         while (nx && (nx.classList.contains('mk') || nx.classList.contains('bsp'))) nx = nx.nextElementSibling;
@@ -1618,7 +1688,9 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       fl.style.setProperty('--figmax', figmax + 'px');
       fixCards(fl);
       moveEls(fl, moves);
-      var gap = parseFloat(getComputedStyle(fl).columnGap) || 28, r0 = fv.getBoundingClientRect(), stride = fv.clientWidth + gap;
+      // the exact (fractional) width: a rounded one drifts a little more on every page, until the text is cut off at the
+      // left edge and a story ends on an empty-looking page (Nov. 12, 2026)
+      var gap = parseFloat(getComputedStyle(fl).columnGap) || 28, r0 = fv.getBoundingClientRect(), stride = r0.width + gap;
       // the opener across the top of the first page, the photo at about its own shape, so nobody's head is cropped
       // away (HARD RULE, Editor, Nov. 11, 2026); the text starts below it
       var pageEl = box.querySelector('.page'), opd = document.createElement('div');
@@ -1650,11 +1722,15 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
         });
       });
       var changed = false;
+      // a figure moves down together with the figures right after it (two graphs in a row move as a group)
+      var nextEl = function (el) { var x = el.nextElementSibling; while (x && (x.classList.contains('mk') || x.classList.contains('bsp'))) x = x.nextElementSibling; return x; };
+      var bump = function (i) { moves[i] = (moves[i] || 0) + 1; for (var j = i; j + 1 < els.length && nextEl(els[j]) === els[j + 1]; j++) moves[j + 1] = (moves[j + 1] || 0) + 1; };
       // 1. a page with a figure and fewer than three lines of text: move the figure down
       for (var k2 = 0; k2 < n && !changed; k2++) {
         if (pg[k2].figs.length && pg[k2].lines < 3) {
-          var i2 = pg[k2].figs[0];
-          if ((moves[i2] || 0) < 8) { moves[i2] = (moves[i2] || 0) + 1; changed = true; }
+          // two graphs filling a page: the later one moves down, so text comes between them
+          var i2 = pg[k2].figs.length > 1 ? Math.max.apply(null, pg[k2].figs) : pg[k2].figs[0];
+          if ((moves[i2] || 0) < 8) { bump(i2); changed = true; }
           else if (els[i2].classList.contains('pull') && !dropped[i2]) { out.pull = true; dropped[i2] = true; changed = true; }
         }
       }
@@ -1662,12 +1738,15 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       for (var k3 = 0; k3 < n - 1 && !changed; k3++) {
         if (colH - pg[k3].bottom <= 3 * lineH) continue;
         var first = pg[k3 + 1].figs.filter(function (i) { return colOf(els[i].getClientRects()[0] || els[i].getBoundingClientRect()) === k3 + 1; })[0];
-        if (first !== undefined && (moves[first] || 0) < 8) { moves[first] = (moves[first] || 0) + 1; changed = true; }
+        if (first !== undefined && (moves[first] || 0) < 8) { bump(first); changed = true; }
       }
       if (changed && round < 39) continue;
       // the "See the original" line alone on the last page: left out
       var endEl = fl.querySelector('.endmark');
-      if (endEl && n > 1 && pg[n - 1].lines <= 1 && !pg[n - 1].figs.length) { endEl.parentNode.removeChild(endEl); n = Math.max(1, Math.ceil((fl.scrollWidth + gap - 2) / stride)); }
+      if (endEl && n > 1 && pg[n - 1].lines <= 1 && !pg[n - 1].figs.length) { endEl.parentNode.removeChild(endEl); if (!pg[n - 1].lines) pg[n - 1].bottom = 0; }
+      // the page count comes from where the content really ends, never from scrollWidth (some browsers add an empty
+      // column to it): no empty pages, ever (HARD RULE, Editor, Nov. 12, 2026)
+      while (n > 1 && !pg[n - 1].bottom) n--;
       return { n: n, stride: stride, figmax: figmax, out: out, placed: [], html: fl.innerHTML, opband: true, bands: [{ page: 0, html: openerBand(p), cls: 'opband' }] };
     }
   }
@@ -1738,18 +1817,19 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   // table of contents on the same page in the reader"). #cover and #contents both open it.
   var TOCP = { no: 0, toc: true, short: 'Cover and contents', region: 'Contents', start: 1, end: 2, pages: [] };
   var SEQ = [TOCP].concat(P);
-  // HARD RULE (Editor, Nov. 11, 2026): an issue is at most 40 pages. Laid out as designed first; when longer, again one
-  // step tighter at a time (dens-1..3 in reuse3.css) until it fits
-  var MAXP = 40, DENS = 0;
+  // No page limit (Editor, Nov. 12, 2026: "remove the 40-page limit, it seems to only cause issues"; it was Nov. 11's
+  // max 40 pages with dens-1..3 tightening). An issue is laid out once, in the built-in look, and takes the pages it needs.
+  var DENS = 0;
   function paginateAll() {
     var w0 = wide, root = document.documentElement; wide = true;
-    for (var d = 0; d <= 3; d++) {
-      root.classList.remove('dens-1', 'dens-2', 'dens-3'); if (d) root.classList.add('dens-' + d);
-      var at = 3;   // cover 1 and contents 2 (one spread), stories from 3
-      P.forEach(function (p) { p.start = at; p.pages = storyPages(p); at += p.pages.length; p.end = at - 1; });
-      DENS = d;
-      if (at - 1 <= MAXP) break;
-    }
+    root.classList.remove('dens-1', 'dens-2', 'dens-3');
+    var at = 3;   // cover 1 and contents 2 (one spread), stories from 3
+    P.forEach(function (p) {
+      p.dens = 0; p.start = at; p.pages = storyPages(p);
+      // a story that would end on an almost empty page: once more with slightly smaller bands; kept if one page shorter
+      for (var d = 1; d <= 2 && p.pages.length > 2; d++) { var keep = p.dens; p.dens = d; var t = storyPages(p); if (t.length < p.pages.length) { p.pages = t; break; } p.dens = keep; }
+      at += p.pages.length; p.end = at - 1;
+    });
     wide = w0; LAST = at - 1;
     TOCP.pages = [coverPage()].concat(tocPages());   // pages 1 and 2, one spread
     fillDrawer();
@@ -1926,7 +2006,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     figures(p).list.forEach(function (g) { byKey[g.key] = g; });
     if (!m.opband) pages.push(opener(p, num(0)));   // on a computer the opener sits on the first text page (opband)
     for (var i = 0; i < m.n; i++) {
-      pages.push('<div class="page' + (p.tpl === 'o' ? ' oldnews' : '') + '">' + bandOn(i, true) + '<div class="fview">' + bandOn(i) + '<div class="flow c' + cols + '" style="--figmax:' + m.figmax + 'px;transform:translateX(' + (-i * m.stride) + 'px)">' + body + '</div></div>' + folio(num(pages.length), p.region, i < m.n - 1) + '</div>');
+      pages.push('<div class="page' + (p.tpl === 'o' ? ' oldnews' : '') + (wide && p.dens ? ' dens-' + p.dens : '') + '">' + bandOn(i, true) + '<div class="fview">' + bandOn(i) + '<div class="flow c' + cols + '" style="--figmax:' + m.figmax + 'px;transform:translateX(' + (-i * m.stride) + 'px)">' + body + '</div></div>' + folio(num(pages.length), p.region, i < m.n - 1) + '</div>');
       var here = m.placed.filter(function (x) { return x.page === i && byKey[x.key]; }).map(function (x) { return byKey[x.key]; }), groups = [];
       here.forEach(function (g) {
         var last = groups[groups.length - 1], pairable = !g.photo && g.kind !== 'cards';
@@ -2265,8 +2345,23 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       else if (wasWide !== nowWide) { story = null; route(); }
     }, 180);
   });
-  var fontsReady = document.fonts && document.fonts.load ? Promise.all([400, 700, 900].map(function (w) { return document.fonts.load(w + ' 16px Sombra'); })).catch(function () {}) : Promise.resolve();
-  Promise.race([fontsReady, new Promise(function (r) { setTimeout(r, 2500); })]).then(function () { paginateAll(); route(); });
+  var fontsReady = document.fonts && document.fonts.load ? Promise.all([400, 500, 700, 900].map(function (w) { return document.fonts.load(w + ' 16px Sombra'); })).catch(function () {}) : Promise.resolve();
+  var laid = false;
+  Promise.race([fontsReady, new Promise(function (r) { setTimeout(r, 2500); })]).then(function () {
+    laid = true;
+    window.__laidWithFonts = !!(document.fonts && [400, 500, 700, 900].every(function (w) { return document.fonts.check(w + ' 16px Sombra'); }));
+    paginateAll(); route();
+  });
+  // on a slow phone Sombra can arrive after the first layout; the text is then shorter than measured, which leaves empty
+  // pages and gaps (Editor, Nov. 12, 2026): lay everything out again once every font is in
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () {
+    if (!laid) return;
+    var ok = [400, 500, 700, 900].every(function (w) { return document.fonts.check(w + ' 16px Sombra'); });
+    if (!ok) return;
+    if (window.__laidWithFonts) return; window.__laidWithFonts = true;
+    PH.key = ''; paginateAll();
+    if (story) { var fr = story.at / Math.max(1, story.pages.length), sp = story.p; story = null; openStory(sp, 0); showSpread(Math.min(story.pages.length - 1, Math.floor(fr * story.pages.length))); }
+  });
 })();
 </script>
 
