@@ -965,6 +965,12 @@ body:not(.dopen) .tbtn{background:var(--teal);border-color:var(--teal);color:#ff
 .hero .cv-mark{display:block;flex:none;width:140px;height:45px}
 .mh .credit{display:flex;align-items:center;gap:8px;border-left:2px solid #D9E1DF;padding-left:14px;text-decoration:none;font-size:13px;color:#5C6567;flex:none}
 .mh .credit img{height:20px;width:auto}
+/* the Amwaj.media logo bigger and easier to read (Editor, Nov. 12, 2026): 32px on a computer, 30px on a phone (26px on
+   the narrowest), "from" a touch larger and darker */
+.mh .credit{gap:9px;font-size:14px;color:#4A5355}
+.mh .credit img{height:32px}
+@media (max-width:899px){.mh .credit img{height:30px}.mh .credit{gap:7px}}
+@media (max-width:339px){.mh .credit img{height:26px}.mh .credit{font-size:13px;gap:6px}}
 .mh .sub,#subgo{color:#fff}   /* white, the Editor's choice (Nov. 11, 2026) */
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .mh .wm{color:var(--ink)}:root:not([data-theme="light"]) .mh .mh-mark .wave{stroke:var(--teal)}:root:not([data-theme="light"]) .mh .credit{border-color:var(--rule);color:var(--ink2)}}
 :root[data-theme="dark"] .mh .wm{color:var(--ink)}:root[data-theme="dark"] .mh .mh-mark .wave{stroke:var(--teal)}:root[data-theme="dark"] .mh .credit{border-color:var(--rule);color:var(--ink2)}
@@ -2147,11 +2153,18 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   var PH = { key: '', pages: {}, start: {}, total: 0 };
   function phoneAll() {
     var st = $('stage'), key = st.clientWidth + 'x' + st.clientHeight + 'x' + fi;
-    if (PH.key === key) return;
+    // the page size goes on the book every time, not only when the pages are laid out: going back to the front page
+    // throws the book away, and a story opened after that got a new book without it, so the cached phone pages showed
+    // at the computer's 560x800 size, wider than the screen, the headline over the text (Editor, Nov. 12, 2026: "when
+    // you click on links to stories in mobile, the headline overlaps with bottom line")
+    var sizeBook = function () { var b = $('book'); if (b && PH.w) { b.style.setProperty('--pw', PH.w + 'px'); b.style.setProperty('--ph', PH.h + 'px'); } };
+    if (PH.key === key) { sizeBook(); return; }
     PH = { key: key, pages: {}, start: {}, total: 0 };
     var at = 3;
     P.forEach(function (q) { PH.pages[q.no] = phonePages(q); PH.start[q.no] = at; at += PH.pages[q.no].length; });
     PH.total = at - 1;
+    var b0 = $('book'); PH.w = parseFloat(b0.style.getPropertyValue('--pw')); PH.h = parseFloat(b0.style.getPropertyValue('--ph'));
+    sizeBook();
   }
   function showSpread(s, dir) {
     var per = wide ? 2 : 1, b = $('book'), list = story.pages.slice(s * per, s * per + per);
