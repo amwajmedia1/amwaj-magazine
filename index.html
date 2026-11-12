@@ -1,24 +1,3 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="description" content="The week’s reporting and analysis from Amwaj.media on Iran, Iraq and the Arabian Peninsula. Issue 45: Can Zaidi keep Iraq from becoming Riyadh's battlefield?">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Amwaj Magazine">
-<meta property="og:title" content="Amwaj Magazine, Issue 45">
-<meta property="og:description" content="The week’s reporting and analysis from Amwaj.media on Iran, Iraq and the Arabian Peninsula. Issue 45: Can Zaidi keep Iraq from becoming Riyadh's battlefield?">
-<meta property="og:url" content="https://magazine.amwaj.media/">
-<meta property="og:image" content="https://magazine.amwaj.media/img/02.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@Amwajmedia">
-<link rel="icon" href="logo-mark.svg" type="image/svg+xml">
-<link rel="icon" href="logo.png" type="image/png">
-<link rel="canonical" href="https://magazine.amwaj.media/">
-<meta name="robots" content="index,follow">
-<style>*{box-sizing:border-box}body{margin:0}</style>
-</head>
-<body>
 <title>Amwaj Magazine</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <style>
@@ -119,7 +98,11 @@ body.reading{background:var(--desk);height:100vh;height:100dvh;overflow:hidden;d
 .ax-tl .ax-te::before{left:calc(var(--tld,6.6em) + 14px)}
 .ax-tl .ax-te::after{left:calc(var(--tld,6.6em) + 9px)}
 .ax-tl .ax-te.last .ax-tx{margin-left:0}
-.flow.c1 .ax-tl .ax-te{--tld:5em}
+/* HARD RULE (Editor, Nov. 12, 2026): timelines are left-aligned with their header and standfirst, never right-aligned:
+   dates start at the left edge; the date column is as wide as the longest date (--tlw, set by graphs-render.js) */
+.ax-tl .ax-te{--tld:var(--tlw,6.6em)}
+.ax-tl .ax-td{text-align:left}
+.flow.c1 .ax-tl .ax-te{--tld:min(var(--tlw,5em),5em)}
 .flow.c1 .fig{margin:.5em 0 .9em}
 /* phone sliders: four small cards a row, so a slider shares its page with text (Editor, Nov. 11, 2026: "the graph
    (slider) also looks terrible") */
@@ -1234,7 +1217,12 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   }
   function arifTimeline(g) {
     var n = g.entries.length;
-    return '<div class="ax-tl">' + g.entries.map(function (e, i) {
+    // HARD RULE (Editor, Nov. 12, 2026): the timeline is left-aligned with its header and standfirst. The dates start at
+    // the left edge, and the date column is only as wide as the longest date (about .6em a character), so the rail
+    // never floats in the middle of the card
+    var w = 0; g.entries.forEach(function (e) { w = Math.max(w, String(e.date || '').length); });
+    var tlw = Math.min(6.6, Math.max(2.4, Math.round(w * 0.6 * 10) / 10));
+    return '<div class="ax-tl" style="--tlw:' + tlw + 'em">' + g.entries.map(function (e, i) {
       return '<div class="ax-te' + (i === n - 1 ? ' last' : '') + '"><div class="ax-td">' + esc(e.date) + '</div><div class="ax-tx"><b>' + esc(e.title) + '</b>' + (e.text ? ' ' + esc(e.text) : '') + '</div></div>';
     }).join('') + '</div>';
   }
@@ -1488,7 +1476,8 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       while (k >= 2 && n % k === 1) k--;
       if (k < 2) { if (n <= 4) g.classList.add('one-row'); return; }
       if (g.closest('.flow.c1')) { g.classList.add('per'); g.style.setProperty('--per', k); return; }
-      var w = g.children[0].getBoundingClientRect().width, cg = parseFloat(getComputedStyle(g).columnGap) || 0;
+      // offsetWidth, not the on-screen width: in the scaled book the on-screen width is off by the scale (Nov. 12, 2026)
+      var w = g.children[0].offsetWidth, cg = parseFloat(getComputedStyle(g).columnGap) || 0;
       g.classList.add('per'); g.style.maxWidth = Math.ceil(k * w + (k - 1) * cg + 2) + 'px'; g.style.marginLeft = g.style.marginRight = 'auto';
     });
   }
@@ -1674,20 +1663,59 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       for (var n = moves[i] || 0; n > 0; n--) {
         var nx = el.nextElementSibling;
         while (nx && (nx.classList.contains('mk') || nx.classList.contains('bsp'))) nx = nx.nextElementSibling;
-        if (!nx || nx.classList.contains('endmark') || nx.matches(FIGSEL)) break;
+        if (!nx || nx.classList.contains('endmark') || nx.matches(FIGSEL) || nx.classList.contains('blbox') || nx.classList.contains('onintro')) break;
         nx.parentNode.insertBefore(el, nx.nextSibling);
       }
     });
   }
+  // HARD RULE (Editor, Nov. 12, 2026): the "Bottom line" title never ends a page with its bullets on the next; at least
+  // two bullets (all, when fewer) stay on its page. Else the Bottom Line (with the Old News note above it) moves down past
+  // the next paragraph(s), so the text fills the page above it and leaves no gap; a forced page break only when no
+  // position keeps the rule.
+  function moveBl(fl, n, force) {
+    var bl = fl.querySelector('.blbox'); if (!bl) return 0;
+    var intro = bl.previousElementSibling && bl.previousElementSibling.classList.contains('onintro') ? bl.previousElementSibling : null;
+    var at = bl, moved = 0;
+    // past whole paragraphs; a subheading or list is passed together with the paragraph after it, so the Bottom Line never
+    // sits between a subheading and its text
+    var nextOf = function (el) { var x = el.nextElementSibling; while (x && (x.classList.contains('mk') || x.classList.contains('bsp'))) x = x.nextElementSibling; return x; };
+    while (moved < n) {
+      var nx = nextOf(at), run = [];
+      while (nx && (nx.tagName === 'H3' || nx.tagName === 'UL' || nx.matches(FIGSEL))) { run.push(nx); nx = nextOf(nx); }
+      if (!nx || nx.tagName !== 'P' || nx.classList.contains('endmark')) break;
+      at = nx; moved++;
+    }
+    if (moved) { at.parentNode.insertBefore(bl, at.nextSibling); if (intro) bl.parentNode.insertBefore(intro, bl); }
+    if (force) (intro || bl).style.breakBefore = 'column';
+    return moved;
+  }
+  // ok: the title and its first two bullets on one page; gap: empty space at the foot of the page before it, when the
+  // Bottom Line starts a new page
+  function blState(fl, colOf, top, colH) {
+    var bl = fl.querySelector('.blbox'), h = bl && bl.querySelector('h4'); if (!h) return { ok: true, gap: 0 };
+    var lis = bl.querySelectorAll('li'), li = lis[Math.min(2, lis.length) - 1], hc = colOf(h.getBoundingClientRect());
+    var rs = li ? [].filter.call(li.getClientRects(), function (q) { return q.width > 1; }) : [];
+    var ok = !rs.length || colOf(rs[rs.length - 1]) === hc, gap = 0;
+    var first = bl.previousElementSibling && bl.previousElementSibling.classList.contains('onintro') ? bl.previousElementSibling : bl;
+    var prev = first.previousElementSibling;
+    while (prev && prev.classList.contains('mk')) prev = prev.previousElementSibling;
+    if (prev) {
+      var pr = [].filter.call(prev.getClientRects(), function (q) { return q.height > 0; }), lr = pr[pr.length - 1];
+      if (lr && colOf(lr) < colOf(first.getBoundingClientRect())) gap = Math.max(0, colH - (lr.bottom - top));
+    }
+    return { ok: ok, gap: gap };
+  }
   function measurePhone(p) {
-    var box = $('measure'), out = {}, moves = {}, dropped = {};
-    for (var round = 0; round < 40; round++) {
+    // up to 70 layouts: the Bottom Line search (up to 11) comes on top of the graphs' moves
+    var box = $('measure'), out = {}, moves = {}, dropped = {}, blN = 0, blRes = null, blForce = false, blDone = false, LAST = 69;
+    for (var round = 0; round <= LAST; round++) {
       box.innerHTML = '<div class="page phone' + (p.tpl === 'o' ? ' oldnews' : '') + '"><div class="fview"><div class="flow c1">' + flowHtml(p, out) + '</div></div>' + folio('') + '</div>';
       var fv = box.querySelector('.fview'), fl = box.querySelector('.flow'), colH = fv.clientHeight;
       var figmax = Math.round(colH * 0.5);
       fl.style.setProperty('--figmax', figmax + 'px');
       fixCards(fl);
       moveEls(fl, moves);
+      var blMoved = moveBl(fl, blN, false);
       // the exact (fractional) width: a rounded one drifts a little more on every page, until the text is cut off at the
       // left edge and a story ends on an empty-looking page (Nov. 12, 2026)
       var gap = parseFloat(getComputedStyle(fl).columnGap) || 28, r0 = fv.getBoundingClientRect(), stride = r0.width + gap;
@@ -1697,6 +1725,8 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
       opd.className = 'band opband'; opd.innerHTML = openerBand(p); pageEl.appendChild(opd);
       var opH = opd.getBoundingClientRect().bottom - r0.top; pageEl.removeChild(opd);
       placeSpacer(fl, r0.top, r0.left, Math.min(colH - 2, opH + parseFloat(getComputedStyle(fl).fontSize) * 1.2));
+      // the forced page break goes on after the spacer (placing the spacer clears a break on the first content)
+      if (blForce) { var blf = fl.querySelector('.blbox'); if (blf) (blf.previousElementSibling && blf.previousElementSibling.classList.contains('onintro') ? blf.previousElementSibling : blf).style.breakBefore = 'column'; }
       var colOf = function (r) { return Math.floor((r.left - r0.left + 2) / stride); };
       var lineH = parseFloat(getComputedStyle(fl).fontSize) * 1.5;
       var els = [].slice.call(fl.querySelectorAll(FIGSEL));
@@ -1721,6 +1751,21 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
           if (pg[c].figs.indexOf(i) < 0) pg[c].figs.push(i);
         });
       });
+      // the Bottom Line first (it opens the text): split from its bullets, it tries 1-10 paragraphs further down and keeps
+      // the first position that keeps the rule with (almost) no gap above it; a forced page break only when none keeps it.
+      // The graphs then settle round it, from scratch.
+      if (!blDone && round < LAST) {
+        var bs = blState(fl, colOf, r0.top, colH);
+        if (blRes) {
+          blRes.push({ n: blMoved, ok: bs.ok, gap: bs.gap });
+          if (blN < 10 && blMoved === blN) { blN++; continue; }
+          var okR = blRes.filter(function (r) { return r.ok; }).sort(function (a, b) { return ((a.gap > 2 * lineH) - (b.gap > 2 * lineH)) || a.n - b.n; });
+          // none keeps it: a page break before it at the deepest position tried (the most text above it, the least gap)
+          if (okR.length) blN = okR[0].n; else { blN = Math.max.apply(null, blRes.map(function (r) { return r.n; })); blForce = true; }
+          blDone = true; moves = {}; continue;
+        } else if (!bs.ok) { blRes = [{ n: 0, ok: false, gap: bs.gap }]; blN = 1; continue; }
+        else blDone = true;
+      }
       var changed = false;
       // a figure moves down together with the figures right after it (two graphs in a row move as a group)
       var nextEl = function (el) { var x = el.nextElementSibling; while (x && (x.classList.contains('mk') || x.classList.contains('bsp'))) x = x.nextElementSibling; return x; };
@@ -1740,7 +1785,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
         var first = pg[k3 + 1].figs.filter(function (i) { return colOf(els[i].getClientRects()[0] || els[i].getBoundingClientRect()) === k3 + 1; })[0];
         if (first !== undefined && (moves[first] || 0) < 8) { bump(first); changed = true; }
       }
-      if (changed && round < 39) continue;
+      if (changed && round < LAST) continue;
       // the "See the original" line alone on the last page: left out
       var endEl = fl.querySelector('.endmark');
       if (endEl && n > 1 && pg[n - 1].lines <= 1 && !pg[n - 1].figs.length) { endEl.parentNode.removeChild(endEl); if (!pg[n - 1].lines) pg[n - 1].bottom = 0; }
@@ -1946,7 +1991,9 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   // ---------- a story on a computer: its pages in spreads ----------
   // The pages have one fixed size (--pw x --ph, set in the CSS) and the book is scaled to fit the screen, so the text
   // breaks the same way everywhere and the page numbers hold; zoom multiplies that fit (Editor, Nov. 11, 2026)
-  var PW = 560, PH = 800, story = null, ZL = [1, 1.25, 1.5, 2, 2.5], zi = 0;
+  // (PAGE_H, not PH: PH is the phone page store below, and sharing the name left the book unscaled on big screens,
+  // Editor, Nov. 12, 2026)
+  var PW = 560, PAGE_H = 800, story = null, ZL = [1, 1.25, 1.5, 2, 2.5], zi = 0;
   function size() {
     var st = $('stage'), b = $('book'); if (!st || !b) return;
     // scaled with a transform, NOT css zoom: zoom makes Chrome lay the text out again at another size, so lines broke
@@ -1958,7 +2005,7 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
     var cs = getComputedStyle(st);
     var W = st.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
     var H = st.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
-    var fit = Math.max(0.3, Math.min(W / (PW * 2), H / PH)), s = fit * ZL[zi];
+    var fit = Math.max(0.3, Math.min(W / (PW * 2), H / PAGE_H)), s = fit * ZL[zi];
     var W0 = b.offsetWidth, H0 = b.offsetHeight;      // the book's own size (transforms don't change these)
     b.style.transformOrigin = '0 0';
     b.style.scale = s.toFixed(4);
@@ -2364,6 +2411,3 @@ window.CAPS = {"old-news-after-overthrow-of-monarchy-iraqs-revolution-turns-on-i
   });
 })();
 </script>
-
-</body>
-</html>
