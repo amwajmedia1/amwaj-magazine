@@ -1,5 +1,15 @@
 [
   {
+    "number": 3,
+    "range": "Nov. 14–20, 2026",
+    "title": "Who decides what counts as resistance in Iraq's disarmament drive?",
+    "pages": 39,
+    "stories": 6,
+    "thumb": "thumbs/3.jpg",
+    "added": "2026-11-21",
+    "url": "/"
+  },
+  {
     "number": 2,
     "range": "Nov. 7–13, 2026",
     "title": "Deep Dive: Why Khazali’s road to Washington runs through Tehran",
@@ -7,7 +17,7 @@
     "stories": 6,
     "thumb": "thumbs/2.jpg",
     "added": "2026-11-14",
-    "url": "/"
+    "url": "/issues/2/"
   },
   {
     "number": 1,
